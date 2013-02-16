@@ -1,0 +1,12 @@
+﻿<Window x:Class="FOWA.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FOWA-Server" Height="350" Width="525">
+    <Grid>
+        <Border BorderBrush="Black" BorderThickness="2" Height="210" Margin="10,10,10,0" VerticalAlignment="Top">
+            <TextBlock x:Name="fowaServerLogTextBlock" Margin="8" TextWrapping="Wrap"/>
+        </Border>
+        <Button x:Name="startServerButton" Content="Server starten" HorizontalAlignment="Left" Margin="10,276,0,0" VerticalAlignment="Top" Width="92"/>
+        <Button x:Name="stopServerButton" Content="Server stoppen" HorizontalAlignment="Left" Margin="120,276,0,0" VerticalAlignment="Top" Width="92"/>
+    </Grid>
+</Window>
