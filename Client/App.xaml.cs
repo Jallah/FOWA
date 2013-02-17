@@ -16,14 +16,14 @@ namespace Client
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            ChatWindow chatWindow = new ChatWindow();
-            chatWindow.Show();
+            //ChatWindow chatWindow = new ChatWindow();
+            //chatWindow.Show();
 
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Show();
+            //LoginWindow loginWindow = new LoginWindow();
+            //loginWindow.Show();
 
-            RegisterWindow registerWindow = new RegisterWindow();
-            registerWindow.Show();
+            //RegisterWindow registerWindow = new RegisterWindow();
+            //registerWindow.Show();
 
             ContactWindow contactWindow = new ContactWindow();
             contactWindow.Show();
