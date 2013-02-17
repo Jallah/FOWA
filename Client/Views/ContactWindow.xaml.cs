@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FowaProtocol;
 
 namespace Client.Views
 {
@@ -21,16 +22,17 @@ namespace Client.Views
     public partial class ContactWindow : Window
     {
         public Dictionary<string, ChatWindow> HandledChatWindows = new Dictionary<string, ChatWindow>();
-        private ObservableCollection<Person> list;
+        public static SeekFriendsWindow SeekFriendsWindow;
+        private ObservableCollection<Contact> list;
 
         public ContactWindow()
         {
             InitializeComponent();
 
-            list = new ObservableCollection<Person>
+            list = new ObservableCollection<Contact>
                        {
-                           new Person() {Nachname = "Hans", Vorname = "Schuster"},
-                           new Person() {Nachname = "Peter", Vorname = "Schwanzlurch"}
+                           new Contact() {UserId = 34, NickName = "Schuster"},
+                           new Contact() {UserId = 234, NickName = "Schwanzlurch"}
                        };
 
             listBox.ItemsSource = list;
@@ -38,34 +40,39 @@ namespace Client.Views
 
         private void addFriendButton_Click(object sender, RoutedEventArgs e)
         {
-            list.ElementAt(1).Nachname = "TEST";
+            if(SeekFriendsWindow == null)
+            {
+                SeekFriendsWindow = new SeekFriendsWindow();
+                SeekFriendsWindow.Show();
+            }
+            else
+            {
+                SeekFriendsWindow.WindowState = WindowState.Normal;
+            }
+            
         }
 
         private void ListeItemDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int index = listBox.SelectedIndex;
-            string chatWith = list.ElementAt(index).Nachname;
+            string chatWith = list.ElementAt(index).NickName;
 
             if (listBox.SelectedIndex < 0) return;
 
             var chatWindow = (from w in HandledChatWindows
-                              where w.Key == list.ElementAt(index).Nachname
+                              where w.Key == chatWith
                               select w.Value).FirstOrDefault();
-
+            // Wenn kein Chatfenster für den User Existiert --> ChantWindow erstellen
             if(chatWindow == null)
             {
                 HandledChatWindows.Add(chatWith, new ChatWindow(chatWith));
                 HandledChatWindows.First(w => w.Key == chatWith).Value.Visibility = Visibility.Visible;
             }
-            // Chatfenster Minimieren
+            // Chatfenster aus Taskleist holen
             else
             {
                 HandledChatWindows.First(w => w.Key == chatWith).Value.WindowState = WindowState.Normal;
             }
         }
-
-        
-
-       
     }
 }

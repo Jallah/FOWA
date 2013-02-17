@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\FowaProtocol\Contact.cs">
+      <Link>Contact.cs</Link>
+    </Compile>
     <Compile Include="BusinessLayer\Contracts\IEntity.cs" />
     <Compile Include="DataAccessLayer\Contracts\IRepository.cs" />
     <Compile Include="DataAccessLayer\Repository.cs" />

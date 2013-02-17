@@ -45,7 +45,7 @@ namespace Client.Views
                 charCounterNumberLabel.Content = MAX_CHARS - inputTextBox.Text.Count();
         }
 
-        private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             App.ContactWindow.HandledChatWindows.Remove(ChatWith);
         }

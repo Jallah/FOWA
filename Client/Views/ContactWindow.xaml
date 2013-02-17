@@ -5,11 +5,11 @@
         Title="FOWA-Kontakte" Height="323.322" Width="201.413">
     
     <Window.Resources>
-        <DataTemplate DataType="{x:Type Client:Person}" >
+        <DataTemplate DataType="{x:Type Client:Contact}" >
             <StackPanel Orientation="Horizontal">
-                <TextBlock FontFamily="Verdana" Text="{Binding Vorname}"/>
-                <TextBlock Text=" , "/>
-                <TextBlock FontFamily="Verdana" Text="{Binding Nachname}"/>
+                <TextBlock FontFamily="Verdana" Text="{Binding NickName}"/>
+                <TextBlock Text=" UID: "/>
+                <TextBlock FontFamily="Verdana" Text="{Binding UserId}"/>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>

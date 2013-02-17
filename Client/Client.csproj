@@ -53,12 +53,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Person.cs" />
+    <Compile Include="..\FowaProtocol\Contact.cs">
+      <Link>Contact.cs</Link>
+    </Compile>
     <Compile Include="Views\ContactWindow.xaml.cs">
       <DependentUpon>ContactWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SeekFriendsWindow.xaml.cs">
+      <DependentUpon>SeekFriendsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\ChatWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -81,6 +86,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RegisterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SeekFriendsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,36 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client
+namespace FowaProtocol
 {
-    public class Person : INotifyPropertyChanged
+    public class Contact : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private string _vorname;
-        private string _nachname;
+        private string _nickName;
+        private int _userId;
 
-        public string Vorname
+        public string NickName
         {
-            get { return _vorname; }
+            get { return _nickName; }
             set
             {
-                if (!value.Equals(Vorname))
+                if (!value.Equals(NickName))
                 {
-                    _vorname = value;
-                    OnPropertyChanged("Vorname");
+                    _nickName = value;
+                    OnPropertyChanged("NickName");
                 }
             }
         }
 
-        public string Nachname
+        public int UserId
         {
-            get { return _nachname; }
+            get { return _userId; }
             set
             {
-                if (!value.Equals(Nachname))
+                if (!value.Equals(UserId))
                 {
-                    _nachname = value;
-                    OnPropertyChanged("Nachname");
+                    _userId = value;
+                    OnPropertyChanged("UserId");
                 }
             }
         }
