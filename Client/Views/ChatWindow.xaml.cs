@@ -11,11 +11,14 @@ namespace Client.Views
     public partial class ChatWindow : Window
     {
         private const int MAX_CHARS = 200;
+        public string ChatWith { get; private set; } 
 
-        public ChatWindow()
+        public ChatWindow(string chatWith)
         {
             InitializeComponent();
             charCounterNumberLabel.Content = MAX_CHARS;
+            this.ChatWith = chatWith;
+            this.Title = Title + " " + ChatWith;
         }
 
         private void inputTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -41,5 +44,14 @@ namespace Client.Views
             if (MAX_CHARS - inputTextBox.Text.Count() >= 0)
                 charCounterNumberLabel.Content = MAX_CHARS - inputTextBox.Text.Count();
         }
+
+        private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            App.ContactWindow.HandledChatWindows.Remove(ChatWith);
+        }
+       
+
+
+      
     }
 }

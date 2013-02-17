@@ -48,5 +48,20 @@ namespace Client
             }
         }
 
+
+        private string straße;
+
+        public string getStraße()
+        {
+            return straße;
+        }
+
+        public void setStraße(string straße)
+        {
+            this.straße = straße;
+        }
+
+        public string Straße { get; private set; }
+
     }
 }

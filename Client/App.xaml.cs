@@ -14,6 +14,8 @@ namespace Client
     /// </summary>
     public partial class App : Application
     {
+        public static ContactWindow ContactWindow;
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             //ChatWindow chatWindow = new ChatWindow();
@@ -25,8 +27,8 @@ namespace Client
             //RegisterWindow registerWindow = new RegisterWindow();
             //registerWindow.Show();
 
-            ContactWindow contactWindow = new ContactWindow();
-            contactWindow.Show();
+            ContactWindow = new ContactWindow();
+            ContactWindow.Show();
         }
     }
 }

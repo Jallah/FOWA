@@ -20,7 +20,7 @@ namespace Client.Views
     /// </summary>
     public partial class ContactWindow : Window
     {
-        private Dictionary<string, ChatWindow> _handledChatWindows = new Dictionary<string, ChatWindow>();
+        public Dictionary<string, ChatWindow> HandledChatWindows = new Dictionary<string, ChatWindow>();
         private ObservableCollection<Person> list;
 
         public ContactWindow()
@@ -38,27 +38,29 @@ namespace Client.Views
 
         private void addFriendButton_Click(object sender, RoutedEventArgs e)
         {
-            list.ElementAt(1).Nachname = "Hurensohn";
+            list.ElementAt(1).Nachname = "TEST";
         }
 
         private void ListeItemDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int index = listBox.SelectedIndex;
+            string chatWith = list.ElementAt(index).Nachname;
 
             if (listBox.SelectedIndex < 0) return;
 
-            var chatWindow = (from w in _handledChatWindows
+            var chatWindow = (from w in HandledChatWindows
                               where w.Key == list.ElementAt(index).Nachname
                               select w.Value).FirstOrDefault();
 
             if(chatWindow == null)
             {
-                _handledChatWindows.Add(list.ElementAt(index).Nachname, new ChatWindow());
-                _handledChatWindows.First(w => w.Key == list.ElementAt(index).Nachname).Value.Visibility = Visibility.Visible;
+                HandledChatWindows.Add(chatWith, new ChatWindow(chatWith));
+                HandledChatWindows.First(w => w.Key == chatWith).Value.Visibility = Visibility.Visible;
             }
+            // Chatfenster Minimieren
             else
             {
-                _handledChatWindows.First(w => w.Key == list.ElementAt(index).Nachname).Value.WindowState = WindowState.Normal;
+                HandledChatWindows.First(w => w.Key == chatWith).Value.WindowState = WindowState.Normal;
             }
         }
 
