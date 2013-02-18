@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contact.cs" />
+    <Compile Include="IncomingMessageEventArgs.cs" />
+    <Compile Include="FowaProtocol.cs" />
     <Compile Include="MessageKind.cs" />
     <Compile Include="MessageTemplates.cs" />
     <Compile Include="Test.cs" />
@@ -49,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FowaImplementation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace FowaProtocol
 {
+
+    // Just a test class
     public class Contact : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
