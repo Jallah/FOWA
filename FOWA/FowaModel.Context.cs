@@ -13,10 +13,10 @@ namespace FOWA
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FowaEntities : DbContext
+    public partial class fowaEntities : DbContext
     {
-        public FowaEntities()
-            : base("name=FowaEntities")
+        public fowaEntities()
+            : base("name=fowaEntities")
         {
         }
     

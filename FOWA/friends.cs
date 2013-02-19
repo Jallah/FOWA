@@ -9,13 +9,13 @@
 
 namespace FOWA
 {
-    using FOWA.BusinessLayer.Contracts;
     using System;
     using System.Collections.Generic;
     
-    public partial class friends : IEntity
+    public partial class friends : FOWA.BusinessLayer.Contracts.IEntity
     {
         public int ID { get; set; }
+        public int U_ID { get; set; }
         public int F_ID { get; set; }
     
         public virtual users users { get; set; }

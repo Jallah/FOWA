@@ -24,22 +24,22 @@ namespace Client.Views
     {
         public Dictionary<string, ChatWindow> HandledChatWindows = new Dictionary<string, ChatWindow>();
         public static SeekFriendsWindow SeekFriendsWindow;
-        private ObservableCollection<Contact> list;
+        private ObservableCollection<User> list;
 
         public ContactWindow()
         {
             InitializeComponent();
 
-            list = new ObservableCollection<Contact>
+            list = new ObservableCollection<User>
                        {
-                           new Contact() {UserId = 34, NickName = "Schuster"},
-                           new Contact() {UserId = 234, NickName = "Schwanzlurch"}
+                           new User(234, "hans@penis.de", "Hans", "000.000.000.000"),
+                           new User(555, "Peter@gmx.net", "Peter", "000.000.000.100")
                        };
 
             listBox.ItemsSource = list;
         }
 
-        private void addFriendButton_Click(object sender, RoutedEventArgs e)
+        private void AddFriendButton_Click(object sender, RoutedEventArgs e)
         {
             if(SeekFriendsWindow == null)
             {
@@ -56,7 +56,7 @@ namespace Client.Views
         private void ListeItemDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int index = listBox.SelectedIndex;
-            string chatWith = list.ElementAt(index).NickName;
+            string chatWith = list.ElementAt(index).Nick;
 
             if (listBox.SelectedIndex < 0) return;
 
@@ -72,8 +72,10 @@ namespace Client.Views
             // Chatfenster aus Taskleist holen
             else
             {
-                HandledChatWindows.First(w => w.Key == chatWith).Value.WindowState = WindowState.Normal;
-            }
+                //var chantWindow = HandledChatWindows.First(w => w.Key == chatWith).Value;
+                chatWindow.WindowState = WindowState.Normal;
+                chatWindow.Activate();
+            }         
         }
     }
 }

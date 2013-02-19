@@ -34,7 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -66,17 +67,6 @@
     <Compile Include="BusinessLayer\Contracts\IEntity.cs" />
     <Compile Include="DataAccessLayer\Contracts\IRepository.cs" />
     <Compile Include="DataAccessLayer\Repository.cs" />
-    <Compile Include="FowaModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FowaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="friends.cs">
-      <DependentUpon>FowaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="users.cs">
-      <DependentUpon>FowaModel.tt</DependentUpon>
-    </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,10 +80,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FowaModel.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="FowaModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FowaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FowaModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FowaModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="friends.cs">
+      <DependentUpon>FowaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="users.cs">
+      <DependentUpon>FowaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -135,9 +136,7 @@
       <DependentUpon>FowaModel.edmx</DependentUpon>
       <LastGenOutput>FowaModel.cs</LastGenOutput>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

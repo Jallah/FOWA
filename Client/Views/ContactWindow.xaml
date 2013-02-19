@@ -1,14 +1,16 @@
 ﻿<Window x:Name="ContactWindwo" x:Class="Client.Views.ContactWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        xmlns:Client="clr-namespace:Client" xmlns:FowaProtocol="clr-namespace:FowaProtocol" Title="FOWA-Kontakte" Height="323.322" Width="201.413">
+        xmlns:Client="clr-namespace:Client" Title="FOWA-Kontakte" Height="323.322" Width="201.413">
     
     <Window.Resources>
-        <DataTemplate DataType="{x:Type FowaProtocol:Contact}" >
-            <StackPanel Orientation="Horizontal">
-                <TextBlock FontFamily="Verdana" Text="{Binding NickName}"/>
-                <TextBlock Text=" UID: "/>
-                <TextBlock FontFamily="Verdana" Text="{Binding UserId}"/>
+        <DataTemplate DataType="{x:Type Client:User}">
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontFamily="Verdana" Text="{Binding Nick}"/>
+                <TextBlock FontFamily="Verdana" FontStyle="Italic" FontSize="9">
+                    <Run Text="UID: "/>
+                    <Run Text="{Binding UID}"/>
+                </TextBlock>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -23,6 +25,6 @@
                 </ListBox.ItemContainerStyle>
             </ListBox>
         </Border>
-        <Button x:Name="addFriendButton" Content="Freunde suchen" Margin="10,6,10,0" VerticalAlignment="Top" Click="addFriendButton_Click" />
+        <Button x:Name="AddFriendButton" Content="Freunde suchen" Margin="10,6,10,0" VerticalAlignment="Top" Click="AddFriendButton_Click" />
     </Grid>
 </Window>

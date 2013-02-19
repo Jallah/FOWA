@@ -53,9 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\FowaProtocol\Contact.cs">
-      <Link>Contact.cs</Link>
-    </Compile>
+    <Compile Include="User.cs" />
     <Compile Include="Views\ContactWindow.xaml.cs">
       <DependentUpon>ContactWindow.xaml</DependentUpon>
     </Compile>

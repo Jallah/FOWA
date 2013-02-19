@@ -9,11 +9,10 @@
 
 namespace FOWA
 {
-    using FOWA.BusinessLayer.Contracts;
     using System;
     using System.Collections.Generic;
-    
-    public partial class users : IEntity
+
+    public partial class users : FOWA.BusinessLayer.Contracts.IEntity
     {
         public users()
         {
@@ -24,7 +23,7 @@ namespace FOWA
         public string email { get; set; }
         public string pw { get; set; }
         public string nick { get; set; }
-        public Nullable<bool> isOnline { get; set; }
+        public string IP { get; set; }
     
         public virtual ICollection<friends> friends { get; set; }
     }
