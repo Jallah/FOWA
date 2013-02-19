@@ -1,4 +1,7 @@
-﻿using System;
+﻿using System.IO;
+using System.Xml;
+using FowaProtocol.FowaMessages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +13,12 @@ namespace FowaProtocol
     {
         protected FowaProtocol()
         {
-            this.IncomingLoginMessage += OnIncomingLoginMessage;
-            this.IncomingRegisterMessage += OnIncomingRegisterMessage;
-            this.IncomingUserMessage += OnIncomingUserMessage;
-            this.IncomingSeekFriendsRequestMessage += OnIncomingSeekFriendsRequestMessage;
-            this.IncomingErrorMessage += OnIncomingErrorMessage;
-            this.IncomingFriendlistMessage += OnIncomingFriendlistMessage;
+            //this.IncomingLoginMessage += OnIncomingLoginMessage;
+            //this.IncomingRegisterMessage += OnIncomingRegisterMessage;
+            //this.IncomingUserMessage += OnIncomingUserMessage;
+            //this.IncomingSeekFriendsRequestMessage += OnIncomingSeekFriendsRequestMessage;
+            //this.IncomingErrorMessage += OnIncomingErrorMessage;
+            //this.IncomingFriendlistMessage += OnIncomingFriendlistMessage;
         }
 
 
@@ -33,12 +36,7 @@ namespace FowaProtocol
         public event IncomingErrorMessageMessageEventHandler IncomingErrorMessage;
         public event IncomingFriendlistMessageEventHandler IncomingFriendlistMessage;
 
-        protected abstract void OnIncomingLoginMessage(object sender, IncomingMessageEventArgs args);
-        protected abstract void OnIncomingRegisterMessage(object sender, IncomingMessageEventArgs args);
-        protected abstract void OnIncomingUserMessage(object sender, IncomingMessageEventArgs args);
-        protected abstract void OnIncomingSeekFriendsRequestMessage(object sender, IncomingMessageEventArgs args);
-        protected abstract void OnIncomingErrorMessage(object sender, IncomingMessageEventArgs args);
-        protected abstract void OnIncomingFriendlistMessage(object sender, IncomingMessageEventArgs args);
+        
 
         // LoginMessage = 1,
         // RegisterMessage = 2
@@ -46,28 +44,46 @@ namespace FowaProtocol
         // SeekFriendsRequestMessage = 4
         // ErrorMessage = 5
         // FriendlistMessage = 6
-        protected abstract int GetKindOfMessage(string messag);
+        protected int GetKindOfMessage(string incomingString)
+        {
+            int messageKind;
+            using(XmlReader reader = XmlReader.Create(new StringReader(incomingString)))
+            {
+                reader.ReadToFollowing("info");
+                reader.MoveToFirstAttribute();
+                messageKind = int.Parse(reader.Value);
+            }
+
+            return messageKind;
+        }
         
         protected void HandleIncomingMessage(string message)
         {
+
             switch (GetKindOfMessage(message))
             {
                 case (int)MessageKind.LoginMessage:
+                    if(IncomingLoginMessage != null)
                     IncomingLoginMessage(this, new IncomingMessageEventArgs(message));
                     break;
                 case (int)MessageKind.RegisterMessage:
+                    if(IncomingRegisterMessage != null)
                     IncomingRegisterMessage(this, new IncomingMessageEventArgs(message));
                     break;
                 case (int)MessageKind.UserMessage:
+                    if(IncomingUserMessage != null)
                     IncomingUserMessage(this, new IncomingMessageEventArgs(message));
                     break;
                 case (int)MessageKind.SeekFriendsRequestMessage:
+                    if(IncomingSeekFriendsRequestMessage != null)
                     IncomingSeekFriendsRequestMessage(this, new IncomingMessageEventArgs(message));
                     break;
                 case (int)MessageKind.ErrorMessage:
+                    if(IncomingErrorMessage != null)
                     IncomingErrorMessage(this, new IncomingMessageEventArgs(message));
                     break;
-                case (int)MessageKind.FriendlistMessage:
+                case (int)MessageKind.FriendListMessage:
+                    if(IncomingFriendlistMessage != null)
                     IncomingFriendlistMessage(this, new IncomingMessageEventArgs(message));
                     break;
                 default:

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FowaProtocol.FowaMessages;
 
 namespace FowaProtocol
 {
@@ -12,7 +13,7 @@ namespace FowaProtocol
 
         public IncomingMessageEventArgs(string message)
         {
-            Message = message;
+            this.Message = message;
         }
     }
 }

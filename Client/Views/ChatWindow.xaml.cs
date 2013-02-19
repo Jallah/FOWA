@@ -1,7 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using FowaProtocol.FowaImplementation;
+using FowaProtocol.FowaMessages;
 
 namespace Client.Views
 {
@@ -13,9 +17,20 @@ namespace Client.Views
         private const int MAX_CHARS = 200;
         public string ChatWith { get; private set; } 
 
+        private FowaClient _client = new FowaClient();
+
         public ChatWindow(string chatWith)
         {
             InitializeComponent();
+            try
+            {
+                _client.Connect(new IPEndPoint(IPAddress.Parse(/*"127.0.0.1"*/"192.168.2.108"), 3000));
+            }
+            catch (Exception ex)
+            {
+                this.chatTextBlock.Text = "Fehler:\n" + ex.Message;
+            }
+            
             charCounterNumberLabel.Content = MAX_CHARS;
             this.ChatWith = chatWith;
             this.Title = Title + " " + ChatWith;
@@ -26,7 +41,8 @@ namespace Client.Views
             switch (e.Key)
             {
                 case Key.Enter:
-                    chatTextBlock.Text = chatTextBlock.Text + inputTextBox.Text + "\n";
+                    chatTextBlock.Text = chatTextBlock.Text + inputTextBox.Text.Trim() + "\n";
+                    _client.SendMessage(new UserMessage("hans", inputTextBox.Text.Trim()));
                     inputTextBox.Clear();
                     charCounterNumberLabel.Content = MAX_CHARS;
                     break;
@@ -47,6 +63,8 @@ namespace Client.Views
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            _client.Dispose();
+            _client = null;
             App.ContactWindow.HandledChatWindows.Remove(ChatWith);
         }
        

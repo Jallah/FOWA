@@ -42,19 +42,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contact.cs" />
+    <Compile Include="FowaImplementation\FowaClient.cs" />
+    <Compile Include="FowaImplementation\FowaService.cs" />
+    <Compile Include="FowaMessages\ErrorMessage.cs" />
+    <Compile Include="FowaMessages\FriendlistMessage.cs" />
+    <Compile Include="FowaMessages\IFowaMessage.cs" />
+    <Compile Include="FowaMessages\LoginMessage.cs" />
+    <Compile Include="FowaMessages\RegisterMessage.cs" />
+    <Compile Include="FowaMessages\SeekFriendsRequestMessage.cs" />
+    <Compile Include="FowaMessages\UserMessage.cs" />
     <Compile Include="IncomingMessageEventArgs.cs" />
     <Compile Include="FowaProtocol.cs" />
     <Compile Include="MessageKind.cs" />
-    <Compile Include="MessageTemplates.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="FowaImplementation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

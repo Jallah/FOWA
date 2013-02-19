@@ -4,9 +4,11 @@
         Title="FOWA-Server" Height="350" Width="525">
     <Grid>
         <Border BorderBrush="Black" BorderThickness="2" Height="210" Margin="10,10,10,0" VerticalAlignment="Top">
-            <TextBlock x:Name="fowaServerLogTextBlock" Margin="8" TextWrapping="Wrap"/>
+            <ScrollViewer>
+                <TextBlock x:Name="fowaServerLogTextBlock" TextWrapping="Wrap"/>
+            </ScrollViewer>
         </Border>
-        <Button x:Name="startServerButton" Content="Server starten" HorizontalAlignment="Left" Margin="10,276,0,0" VerticalAlignment="Top" Width="92"/>
+        <Button x:Name="startServerButton" Content="Server starten" HorizontalAlignment="Left" Margin="10,276,0,0" VerticalAlignment="Top" Width="92" Click="StartServerButtonClick"/>
         <Button x:Name="stopServerButton" Content="Server stoppen" HorizontalAlignment="Left" Margin="120,276,0,0" VerticalAlignment="Top" Width="92"/>
     </Grid>
 </Window>

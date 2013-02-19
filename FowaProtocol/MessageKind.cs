@@ -7,6 +7,6 @@
         UserMessage,
         SeekFriendsRequestMessage,
         ErrorMessage,
-        FriendlistMessage,
+        FriendListMessage,
     }
 }

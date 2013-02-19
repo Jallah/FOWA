@@ -4,15 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FowaProtocol
+namespace FowaProtocol.FowaMessages
 {
-    class Test
+    public interface IFowaMessage
     {
-        static void Main(string[] args)
-        {
-
-           
-
-        }
+        string Message { get; set; }
     }
 }
