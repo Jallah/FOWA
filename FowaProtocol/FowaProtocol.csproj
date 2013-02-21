@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contact.cs" />
+    <Compile Include="EventArgs\IncomingErrorMessageEventArgs.cs" />
     <Compile Include="FowaImplementation\FowaClient.cs" />
     <Compile Include="FowaImplementation\FowaService.cs" />
     <Compile Include="FowaMessages\ErrorMessage.cs" />
@@ -51,9 +51,11 @@
     <Compile Include="FowaMessages\RegisterMessage.cs" />
     <Compile Include="FowaMessages\SeekFriendsRequestMessage.cs" />
     <Compile Include="FowaMessages\UserMessage.cs" />
-    <Compile Include="IncomingMessageEventArgs.cs" />
+    <Compile Include="EventArgs\IncomingMessageEventArgs.cs" />
     <Compile Include="FowaProtocol.cs" />
-    <Compile Include="MessageKind.cs" />
+    <Compile Include="IContact.cs" />
+    <Compile Include="MessageEnums\ErrorMessageKind.cs" />
+    <Compile Include="MessageEnums\MessageKind.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

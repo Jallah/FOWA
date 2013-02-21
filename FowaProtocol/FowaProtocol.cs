@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Xml;
+using FowaProtocol.EventArgs;
 using FowaProtocol.FowaMessages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FowaProtocol.MessageEnums;
 
 namespace FowaProtocol
 {
@@ -26,7 +28,7 @@ namespace FowaProtocol
         public delegate void IncomingRegisterMessageEventHandler(object sender, IncomingMessageEventArgs args);
         public delegate void IncomingUserMessageEventHandler(object sender, IncomingMessageEventArgs args);
         public delegate void IncomingSeekFriendsRequestMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        public delegate void IncomingErrorMessageMessageEventHandler(object sender, IncomingMessageEventArgs args);
+        public delegate void IncomingErrorMessageMessageEventHandler(object sender, IncomingErrorMessageEventArgs args);
         public delegate void IncomingFriendlistMessageEventHandler(object sender, IncomingMessageEventArgs args);
 
         public event IncomingLoginMessageEventHandler IncomingLoginMessage;
@@ -38,7 +40,7 @@ namespace FowaProtocol
 
         
 
-        // LoginMessage = 1,
+        // LoginMessage = 1
         // RegisterMessage = 2
         // UserMessage = 3
         // SeekFriendsRequestMessage = 4
@@ -55,6 +57,21 @@ namespace FowaProtocol
             }
 
             return messageKind;
+        }
+
+        // LoginError = 1
+        // RegisterError = 2
+        protected int GetErrorCode(string message)
+        {
+            int errorcode;
+            using (XmlReader reader = XmlReader.Create(new StringReader(message)))
+            {
+                reader.ReadToFollowing("info");
+                reader.MoveToAttribute("errorcode");
+                errorcode = int.Parse(reader.Value);
+            }
+
+            return errorcode;
         }
         
         protected void HandleIncomingMessage(string message)
@@ -80,7 +97,15 @@ namespace FowaProtocol
                     break;
                 case (int)MessageKind.ErrorMessage:
                     if(IncomingErrorMessage != null)
-                    IncomingErrorMessage(this, new IncomingMessageEventArgs(message));
+                        switch (GetErrorCode(message))
+                        {
+                            case (int)ErrorMessageKind.LiginError:
+                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message));
+                                break;
+                            case (int)ErrorMessageKind.RegisterError:
+                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.RegisterError, message));
+                                break;
+                        }
                     break;
                 case (int)MessageKind.FriendListMessage:
                     if(IncomingFriendlistMessage != null)

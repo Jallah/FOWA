@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Client.ViewModel;
 using FowaProtocol;
 
 
@@ -24,16 +25,16 @@ namespace Client.Views
     {
         public Dictionary<string, ChatWindow> HandledChatWindows = new Dictionary<string, ChatWindow>();
         public static SeekFriendsWindow SeekFriendsWindow;
-        private ObservableCollection<User> list;
+        private ObservableCollection<UserChatViewModel> list;
 
         public ContactWindow()
         {
             InitializeComponent();
 
-            list = new ObservableCollection<User>
+            list = new ObservableCollection<UserChatViewModel>
                        {
-                           new User(234, "hans@penis.de", "Hans", "000.000.000.000"),
-                           new User(555, "Peter@gmx.net", "Peter", "000.000.000.100")
+                           new UserChatViewModel(new User(234, "hans@penis.de", "Hans", "000.000.000.000")),
+                           new UserChatViewModel(new User(555, "Peter@gmx.net", "Peter", "000.000.000.100"))
                        };
 
             listBox.ItemsSource = list;
@@ -64,10 +65,10 @@ namespace Client.Views
                               where w.Key == chatWith
                               select w.Value).FirstOrDefault();
             // Wenn kein Chatfenster für den User Existiert --> ChantWindow erstellen
-            if(chatWindow == null)
+            if (chatWindow == null)
             {
                 HandledChatWindows.Add(chatWith, new ChatWindow(chatWith));
-                HandledChatWindows.First(w => w.Key == chatWith).Value.Visibility = Visibility.Visible;
+                HandledChatWindows.First(w => w.Key == chatWith).Value.ShowDialog();//Visibility = Visibility.Visible;
             }
             // Chatfenster aus Taskleist holen
             else
@@ -75,7 +76,7 @@ namespace Client.Views
                 //var chantWindow = HandledChatWindows.First(w => w.Key == chatWith).Value;
                 chatWindow.WindowState = WindowState.Normal;
                 chatWindow.Activate();
-            }         
+            }
         }
     }
 }

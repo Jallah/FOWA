@@ -11,14 +11,15 @@ namespace FowaProtocol.FowaImplementation
     public class FowaService : FowaProtocol, IDisposable
     {
         private TcpListener _tcpListener;
-        private Task _listenTask;
-        public Dictionary<int, Task> ClientTasks;
         private bool ServerIsRunning { get; set; }
+        private readonly Task _listenTask;
+        private readonly object _locker = new object();
+        private const int BUFFER_SIZE = 4096; // 2^12
 
+        public Dictionary<int, Task> ClientTasks;
         public static int ConnectedClients = 0;
         
-        
-        public FowaService():base()
+        public FowaService() : base()
         {
             this._tcpListener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, 3000);
             this._listenTask = new Task(ListenForClients);
@@ -33,13 +34,23 @@ namespace FowaProtocol.FowaImplementation
             {
                 TcpClient client = _tcpListener.AcceptTcpClient();
                 if (!ServerIsRunning) return;
-                ConnectedClients++;
+
+                lock (_locker)
+                {
+                    ConnectedClients++;
+                }
 
                 Task clientHandleTask = new Task(() => HandleClientComm(client));
                 clientHandleTask.Start();
 
                 ClientTasks.Add(ConnectedClients, clientHandleTask);
             }
+
+            lock (_locker)
+            {
+                ConnectedClients = 0;
+            }
+
         }
 
         private void HandleClientComm(TcpClient client)
@@ -47,7 +58,7 @@ namespace FowaProtocol.FowaImplementation
             NetworkStream clientStream = client.GetStream();
             //Client cl = new Client(ClientCount, ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address.ToString(), ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Port.ToString(), "hans");
 
-            byte[] message = new byte[4096];
+            byte[] message = new byte[BUFFER_SIZE];
 
             while (true)
             {
@@ -59,8 +70,9 @@ namespace FowaProtocol.FowaImplementation
                     // If you read zero bytes from the client, you know the client has disconnected. Otherwise, a message
                     // has been successfully received from the server.
 
+                    //Incoming message may be larger than the buffer size.
                     //blocks until a client sends a message
-                    bytesRead = clientStream.Read(message, 0, 4096);
+                    bytesRead = clientStream.Read(message, 0, message.Length);
                 }
                 catch
                 {
@@ -101,15 +113,20 @@ namespace FowaProtocol.FowaImplementation
                 clientStream.Flush();
             }
 
-            ConnectedClients--;
+            lock (_locker)
+            {
+                ConnectedClients--;
+            }
+
             client.Close();
             clientStream.Close();
         }
 
         public void StartServer()
         {
+            if (_listenTask.Status != TaskStatus.Running) _listenTask.Start();
+            _tcpListener.Start();
             ServerIsRunning = true;
-            _listenTask.Start();
         }
 
         public void StopServer()
@@ -146,7 +163,7 @@ namespace FowaProtocol.FowaImplementation
         
         ~FowaService()
         {
-            Dispose(false); // false because otherwise the managed Code will be disposed twice
+            Dispose(false); // false because otherwise the managed Code will be (tried to) dispose twice
         }
     }
 }

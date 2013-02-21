@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    class User
+    public class User
     {
         public User(int uid, string email, string nick, string ip)
         {

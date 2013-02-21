@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementation;
 using FowaProtocol;
 

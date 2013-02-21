@@ -11,14 +11,15 @@ namespace FowaProtocol.FowaMessages
     {
         public string Message { get; set; }
 
-        public FriendListMessage(IEnumerable<Contact> friends)
+        // not finished yet
+        public string FriendListMessage<T>(IEnumerable<T> friends) where T : IContact
         {
             StringBuilder friendList = new StringBuilder();
 
             friendList.Append("<friendlist>");
             foreach (var contact in friends)
             {
-                friendList.Append("<friend nickname='" + contact.NickName + "' id='" + contact.UserId + "'></friend>");
+                friendList.Append("<friend nickname='" + contact.NickName + "' id='" + contact.UID + "'></friend>");
             }
             friendList.Append("</friendlist>");
 
