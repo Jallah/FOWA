@@ -23,7 +23,7 @@ namespace Server
         public string email { get; set; }
         public string pw { get; set; }
         public string nick { get; set; }
-        public Nullable<bool> isOnline { get; set; }
+        public string IP { get; set; }
     
         public virtual ICollection<friends> friends { get; set; }
     }

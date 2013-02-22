@@ -6,27 +6,19 @@
     <edmx:StorageModels>
       <Schema Namespace="fowaModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="fowaModelStoreContainer">
-          <EntitySet Name="friends" EntityType="fowaModel.Store.friends" store:Type="Tables" store:Schema="fowa" store:Name="friends">
-            <DefiningQuery>SELECT
-      `friends`.`ID`, 
-      `friends`.`F_ID`
-      FROM `friends` AS `friends`</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="friends" EntityType="fowaModel.Store.friends" store:Type="Tables" Schema="fowa" />
           <EntitySet Name="users" EntityType="fowaModel.Store.users" store:Type="Tables" Schema="fowa" />
           <AssociationSet Name="FK" Association="fowaModel.Store.FK">
             <End Role="users" EntitySet="users" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
         </EntityContainer>
-        <!--Während der Generierung sind Fehler aufgetreten:
-      Warnung 6002: Für Tabelle/Sicht 'def.fowa.friends' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.
-      -->
         <EntityType Name="friends">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="F_ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="U_ID" Type="int" Nullable="false" />
           <Property Name="F_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="users">
@@ -37,7 +29,7 @@
           <Property Name="email" Type="varchar" Nullable="false" MaxLength="45" />
           <Property Name="pw" Type="varchar" Nullable="false" MaxLength="45" />
           <Property Name="nick" Type="varchar" Nullable="false" MaxLength="45" />
-          <Property Name="isOnline" Type="bit" />
+          <Property Name="IP" Type="varchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK">
           <End Role="users" Type="fowaModel.Store.users" Multiplicity="1" />
@@ -47,7 +39,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="friends">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="U_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -67,9 +59,9 @@
         <EntityType Name="friends">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="F_ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="U_ID" Type="Int32" Nullable="false" />
           <Property Name="F_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="users" Relationship="fowaModel.FK" FromRole="friends" ToRole="users" />
         </EntityType>
@@ -81,7 +73,7 @@
           <Property Name="email" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
           <Property Name="pw" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
           <Property Name="nick" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
-          <Property Name="isOnline" Type="Boolean" />
+          <Property Name="IP" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="friends" Relationship="fowaModel.FK" FromRole="users" ToRole="friends" />
         </EntityType>
         <Association Name="FK">
@@ -92,7 +84,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="friends">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="U_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -106,6 +98,7 @@
             <EntityTypeMapping TypeName="fowaModel.friends">
               <MappingFragment StoreEntitySet="friends">
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="U_ID" ColumnName="U_ID" />
                 <ScalarProperty Name="F_ID" ColumnName="F_ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -117,7 +110,7 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="pw" ColumnName="pw" />
                 <ScalarProperty Name="nick" ColumnName="nick" />
-                <ScalarProperty Name="isOnline" ColumnName="isOnline" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -137,6 +130,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

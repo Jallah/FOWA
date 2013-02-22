@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4f75f49adb9048ac82e4da492ef912d0" Name="Diagram1">
-        <EntityTypeShape EntityType="fowaModel.friends" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="fowaModel.users" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+      <Diagram DiagramId="36966ff5183e467794df338d35ccce80" Name="Diagram1">
+        <EntityTypeShape EntityType="fowaModel.friends" Width="1.5" PointX="6.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="fowaModel.users" Width="1.5" PointX="2.75" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="fowaModel.FK" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

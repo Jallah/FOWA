@@ -50,7 +50,7 @@ namespace Client.Views
             {
                 case Key.Enter:
                     chatTextBlock.Text = chatTextBlock.Text + InputTextBox.Text.Trim() + "\n";
-                    _client.SendMessage(new UserMessage("hans", InputTextBox.Text.Trim()));
+                    _client.SendMessageAsync(new UserMessage("hans", InputTextBox.Text.Trim()));
                     InputTextBox.Clear();
                     charCounterNumberLabel.Content = MAX_CHARS;
                     break;

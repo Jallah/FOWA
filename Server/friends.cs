@@ -15,6 +15,7 @@ namespace Server
     public partial class friends
     {
         public int ID { get; set; }
+        public int U_ID { get; set; }
         public int F_ID { get; set; }
     
         public virtual users users { get; set; }

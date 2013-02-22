@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "FOWA\Server.csproj", "{3E0AA225-60B2-463A-B462-9363571009D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{3E0AA225-60B2-463A-B462-9363571009D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{BEC1AF2A-DEF3-4B63-9781-AF08A1FA627A}"
 EndProject
