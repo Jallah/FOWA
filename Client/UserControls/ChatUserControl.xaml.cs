@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using FowaProtocol.FowaImplementation;
+using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
 
 namespace Client.UserControls

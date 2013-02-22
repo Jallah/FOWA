@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FowaProtocol.FowaImplementation
+namespace FowaProtocol.FowaImplementations
 {
     public class FowaService : FowaProtocol, IDisposable
     {
@@ -15,9 +15,11 @@ namespace FowaProtocol.FowaImplementation
         private readonly Task _listenTask;
         private readonly object _locker = new object();
         private const int BUFFER_SIZE = 4096; // 2^12
+        private static int _connectedClients = 0;
 
         public Dictionary<int, Task> ClientTasks;
-        public static int ConnectedClients = 0;
+        public int ConnectedClients { get { return _connectedClients; } }
+        
         
         public FowaService() : base()
         {
@@ -37,20 +39,19 @@ namespace FowaProtocol.FowaImplementation
 
                 lock (_locker)
                 {
-                    ConnectedClients++;
+                    _connectedClients++;
                 }
 
                 Task clientHandleTask = new Task(() => HandleClientComm(client));
                 clientHandleTask.Start();
 
-                ClientTasks.Add(ConnectedClients, clientHandleTask);
+                ClientTasks.Add(_connectedClients, clientHandleTask);
             }
 
             lock (_locker)
             {
-                ConnectedClients = 0;
+                _connectedClients = 0;
             }
-
         }
 
         private void HandleClientComm(TcpClient client)
@@ -102,7 +103,7 @@ namespace FowaProtocol.FowaImplementation
                 //message has successfully been received
                 ASCIIEncoding encoder = new ASCIIEncoding();
                 string rcvMessage = encoder.GetString(message, 0, bytesRead);
-                HandleIncomingMessage(rcvMessage);
+                HandleIncomingMessage(rcvMessage, clientStream);
                 
                 // message to the client
                 //byte[] buffer = encoder.GetBytes("Hello Client!");
@@ -115,7 +116,7 @@ namespace FowaProtocol.FowaImplementation
 
             lock (_locker)
             {
-                ConnectedClients--;
+                _connectedClients--;
             }
 
             client.Close();

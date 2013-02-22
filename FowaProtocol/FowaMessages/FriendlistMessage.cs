@@ -7,19 +7,19 @@ using FowaProtocol;
 
 namespace FowaProtocol.FowaMessages
 {
-    public class FriendListMessage : IFowaMessage
+    public class FriendListMessage<T> : IFowaMessage where T : IContact
     {
         public string Message { get; set; }
 
         // not finished yet
-        public string FriendListMessage<T>(IEnumerable<T> friends) where T : IContact
+        public FriendListMessage(IEnumerable<T> friends)
         {
             StringBuilder friendList = new StringBuilder();
 
             friendList.Append("<friendlist>");
             foreach (var contact in friends)
             {
-                friendList.Append("<friend nickname='" + contact.NickName + "' id='" + contact.UID + "'></friend>");
+                friendList.Append("<friend nickname='" + contact.Nick + "' id='" + contact.UID + "'></friend>");
             }
             friendList.Append("</friendlist>");
 

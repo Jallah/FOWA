@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net.Sockets;
 using System.Xml;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaMessages;
@@ -38,8 +39,6 @@ namespace FowaProtocol
         public event IncomingErrorMessageMessageEventHandler IncomingErrorMessage;
         public event IncomingFriendlistMessageEventHandler IncomingFriendlistMessage;
 
-        
-
         // LoginMessage = 1
         // RegisterMessage = 2
         // UserMessage = 3
@@ -74,42 +73,44 @@ namespace FowaProtocol
             return errorcode;
         }
         
-        protected void HandleIncomingMessage(string message)
+        protected virtual void HandleIncomingMessage(string message, NetworkStream  senderNetwrokStream)
         {
 
             switch (GetKindOfMessage(message))
             {
                 case (int)MessageKind.LoginMessage:
                     if(IncomingLoginMessage != null)
-                    IncomingLoginMessage(this, new IncomingMessageEventArgs(message));
+                    IncomingLoginMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 case (int)MessageKind.RegisterMessage:
                     if(IncomingRegisterMessage != null)
-                    IncomingRegisterMessage(this, new IncomingMessageEventArgs(message));
+                    IncomingRegisterMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 case (int)MessageKind.UserMessage:
                     if(IncomingUserMessage != null)
-                    IncomingUserMessage(this, new IncomingMessageEventArgs(message));
+                    IncomingUserMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 case (int)MessageKind.SeekFriendsRequestMessage:
                     if(IncomingSeekFriendsRequestMessage != null)
-                    IncomingSeekFriendsRequestMessage(this, new IncomingMessageEventArgs(message));
+                    IncomingSeekFriendsRequestMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 case (int)MessageKind.ErrorMessage:
                     if(IncomingErrorMessage != null)
+
                         switch (GetErrorCode(message))
                         {
                             case (int)ErrorMessageKind.LiginError:
-                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message));
+                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message, senderNetwrokStream));
                                 break;
                             case (int)ErrorMessageKind.RegisterError:
-                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.RegisterError, message));
+                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.RegisterError, message, senderNetwrokStream));
                                 break;
                         }
+
                     break;
                 case (int)MessageKind.FriendListMessage:
                     if(IncomingFriendlistMessage != null)
-                    IncomingFriendlistMessage(this, new IncomingMessageEventArgs(message));
+                    IncomingFriendlistMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 default:
                     throw new NotSupportedException("Not Supported");

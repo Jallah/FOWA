@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using FowaProtocol.FowaImplementation;
+using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
 
 namespace Client.Views
