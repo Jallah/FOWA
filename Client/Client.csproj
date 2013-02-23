@@ -53,10 +53,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommandBase\CreateCommandBinding.cs" />
+    <Compile Include="CommandBase\CommandModel.cs" />
+    <Compile Include="Commands\SendLoginDataCommand.cs" />
+    <Compile Include="Helper\Validator.cs" />
     <Compile Include="UserControls\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelBase\ViewModelBase.cs" />
+    <Compile Include="ViewModel\LoginWindowViewModel.cs" />
     <Compile Include="ViewModel\MainChatWindowViewModel.cs" />
+    <Compile Include="ViewModel\RegisterWindowViewModel.cs" />
+    <Compile Include="ViewModel\SeekFriendWindowViewModel.cs" />
     <Compile Include="ViewModel\UserChatViewModel.cs" />
     <Compile Include="Views\MainChatWindow.xaml.cs">
       <DependentUpon>MainChatWindow.xaml</DependentUpon>

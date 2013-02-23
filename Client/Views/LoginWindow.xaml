@@ -1,15 +1,27 @@
 ﻿<Window x:Name="LoginWindow1" x:Class="Client.Views.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ViewModel="clr-namespace:Client.ViewModel"
+        xmlns:CommandBase="clr-namespace:Client.CommandBase"
+        xmlns:Command="clr-namespace:Client.Commands"
         Title="Login" Height="244" Width="271" ResizeMode="CanMinimize">
+    <Window.DataContext>
+        <ViewModel:LoginWindowViewModel />
+    </Window.DataContext>
+
+  
+
     <Grid Margin="0,0,0,0">
-        <TextBox x:Name="email" HorizontalAlignment="Left" Height="23" Margin="31,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204"/>
-        <TextBox x:Name="password" HorizontalAlignment="Left" Height="23" Margin="31,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204"/>
+        <TextBox x:Name="email" Text="{Binding Path=EMail, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="31,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204"/>
+        <TextBox x:Name="password" Text="{Binding Path=Password, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="31,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204"/>
         <Label x:Name="emailLabel" Content="E-mail:" HorizontalAlignment="Left" Margin="31,11,0,0" VerticalAlignment="Top" Width="82"/>
         <Label x:Name="passwordLabel" Content="Passwort:" HorizontalAlignment="Left" Margin="31,86,0,0" VerticalAlignment="Top"/>
         <TextBlock x:Name="emailErrorTextBlock" HorizontalAlignment="Left" Margin="31,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.5,1.375" Width="204"/>
         <TextBlock x:Name="passwordErrorTextBlock" HorizontalAlignment="Left" Margin="31,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.44,-1.062" Width="204"/>
-        <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="31,161,0,0" VerticalAlignment="Top" Width="75"/>
+        
+        <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="31,161,0,0" VerticalAlignment="Top" Width="75" CommandParameter="{Binding}" Command="{Binding SendLoginDataCommand.Command}"
+                CommandBase:CreateCommandBinding.Command="{Binding SendLoginDataCommand}"/>
+        
         <Button x:Name="registerButton" Content="Registrieren" HorizontalAlignment="Left" Margin="160,161,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>

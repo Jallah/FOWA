@@ -15,15 +15,7 @@ namespace FowaProtocol
     public abstract class FowaProtocol
     {
         protected FowaProtocol()
-        {
-            //this.IncomingLoginMessage += OnIncomingLoginMessage;
-            //this.IncomingRegisterMessage += OnIncomingRegisterMessage;
-            //this.IncomingUserMessage += OnIncomingUserMessage;
-            //this.IncomingSeekFriendsRequestMessage += OnIncomingSeekFriendsRequestMessage;
-            //this.IncomingErrorMessage += OnIncomingErrorMessage;
-            //this.IncomingFriendlistMessage += OnIncomingFriendlistMessage;
-        }
-
+        { }
 
         public delegate void IncomingLoginMessageEventHandler(object sender, IncomingMessageEventArgs args);
         public delegate void IncomingRegisterMessageEventHandler(object sender, IncomingMessageEventArgs args);
@@ -48,7 +40,7 @@ namespace FowaProtocol
         protected int GetKindOfMessage(string incomingString)
         {
             int messageKind;
-            using(XmlReader reader = XmlReader.Create(new StringReader(incomingString)))
+            using (XmlReader reader = XmlReader.Create(new StringReader(incomingString)))
             {
                 reader.ReadToFollowing("info");
                 reader.MoveToFirstAttribute();
@@ -72,30 +64,30 @@ namespace FowaProtocol
 
             return errorcode;
         }
-        
-        protected virtual void HandleIncomingMessage(string message, NetworkStream  senderNetwrokStream)
+
+        protected virtual void HandleIncomingMessage(string message, NetworkStream senderNetwrokStream)
         {
 
             switch (GetKindOfMessage(message))
             {
                 case (int)MessageKind.LoginMessage:
-                    if(IncomingLoginMessage != null)
-                    IncomingLoginMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                    if (IncomingLoginMessage != null)
+                        IncomingLoginMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 case (int)MessageKind.RegisterMessage:
-                    if(IncomingRegisterMessage != null)
-                    IncomingRegisterMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                    if (IncomingRegisterMessage != null)
+                        IncomingRegisterMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 case (int)MessageKind.UserMessage:
-                    if(IncomingUserMessage != null)
-                    IncomingUserMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                    if (IncomingUserMessage != null)
+                        IncomingUserMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 case (int)MessageKind.SeekFriendsRequestMessage:
-                    if(IncomingSeekFriendsRequestMessage != null)
-                    IncomingSeekFriendsRequestMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                    if (IncomingSeekFriendsRequestMessage != null)
+                        IncomingSeekFriendsRequestMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 case (int)MessageKind.ErrorMessage:
-                    if(IncomingErrorMessage != null)
+                    if (IncomingErrorMessage != null)
 
                         switch (GetErrorCode(message))
                         {
@@ -109,8 +101,8 @@ namespace FowaProtocol
 
                     break;
                 case (int)MessageKind.FriendListMessage:
-                    if(IncomingFriendlistMessage != null)
-                    IncomingFriendlistMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                    if (IncomingFriendlistMessage != null)
+                        IncomingFriendlistMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
                     break;
                 default:
                     throw new NotSupportedException("Not Supported");

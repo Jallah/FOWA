@@ -29,17 +29,17 @@ namespace Client
             //ChatWindow chatWindow = new ChatWindow();
             //chatWindow.Show();
 
-            //LoginWindow loginWindow = new LoginWindow();
-            //loginWindow.Show();
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
 
             //RegisterWindow registerWindow = new RegisterWindow();
             //registerWindow.Show();
 
-            MainChatWindow mainChat = new MainChatWindow();
-            mainChat.Show();
+            //MainChatWindow mainChat = new MainChatWindow();
+            //mainChat.Show();
 
-            ContactWindow = new ContactWindow();
-            ContactWindow.Show();
+            //ContactWindow = new ContactWindow();
+            //ContactWindow.Show();
         }
     }
 }
