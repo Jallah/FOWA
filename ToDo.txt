@@ -1,12 +1,29 @@
+-------------------
+Client: (MVVM)
+-------------------
 
-
-- Gui Redesign (First at all learn to understand the MVVM Pattern :D)
-	- ViewModels
-	- MainChatWindow with Tabs
-	- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
+	- Gui Redesign (First at all learn to understand the MVVM Pattern :D)
+		- ViewModels
+		- MainChatWindow with Tabs
+		- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
 	
-- Write CustomCommands
+	- Write CustomCommands
 
-- Tests
+-------------------
+FowaProtocol:
+-------------------
+	
+	- Create XML-Messages with an API (Header, Body, ...)
+
+-------------------
+Server:
+-------------------
+
+	- ...
+
+-------------------
+- Tests to perform
+-------------------
+
 	-FowaClient
 	-FowaService (events etc.)

@@ -8,6 +8,6 @@ namespace FowaProtocol.FowaMessages
 {
     public interface IFowaMessage
     {
-        string Message { get; set; }
+        string Message { get; }
     }
 }

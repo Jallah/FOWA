@@ -9,7 +9,7 @@ namespace FowaProtocol.FowaMessages
 {
     public class ErrorMessage : IFowaMessage
     {
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         public ErrorMessage(ErrorMessageKind errorMessage, string message)
         {

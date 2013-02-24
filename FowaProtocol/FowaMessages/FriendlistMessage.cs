@@ -9,7 +9,7 @@ namespace FowaProtocol.FowaMessages
 {
     public class FriendListMessage<T> : IFowaMessage where T : IContact
     {
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         // not finished yet
         public FriendListMessage(IEnumerable<T> friends)

@@ -9,7 +9,7 @@ namespace FowaProtocol.FowaMessages
     public class LoginMessage : IFowaMessage
     {
         // implement IFowaMessage
-        public string Message { get; set; } // hier versuchen setter private zu machen 
+        public string Message { get; private set; }
 
         public LoginMessage(string email, string password)
         {

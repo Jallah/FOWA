@@ -8,7 +8,7 @@ namespace FowaProtocol.FowaMessages
 {
     public class RegisterMessage : IFowaMessage
     {
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         public RegisterMessage(string email, string password, string nickName)
         {

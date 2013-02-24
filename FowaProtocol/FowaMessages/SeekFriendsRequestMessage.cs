@@ -8,7 +8,7 @@ namespace FowaProtocol.FowaMessages
 {
     public class SeekFriendsRequestMessage : IFowaMessage
     {
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         public SeekFriendsRequestMessage(string email, string nickName, int id)
         {
