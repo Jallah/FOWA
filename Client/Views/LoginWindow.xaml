@@ -9,15 +9,49 @@
         <ViewModel:LoginWindowViewModel />
     </Window.DataContext>
 
-  
+    <Window.Resources>
+
+        <Style TargetType="{x:Type TextBox}">
+            
+            <Setter Property="VerticalAlignment" Value="Center" />
+            
+            <Setter Property="Margin" Value="0,2,40,2" />
+
+            <Setter Property="Validation.ErrorTemplate">
+
+                <Setter.Value>
+
+                    <ControlTemplate>
+
+                        <DockPanel LastChildFill="true">
+
+                            <Border Background="Red" BorderThickness="0" DockPanel.Dock="right" Margin="5,0,0,0" Width="20" Height="20" CornerRadius="10"
+	                            ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+
+                                <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" FontWeight="Bold" Foreground="white"/>
+
+                            </Border>
+
+                            <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
+
+                                <Border BorderBrush="red" BorderThickness="2" />
+
+                            </AdornedElementPlaceholder>
+
+                        </DockPanel>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <Grid Margin="0,0,0,0">
-        <TextBox x:Name="email" Text="{Binding Path=EMail, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="31,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204"/>
+        <TextBox x:Name="email" Text="{Binding Path=EMail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Height="23" Margin="31,37,30,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="password" Text="{Binding Path=Password, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="31,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204"/>
         <Label x:Name="emailLabel" Content="E-mail:" HorizontalAlignment="Left" Margin="31,11,0,0" VerticalAlignment="Top" Width="82"/>
         <Label x:Name="passwordLabel" Content="Passwort:" HorizontalAlignment="Left" Margin="31,86,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="emailErrorTextBlock" HorizontalAlignment="Left" Margin="31,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.5,1.375" Width="204"/>
-        <TextBlock x:Name="passwordErrorTextBlock" HorizontalAlignment="Left" Margin="31,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.44,-1.062" Width="204"/>
         
         <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="31,161,0,0" VerticalAlignment="Top" Width="75" CommandParameter="{Binding}" Command="{Binding SendLoginDataCommand.Command}"
                 CommandBase:CreateCommandBinding.Command="{Binding SendLoginDataCommand}"/>

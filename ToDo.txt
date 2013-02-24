@@ -4,10 +4,8 @@
 	- ViewModels
 	- MainChatWindow with Tabs
 	- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
-	- Implenent IDataErrorInfo to LoginViewModel (e-mail regex, etc.)
 	
-- Write some Custom Commands through implementing ICommand or usage of
-  one of its Implementations like RoutedCommand or DelegateCommand.
+- Write CustomCommands
 
 - Tests
 	-FowaClient

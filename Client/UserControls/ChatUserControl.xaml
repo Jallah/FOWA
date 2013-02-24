@@ -19,7 +19,8 @@
                 </ScrollViewer>
             </Border>
 
-            <TextBox x:Name="InputTextBox" Margin="10,240,4,10" TextWrapping="Wrap" Text="" Grid.ColumnSpan="2" PreviewKeyDown="InputTextBox_PreviewKeyDown" TextChanged="InputTextBox_TextChanged"/>
+            <TextBox x:Name="InputTextBox" Margin="10,240,4,10" TextWrapping="Wrap" Text="" Grid.ColumnSpan="2" PreviewKeyDown="InputTextBox_PreviewKeyDown" TextChanged="InputTextBox_TextChanged">
+            </TextBox>
             <Label x:Name="charCounterLabel" Content="Zeichen:" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.158,0.231" Height="25"/>
             <Label x:Name="charCounterNumberLabel" Content="" HorizontalAlignment="Left" Margin="64,215,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.816,-0.154" Width="34"/>
 

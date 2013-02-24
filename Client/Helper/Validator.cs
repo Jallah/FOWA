@@ -21,12 +21,7 @@ namespace Client.Helper
 
         internal static bool ValidateFields(string[] value)
         {
-            foreach (var s in value)
-            {
-                if(string.IsNullOrEmpty(s)) return false;
-            }
-
-            return true;
+            return value.All(s => !string.IsNullOrEmpty(s));
         }
     }
 }

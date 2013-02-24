@@ -14,6 +14,12 @@ namespace Client.CommandBase
         protected CommandModel()
         {
             _routedCommand = new RoutedCommand();
+            SetInputGesture();
+        }
+
+        protected void SetInputGesture()
+        {
+            _routedCommand.InputGestures.Add(new KeyGesture(Key.F10));
         }
 
         public RoutedCommand Command

@@ -55,6 +55,22 @@ namespace Client.ViewModel
             MessageBox.Show("Sende Logindaten");
         }
 
+        public override string this[string columnName]
+        {
+            get
+            {
+                string errorMessage = string.Empty;
+                switch (columnName)
+                {
+                    case "EMail":
+                        if(!Validator.IsEmail(EMail)) errorMessage = "Invalid e-mail";
+                        break;
+                    case "Password":
+                        break;
+                }
 
+                return errorMessage;
+            }
+        }
     }
 }
