@@ -7,12 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Server.BL.Contracts;
+
 namespace Server
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class users
+    public partial class users : IEntity
     {
         public users()
         {

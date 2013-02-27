@@ -7,12 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Server.BL.Contracts;
+
 namespace Server
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class friends
+    public partial class friends : IEntity
     {
         public int ID { get; set; }
         public int U_ID { get; set; }

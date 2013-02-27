@@ -9,7 +9,7 @@ Client: (MVVM)
 	
 	- Implenent INotifyPorpertyChanged (ViewModelBase) with lambda-expresssion to get
 	  the propertyname 
-	- Write CustomCommands
+	- Write CustomCommands (Send, Login, Register ...)
 	- NAT Traversal
 	- ...
 
@@ -18,12 +18,14 @@ FowaProtocol:
 --------------------
 	
 	- Create XML-Messages with an API (Header, Body, ...) // done
+	- Write a ConnectionCach class
 	- ...
 
 --------------------
 Server:
 --------------------
 
+	- Implement RepositoryPattern
 	- NAT Traversal
 	- ...
 

@@ -61,9 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BusinessLayer\Contracts\IEntity.cs" />
-    <Compile Include="DataAccessLayer\Contracts\IRepository.cs" />
-    <Compile Include="DataAccessLayer\Repository.cs" />
+    <Compile Include="BL\Contracts\IEntity.cs" />
+    <Compile Include="DL\Contracts\IRepository.cs" />
+    <Compile Include="DL\Repository.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
