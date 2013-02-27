@@ -48,6 +48,7 @@
     <Compile Include="FowaMessages\FriendlistMessage.cs" />
     <Compile Include="FowaMessages\IFowaMessage.cs" />
     <Compile Include="FowaMessages\LoginMessage.cs" />
+    <Compile Include="FowaMessages\MessageBase.cs" />
     <Compile Include="FowaMessages\RegisterMessage.cs" />
     <Compile Include="FowaMessages\SeekFriendsRequestMessage.cs" />
     <Compile Include="FowaMessages\UserMessage.cs" />

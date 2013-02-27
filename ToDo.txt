@@ -1,29 +1,42 @@
--------------------
+--------------------
 Client: (MVVM)
--------------------
+--------------------
 
 	- Gui Redesign (First at all learn to understand the MVVM Pattern :D)
 		- ViewModels
 		- MainChatWindow with Tabs
 		- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
 	
+	- Implenent INotifyPorpertyChanged (ViewModelBase) with lambda-expresssion to get
+	  the propertyname 
 	- Write CustomCommands
-
--------------------
-FowaProtocol:
--------------------
-	
-	- Create XML-Messages with an API (Header, Body, ...)
-
--------------------
-Server:
--------------------
-
+	- NAT Traversal
 	- ...
 
--------------------
-- Tests to perform
--------------------
+--------------------
+FowaProtocol:
+--------------------
+	
+	- Create XML-Messages with an API (Header, Body, ...) // done
+	- ...
 
-	-FowaClient
-	-FowaService (events etc.)
+--------------------
+Server:
+--------------------
+
+	- NAT Traversal
+	- ...
+
+--------------------
+- Tests to perform:
+--------------------
+
+	- FowaClient
+	- FowaService (events etc.)
+	- ...
+
+#######################################################################################################################################
+
+Additional notes:
+	
+	- Maybe to much logic within the Messages-Ctors. ( matter of taste :) )

@@ -4,34 +4,70 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FowaProtocol;
+using System.Xml;
 
 namespace FowaProtocol.FowaMessages
 {
-    public class FriendListMessage<T> : IFowaMessage where T : IContact
+    // The Following Code will create the XML-Document shown below.
+
+    /*
+        <fowamessage>
+           <header messagekind="6" />
+           <friendlist>
+                <friend email="" nickname="" ip="" uid="" />
+                <friend email="" nickname="" ip="" uid="" />
+                ...
+          </friendlist>
+        </fowamessage> 
+    */
+
+    public class FriendListMessage<T> : MessageBase, IFowaMessage where T : IContact
     {
         public string Message { get; private set; }
 
         // not finished yet
         public FriendListMessage(IEnumerable<T> friends)
+            : base((int)MessageKind.FriendListMessage)
         {
-            StringBuilder friendList = new StringBuilder();
+            // friendlistnode
+            XmlNode friendlistNode = XmlDoc.CreateElement("friendlist");
 
-            friendList.Append("<friendlist>");
-            foreach (var contact in friends)
+            // maybe accomplish the following through Serializer ( I think it is a matter of taste )
+            foreach (var friend in friends)
             {
-                friendList.Append("<friend nickname='" + contact.Nick + "' id='" + contact.UID + "'></friend>");
+                XmlNode friendNode = XmlDoc.CreateElement("friend");
+
+                // Create attributes
+                XmlAttribute eMailAttribute = XmlDoc.CreateAttribute("email");
+                eMailAttribute.Value = friend.Email;
+                XmlAttribute nickNameAttribute = XmlDoc.CreateAttribute("nickname");
+                nickNameAttribute.Value = friend.Nick;
+                XmlAttribute ipAttribute = XmlDoc.CreateAttribute("ip");
+                ipAttribute.Value = friend.Ip;
+                XmlAttribute uidAttribute = XmlDoc.CreateAttribute("uid");
+                uidAttribute.Value = friend.UID + "";
+
+                // add attributes to friendnode
+                if (friendlistNode.Attributes != null)
+                {
+                    friendNode.Attributes.Append(eMailAttribute);
+                    friendNode.Attributes.Append(nickNameAttribute);
+                    friendNode.Attributes.Append(ipAttribute);
+                    friendNode.Attributes.Append(uidAttribute);
+                }
+                else
+                {
+                    throw new Exception("Error occurred during creating a FriendListMessage");
+                }
+
+                // add friendnode to freindlistnode
+                friendlistNode.AppendChild(friendNode);
             }
-            friendList.Append("</friendlist>");
 
-            var friendListMessage = @"<?xml version='1.0'?>
-                                 <fowamessage>
-                                    <header>
-                                        <info messagekind='" + (int)MessageKind.FriendListMessage + "'/>" +
-                                    "</header>" +
-                                    friendList +
-                                "</fowamessage>";
+            // add logininfo to xml RoodNode
+            RoodNode.AppendChild(friendlistNode);
 
-            this.Message = friendListMessage;
+            Message = XmlDocToString(XmlDoc);
         }
     }
 }
