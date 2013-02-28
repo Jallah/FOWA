@@ -48,12 +48,16 @@ namespace Server.BL.Services
 
         public IList<user> GetFriends(user user)
         {
-            // Inner Join (see FowaModel)
-            var friends = (from u in _userRepository.Table
-                           join f in _friendsRepository.Table on u.ID equals f.F_ID
-                           select u).ToList();
+            IQueryable<int> friendIds = from f in _friendsRepository.Table
+                                        where f.U_ID == user.ID
+                                        select f.F_ID;
 
-            return friends;
+            IQueryable<user> friends = from u in _userRepository.Table
+                                       from friendId in friendIds
+                                       where u.ID == friendId
+                                       select u;
+
+            return friends.ToList(); // Execute query
         }
 
 
@@ -73,6 +77,6 @@ namespace Server.BL.Services
             _fowaDbContext.SaveChanges();
         }
 
-       
+
     }
 }

@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using FowaProtocol;
+using Server.DL;
 
 
 namespace Server.BL.Contracts
