@@ -7,12 +7,13 @@ using System.Xml.Serialization;
 
 namespace FowaProtocol
 {
-    
+
     public interface IContact
     {
-        string Nick { get; set; }
-        string Email { get; set; }
         int UID { get; set; }
+        string Email { get; set; }
+        string Pw { get; set; }
+        string Nick { get; set; }
         string Ip { get; set; }
 
         // additional Properties (Port etc.)

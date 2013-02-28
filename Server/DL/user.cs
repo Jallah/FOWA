@@ -9,14 +9,14 @@
 
 using Server.BL.Contracts;
 
-namespace Server
+namespace Server.DL
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class users : IEntity
+    public partial class user : IEntity
     {
-        public users()
+        public user()
         {
             this.friends = new HashSet<friends>();
         }

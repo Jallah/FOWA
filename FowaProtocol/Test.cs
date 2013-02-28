@@ -22,6 +22,8 @@ namespace FowaProtocol
         public int UID { get; set; }
         [XmlAttribute("ip")]
         public string Ip { get; set; }
+
+        public string Pw { get; set; }
     }
 
 

@@ -7,9 +7,9 @@
       <Schema Namespace="fowaModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="fowaModelStoreContainer">
           <EntitySet Name="friends" EntityType="fowaModel.Store.friends" store:Type="Tables" Schema="fowa" />
-          <EntitySet Name="users" EntityType="fowaModel.Store.users" store:Type="Tables" Schema="fowa" />
+          <EntitySet Name="user" EntityType="fowaModel.Store.user" store:Type="Tables" Schema="fowa" />
           <AssociationSet Name="FK" Association="fowaModel.Store.FK">
-            <End Role="users" EntitySet="users" />
+            <End Role="user" EntitySet="user" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
         </EntityContainer>
@@ -21,7 +21,7 @@
           <Property Name="U_ID" Type="int" Nullable="false" />
           <Property Name="F_ID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="users">
+        <EntityType Name="user">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -29,13 +29,13 @@
           <Property Name="email" Type="varchar" Nullable="false" MaxLength="45" />
           <Property Name="pw" Type="varchar" Nullable="false" MaxLength="45" />
           <Property Name="nick" Type="varchar" Nullable="false" MaxLength="45" />
-          <Property Name="IP" Type="varchar" MaxLength="20" />
+          <Property Name="IP" Type="varchar" MaxLength="30" />
         </EntityType>
         <Association Name="FK">
-          <End Role="users" Type="fowaModel.Store.users" Multiplicity="1" />
+          <End Role="user" Type="fowaModel.Store.user" Multiplicity="1" />
           <End Role="friends" Type="fowaModel.Store.friends" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="users">
+            <Principal Role="user">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="friends">
@@ -50,9 +50,9 @@
       <Schema Namespace="fowaModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="fowaEntities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="friends" EntityType="fowaModel.friends" />
-          <EntitySet Name="users" EntityType="fowaModel.users" />
+          <EntitySet Name="user" EntityType="fowaModel.user" />
           <AssociationSet Name="FK" Association="fowaModel.FK">
-            <End Role="users" EntitySet="users" />
+            <End Role="user" EntitySet="user" />
             <End Role="friends" EntitySet="friends" />
           </AssociationSet>
         </EntityContainer>
@@ -63,9 +63,9 @@
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="U_ID" Type="Int32" Nullable="false" />
           <Property Name="F_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="users" Relationship="fowaModel.FK" FromRole="friends" ToRole="users" />
+          <NavigationProperty Name="user" Relationship="fowaModel.FK" FromRole="friends" ToRole="user" />
         </EntityType>
-        <EntityType Name="users">
+        <EntityType Name="user">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -73,14 +73,14 @@
           <Property Name="email" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
           <Property Name="pw" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
           <Property Name="nick" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
-          <Property Name="IP" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="friends" Relationship="fowaModel.FK" FromRole="users" ToRole="friends" />
+          <Property Name="IP" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="friends" Relationship="fowaModel.FK" FromRole="user" ToRole="friends" />
         </EntityType>
         <Association Name="FK">
-          <End Role="users" Type="fowaModel.users" Multiplicity="1" />
+          <End Role="user" Type="fowaModel.user" Multiplicity="1" />
           <End Role="friends" Type="fowaModel.friends" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="users">
+            <Principal Role="user">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="friends">
@@ -103,9 +103,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="fowaModel.users">
-              <MappingFragment StoreEntitySet="users">
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="fowaModel.user">
+              <MappingFragment StoreEntitySet="user">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="pw" ColumnName="pw" />

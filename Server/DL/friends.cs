@@ -9,7 +9,7 @@
 
 using Server.BL.Contracts;
 
-namespace Server
+namespace Server.DL
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,6 @@ namespace Server
         public int U_ID { get; set; }
         public int F_ID { get; set; }
     
-        public virtual users users { get; set; }
+        public virtual user user { get; set; }
     }
 }

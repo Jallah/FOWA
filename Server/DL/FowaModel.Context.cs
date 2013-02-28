@@ -7,8 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-namespace Server
+namespace Server.DL
 {
     using System;
     using System.Data.Entity;
@@ -27,6 +26,6 @@ namespace Server
         }
     
         public DbSet<friends> friends { get; set; }
-        public DbSet<users> users { get; set; }
+        public DbSet<user> user { get; set; }
     }
 }

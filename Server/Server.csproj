@@ -62,8 +62,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BL\Contracts\IEntity.cs" />
-    <Compile Include="DL\Contracts\IRepository.cs" />
-    <Compile Include="DL\Repository.cs" />
+    <Compile Include="BL\Contracts\IUserFriendsService.cs" />
+    <Compile Include="BL\Services\UserFriendsService.cs" />
+    <Compile Include="DAL\Contracts\IRepository.cs" />
+    <Compile Include="DAL\Repository.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,25 +74,25 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FowaModel.Context.cs">
+    <Compile Include="DL\FowaModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FowaModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="FowaModel.cs">
+    <Compile Include="DL\FowaModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FowaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="FowaModel.Designer.cs">
+    <Compile Include="DL\FowaModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FowaModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="friends.cs">
+    <Compile Include="DL\friends.cs">
       <DependentUpon>FowaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="users.cs">
+    <Compile Include="DL\user.cs">
       <DependentUpon>FowaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -116,19 +118,20 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="FowaModel.edmx">
+    <EntityDeploy Include="DL\FowaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FowaModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="FowaModel.Context.tt">
+    <None Include="App.config" />
+    <None Include="DL\FowaModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FowaModel.edmx</DependentUpon>
       <LastGenOutput>FowaModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="FowaModel.edmx.diagram">
+    <None Include="DL\FowaModel.edmx.diagram">
       <DependentUpon>FowaModel.edmx</DependentUpon>
     </None>
-    <None Include="FowaModel.tt">
+    <None Include="DL\FowaModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FowaModel.edmx</DependentUpon>
       <LastGenOutput>FowaModel.cs</LastGenOutput>
@@ -141,9 +144,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +152,7 @@
       <Name>FowaProtocol</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
