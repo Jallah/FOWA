@@ -10,6 +10,7 @@ namespace Server.BL.Contracts
     public interface IUserFriendsService
     {
         user GetUserById(int id);
+        bool UserExists(string email); // email is an uniq field
         void AddUser(user user);
         void UpdateUser(user user);
         void DeleteUser(user user);

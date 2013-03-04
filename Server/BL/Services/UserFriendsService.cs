@@ -42,6 +42,8 @@ namespace Server.BL.Services
 
         public void DeleteUser(user user)
         {
+            // We don't have to implicitly delete all the friends of this user because
+            // (delete) dissemination is enabled on the MySql-Server. (ON DELETE/UPDATE CASCADE in the foreign key options)
             _userRepository.Delete(user);
             Commit();
         }
@@ -69,14 +71,27 @@ namespace Server.BL.Services
 
         public void RemoveFriend(user user, user friendToRemove)
         {
-            throw new NotImplementedException();
+            _friendsRepository.Delete(new friends{U_ID = user.ID, F_ID = friendToRemove.ID});
+            Commit();
+        }
+
+        public bool UserExists(string email) // email is an uniq field
+        {
+            // If the LINQ query is executed in database context, a call to Contains() is mapped to the LIKE operator:
+            // .Where(a => a.Field.Contains("hello")) becomes Field LIKE '%hello%'. The LIKE operator is case insensitive by default.
+            //
+            // Tested:
+            // hans@gmx.net an email wich alredy exsists.
+            // email = hans@gmx.neT --> return true
+            // email = hans@gmx.nett --> return false
+            // email = hhans@gmx.net --> return false
+            return _userRepository.Table.FirstOrDefault(a => a.email.Contains(email)) != null;
         }
 
         private void Commit()
         {
             _fowaDbContext.SaveChanges();
         }
-
 
     }
 }

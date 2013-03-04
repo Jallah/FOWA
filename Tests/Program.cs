@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Server;
 using Server.BL.Services;
+using Server.DL;
 
 
 namespace Tests
@@ -16,9 +17,15 @@ namespace Tests
 
             UserFriendsService service = new UserFriendsService();
 
-            service.AddUser(new user{email = "hans@gmx.net", nick = "hans", pw = "superSavePw"});
+            //service.AddUser(new user{email = "hans@gmx.net", nick = "hans", pw = "superSavePw"});
 
-            Console.WriteLine("Done");
+
+
+            bool exist = service.UserExists("hhans@gmx.net");
+
+            string s = exist ? "yes" : "no";
+
+            Console.WriteLine(s);
             Console.ReadKey();
         }
     }

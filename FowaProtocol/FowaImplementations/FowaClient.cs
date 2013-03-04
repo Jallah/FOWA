@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -40,58 +41,42 @@ namespace FowaProtocol.FowaImplementations
 
         }
 
-        public int WriteToClientStreamAync(IFowaMessage fowaMessage, NetworkStream networkStream)
+        public bool WriteToClientStreamAync(IFowaMessage fowaMessage, NetworkStream networkStream)
         {
+            bool successfull = true;
+
             try
             {
-                ASCIIEncoding encoder = new ASCIIEncoding();
-                byte[] buffer = encoder.GetBytes(fowaMessage.Message.Trim());
-                networkStream.WriteAsync(buffer, 0, buffer.Length);
-                return 0;
+                //ASCIIEncoding encoder = new ASCIIEncoding();
+                //byte[] buffer = encoder.GetBytes(fowaMessage.Message.Trim());
+                StreamWriter sw = new StreamWriter(networkStream);
+                sw.WriteAsync(fowaMessage.Message.Trim());
+                //networkStream.WriteAsync(buffer, 0, buffer.Length);
+
             }
             catch (Exception)
             {
                 // Log exceptions
-                return -1;
+                successfull = false;
             }
+
+            return successfull;
         }
 
-        public int ReadFromClientSream(NetworkStream networkStream)
+        public void ReadFromClientSream(NetworkStream networkStream)
         {
-            if (!networkStream.CanRead) return -1;
-
-            byte[] message = new byte[BUFFER_SIZE];
-            ASCIIEncoding encoder = new ASCIIEncoding();
-
-            int bytesRead = 0;
-
-            do
-            {
-                bytesRead = networkStream.Read(message, 0, message.Length);
-            } 
-            while (networkStream.DataAvailable);
-
-            string rcvMessage = encoder.GetString(message, 0, bytesRead);
-
-            IncomingUserMessage(this, new IncomingMessageEventArgs(rcvMessage, null));
-
-            return bytesRead;
+            StreamReader sr = new StreamReader(networkStream);
+            Task<string> rvcMessage = sr.ReadToEndAsync();
+            IncomingUserMessage(this, new IncomingMessageEventArgs(rvcMessage.Result, null));
         }
 
-        public int SendMessageAsync(IFowaMessage fowaMessage)
+        public void SendMessageAsync(IFowaMessage fowaMessage)
         {
-            try
-            {
-                ASCIIEncoding encoder = new ASCIIEncoding();
-                byte[] buffer = encoder.GetBytes(fowaMessage.Message.Trim());
-                ClientStream.WriteAsync(buffer, 0, buffer.Length);
-                return 0;
-            }
-            catch (Exception)
-            {
-                // Log exceptions
-                return -1;
-            }
+            //ASCIIEncoding encoder = new ASCIIEncoding();
+            //byte[] buffer = encoder.GetBytes(fowaMessage.Message.Trim());
+            //ClientStream.WriteAsync(buffer, 0, buffer.Length);
+            StreamWriter sw = new StreamWriter(ClientStream);
+            sw.WriteAsync(fowaMessage.Message.Trim());
         }
 
         protected void Dispose(bool freeManagedObjectsAlso)
