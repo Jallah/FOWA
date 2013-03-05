@@ -11,13 +11,17 @@ namespace FOWA.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private readonly FowaService service = new FowaService();
+        private readonly FowaMetaData _metaData;
+        private readonly FowaService _service; 
 
         public MainWindow()
         {
+            _metaData = new FowaMetaData {OnIncomingUserMessageCallback = this.OnIncomingUserMessage};
+            _service = new FowaService(_metaData);
+
             InitializeComponent();
             //service.IncomingUserMessage += OnIncomingUserMessage;
-            //service.StartServer();
+            _service.StartServer();
         }
 
 

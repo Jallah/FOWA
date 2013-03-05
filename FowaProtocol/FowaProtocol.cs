@@ -17,19 +17,19 @@ namespace FowaProtocol
         protected FowaProtocol()
         { }
 
-        public delegate void IncomingLoginMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        public delegate void IncomingRegisterMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        public delegate void IncomingUserMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        public delegate void IncomingSeekFriendsRequestMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        public delegate void IncomingErrorMessageMessageEventHandler(object sender, IncomingErrorMessageEventArgs args);
-        public delegate void IncomingFriendlistMessageEventHandler(object sender, IncomingMessageEventArgs args);
+        //public delegate void IncomingLoginMessageEventHandler(object sender, IncomingMessageEventArgs args);
+        //public delegate void IncomingRegisterMessageEventHandler(object sender, IncomingMessageEventArgs args);
+        //public delegate void IncomingUserMessageEventHandler(object sender, IncomingMessageEventArgs args);
+        //public delegate void IncomingSeekFriendsRequestMessageEventHandler(object sender, IncomingMessageEventArgs args);
+        //public delegate void IncomingErrorMessageMessageEventHandler(object sender, IncomingErrorMessageEventArgs args);
+        //public delegate void IncomingFriendlistMessageEventHandler(object sender, IncomingMessageEventArgs args);
 
-        public event IncomingLoginMessageEventHandler IncomingLoginMessage;
-        public event IncomingRegisterMessageEventHandler IncomingRegisterMessage;
-        public event IncomingUserMessageEventHandler IncomingUserMessage;
-        public event IncomingSeekFriendsRequestMessageEventHandler IncomingSeekFriendsRequestMessage;
-        public event IncomingErrorMessageMessageEventHandler IncomingErrorMessage;
-        public event IncomingFriendlistMessageEventHandler IncomingFriendlistMessage;
+        public event Action<object, IncomingMessageEventArgs> IncomingLoginMessage;
+        public event Action<object, IncomingMessageEventArgs> IncomingRegisterMessage;
+        public event Action<object, IncomingMessageEventArgs> IncomingUserMessage;
+        public event Action<object, IncomingMessageEventArgs> IncomingSeekFriendsRequestMessage;
+        public event Action<object, IncomingErrorMessageEventArgs> IncomingErrorMessage;
+        public event Action<object, IncomingMessageEventArgs> IncomingFriendlistMessage;
 
         // LoginMessage = 1
         // RegisterMessage = 2

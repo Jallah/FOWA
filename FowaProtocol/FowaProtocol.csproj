@@ -54,6 +54,7 @@
     <Compile Include="FowaMessages\SeekFriendsRequestMessage.cs" />
     <Compile Include="FowaMessages\UserMessage.cs" />
     <Compile Include="EventArgs\IncomingMessageEventArgs.cs" />
+    <Compile Include="FowaMetaData.cs" />
     <Compile Include="FowaProtocol.cs" />
     <Compile Include="IContact.cs" />
     <Compile Include="MessageEnums\ErrorMessageKind.cs" />
