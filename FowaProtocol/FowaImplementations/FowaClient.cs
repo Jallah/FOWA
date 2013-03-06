@@ -11,20 +11,28 @@ using FowaProtocol.FowaMessages;
 
 namespace FowaProtocol.FowaImplementations
 {
-    public class FowaClient : IDisposable
+    public class FowaClient : FowaProtocol, IDisposable
     {
-        private TcpClient _client;
-        private const int BUFFER_SIZE = 4096; // 2^12
+        //private TcpClient _client;
+        private Socket _client;
+        private StreamWriter _streamWriter;
+        private StreamReader _streamReader;
+        //private const int BUFFER_SIZE = 4096; // 2^12
         public NetworkStream ClientStream { get; set; }
-        public delegate void IncomingUserMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        public event IncomingUserMessageEventHandler IncomingUserMessage;
+
+        //public delegate void IncomingUserMessageEventHandler(object sender, IncomingMessageEventArgs args);
+        //public event IncomingUserMessageEventHandler IncomingUserMessage;
 
 
         // = new IPEndPoint(IPAddress.Parse(/*"127.0.0.1"*/"192.168.2.108"), 80);
-        public FowaClient()
+        public FowaClient(IPEndPoint endPoint)
             : base()
         {
-            _client = new TcpClient();
+            _client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _client.Connect(endPoint);
+            ClientStream = new NetworkStream(_client);
+            _streamWriter = new StreamWriter(ClientStream);
+            _streamReader = new StreamReader(ClientStream);
         }
 
         public void Connect(IPEndPoint endPoint)
@@ -32,7 +40,10 @@ namespace FowaProtocol.FowaImplementations
             try
             {
                 _client.Connect(endPoint);
-                ClientStream = _client.GetStream();
+                ClientStream = new NetworkStream(_client);
+                _streamWriter = new StreamWriter(ClientStream);
+                _streamReader = new StreamReader(ClientStream);
+               
             }
             catch (Exception ex)
             {
@@ -41,18 +52,14 @@ namespace FowaProtocol.FowaImplementations
 
         }
 
-        public bool WriteToClientStreamAync(IFowaMessage fowaMessage, NetworkStream networkStream)
+        public bool WriteToClientStreamAync(IFowaMessage fowaMessage)
         {
             bool successfull = true;
 
             try
             {
-                //ASCIIEncoding encoder = new ASCIIEncoding();
-                //byte[] buffer = encoder.GetBytes(fowaMessage.Message.Trim());
-                StreamWriter sw = new StreamWriter(networkStream);
-                sw.WriteAsync(fowaMessage.Message.Trim());
-                //networkStream.WriteAsync(buffer, 0, buffer.Length);
-
+                _streamWriter.WriteLineAsync(fowaMessage.Message);
+                _streamWriter.Flush();
             }
             catch (Exception)
             {
@@ -63,20 +70,10 @@ namespace FowaProtocol.FowaImplementations
             return successfull;
         }
 
-        public void ReadFromClientSream(NetworkStream networkStream)
+        public async void ReadFromSreamAsync()
         {
-            StreamReader sr = new StreamReader(networkStream);
-            Task<string> rvcMessage = sr.ReadToEndAsync();
-            IncomingUserMessage(this, new IncomingMessageEventArgs(rvcMessage.Result, null));
-        }
-
-        public void SendMessageAsync(IFowaMessage fowaMessage)
-        {
-            //ASCIIEncoding encoder = new ASCIIEncoding();
-            //byte[] buffer = encoder.GetBytes(fowaMessage.Message.Trim());
-            //ClientStream.WriteAsync(buffer, 0, buffer.Length);
-            StreamWriter sw = new StreamWriter(ClientStream);
-            sw.WriteAsync(fowaMessage.Message.Trim());
+            string s = await _streamReader.ReadLineAsync();
+            HandleIncomingMessage(s, ClientStream);
         }
 
         protected void Dispose(bool freeManagedObjectsAlso)

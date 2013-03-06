@@ -33,8 +33,8 @@ namespace Client.Views
 
             list = new ObservableCollection<UserChatViewModel>
                        {
-                           new UserChatViewModel(new User(234, "hans@penis.de", "Hans", "000.000.000.000")),
-                           new UserChatViewModel(new User(555, "Peter@gmx.net", "Peter", "000.000.000.100"))
+                           new UserChatViewModel(new User(234, "hans@penis.de", "Hans", "000.000.000.000", "")),
+                           new UserChatViewModel(new User(555, "Peter@gmx.net", "Peter", "000.000.000.100", ""))
                        };
 
             listBox.ItemsSource = list;

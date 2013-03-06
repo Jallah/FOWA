@@ -16,8 +16,8 @@ namespace Client.ViewModel
         {
             UserChats = new ObservableCollection<UserChatViewModel>()
                             {
-                                new UserChatViewModel(new User(234, "Hans@gmx.net", "Hans", "123.123.123.123:3000")),
-                                new UserChatViewModel(new User(555, "Peter@gmx.de", "Peter", "123.123.123.111:3000"))
+                                new UserChatViewModel(new User(234, "Hans@gmx.net", "Hans", "123.123.123.123:3000", "hallo")),
+                                new UserChatViewModel(new User(555, "Peter@gmx.de", "Peter", "123.123.123.111:3000", "hallo"))
                             };
         }
     }

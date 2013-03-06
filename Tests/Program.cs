@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Server;
@@ -15,17 +18,27 @@ namespace Tests
         static void Main(string[] args)
         {
 
-            UserFriendsService service = new UserFriendsService();
+            TcpListener listener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, 80);
+            listener.Start();
 
-            //service.AddUser(new user{email = "hans@gmx.net", nick = "hans", pw = "superSavePw"});
+            TcpClient client = listener.AcceptTcpClient();
 
+            NetworkStream stream = client.GetStream();
 
+            StreamReader reader = new StreamReader(stream);
 
-            bool exist = service.UserExists("hhans@gmx.net");
+            while (true)
+            {
+                string s = reader.ReadLine();
+                Console.WriteLine(s);
+            }
+            //UserFriendsService service = new UserFriendsService();
 
-            string s = exist ? "yes" : "no";
+            //bool exist = service.UserExists("hhans@gmx.net");
 
-            Console.WriteLine(s);
+            //string s = exist ? "yes" : "no";
+
+            //Console.WriteLine(s);
             Console.ReadKey();
         }
     }

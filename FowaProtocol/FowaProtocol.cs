@@ -42,7 +42,7 @@ namespace FowaProtocol
             int messageKind;
             using (XmlReader reader = XmlReader.Create(new StringReader(incomingString)))
             {
-                reader.ReadToFollowing("info");
+                reader.ReadToFollowing("header");
                 reader.MoveToFirstAttribute();
                 messageKind = int.Parse(reader.Value);
             }
@@ -57,8 +57,8 @@ namespace FowaProtocol
             int errorcode;
             using (XmlReader reader = XmlReader.Create(new StringReader(message)))
             {
-                reader.ReadToFollowing("info");
-                reader.MoveToAttribute("errorcode");
+                reader.ReadToFollowing("errorinfo");
+                reader.MoveToFirstAttribute();
                 errorcode = int.Parse(reader.Value);
             }
 

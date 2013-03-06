@@ -18,7 +18,8 @@ namespace Client.Views
         private const int MAX_CHARS = 200;
         public string ChatWith { get; private set; }
 
-        private FowaClient _client = new FowaClient();
+        private FowaClient _client =
+            new FowaClient(new IPEndPoint(IPAddress.Parse( /*"127.0.0.1"*/"192.168.2.108"), 3000));
 
         public ChatWindow(string chatWith)
         {

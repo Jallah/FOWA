@@ -16,7 +16,7 @@ namespace FOWA.Views
 
         public MainWindow()
         {
-            _metaData = new FowaMetaData {OnIncomingUserMessageCallback = this.OnIncomingUserMessage};
+            _metaData = new FowaMetaData {OnIncomingLoginMessageCallback = this.OnIncomingLoginMessage};
             _service = new FowaService(_metaData);
 
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace FOWA.Views
         }
 
 
-        public void OnIncomingUserMessage(object sender, IncomingMessageEventArgs args)
+        public void OnIncomingLoginMessage(object sender, IncomingMessageEventArgs args)
         {
             // folgendes würde zu folgender Aushahme führen:
             // Der aufrufende Thread kann nicht auf dieses Objekt zugreifen, da sich das Objekt im Besitz eines anderen Threads befindet."

@@ -7,8 +7,6 @@ Client: (MVVM)
 		- MainChatWindow with Tabs
 		- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
 	
-	- Implenent INotifyPorpertyChanged (ViewModelBase) with lambda-expresssion to get
-	  the propertyname 
 	- Write CustomCommands (Send, Login, Register ...)
 	- NAT Traversal
 	- ...

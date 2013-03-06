@@ -16,7 +16,7 @@ namespace FowaProtocol.FowaImplementations
         private bool _serviceIsRunning;
         private bool ServerIsRunning { get { return _serviceIsRunning; } }
         private readonly Task _listenTask;
-        private FowaMetaData _metaData;
+        private readonly FowaMetaData _metaData;
 
         public List<ClientHandling> Clients;
 
@@ -24,7 +24,7 @@ namespace FowaProtocol.FowaImplementations
             : base()
         {
             _metaData = metaData;
-            this._tcpListener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, 3000);
+            this._tcpListener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, 80);
             this._listenTask = new Task(ListenForClients);
             Clients = new List<ClientHandling>();
         }

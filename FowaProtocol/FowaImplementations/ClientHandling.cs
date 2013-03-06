@@ -32,7 +32,7 @@ namespace FowaProtocol.FowaImplementations
                 catch (Exception exception)
                 {
                     // Client Disconnected
-                    
+                    string s = exception.Message;
                     // log Exception
                     //Console.WriteLine("Client {0} disconnected", _nr);
                     break;

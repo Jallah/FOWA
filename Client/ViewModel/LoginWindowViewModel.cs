@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,6 +9,8 @@ using System.Windows.Input;
 using Client.CommandBase;
 using Client.Commands;
 using Client.Helper;
+using FowaProtocol.FowaImplementations;
+using FowaProtocol.FowaMessages;
 
 namespace Client.ViewModel
 {
@@ -17,10 +20,13 @@ namespace Client.ViewModel
         private string _eMail;
         private string _password;
         private readonly CommandModel _sendLogin;
+        private readonly FowaClient _client;
 
         public LoginWindowViewModel()
         {
             _sendLogin = new SendLoginDataCommand(this);
+            IPEndPoint ip = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 80);
+            _client = new FowaClient(ip);
         }
 
         public string EMail
@@ -52,7 +58,7 @@ namespace Client.ViewModel
 
         internal void SendLoginData()
         {
-            MessageBox.Show("Sende Logindaten");
+            _client.WriteToClientStreamAync(new LoginMessage(EMail, Password));
         }
 
         public override string this[string columnName]
