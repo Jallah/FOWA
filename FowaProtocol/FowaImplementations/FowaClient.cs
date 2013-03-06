@@ -29,10 +29,7 @@ namespace FowaProtocol.FowaImplementations
             : base()
         {
             _client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _client.Connect(endPoint);
-            ClientStream = new NetworkStream(_client);
-            _streamWriter = new StreamWriter(ClientStream);
-            _streamReader = new StreamReader(ClientStream);
+            Connect(endPoint);
         }
 
         public void Connect(IPEndPoint endPoint)
