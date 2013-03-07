@@ -65,7 +65,7 @@ namespace FowaProtocol
             return errorcode;
         }
 
-        protected virtual void HandleIncomingMessage(string message, NetworkStream senderNetwrokStream)
+        public virtual void HandleIncomingMessage(string message, NetworkStream senderNetwrokStream)
         {
 
             switch (GetKindOfMessage(message))

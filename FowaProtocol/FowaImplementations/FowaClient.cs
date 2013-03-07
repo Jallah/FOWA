@@ -25,11 +25,10 @@ namespace FowaProtocol.FowaImplementations
 
 
         // = new IPEndPoint(IPAddress.Parse(/*"127.0.0.1"*/"192.168.2.108"), 80);
-        public FowaClient(IPEndPoint endPoint)
+        public FowaClient()
             : base()
         {
             _client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            Connect(endPoint);
         }
 
         public void Connect(IPEndPoint endPoint)
@@ -49,13 +48,13 @@ namespace FowaProtocol.FowaImplementations
 
         }
 
-        public bool WriteToClientStreamAync(IFowaMessage fowaMessage)
+        public async Task<bool> WriteToClientStreamAync(IFowaMessage fowaMessage)
         {
             bool successfull = true;
 
             try
             {
-                _streamWriter.WriteLineAsync(fowaMessage.Message);
+                await _streamWriter.WriteLineAsync(fowaMessage.Message);
                 _streamWriter.Flush();
             }
             catch (Exception)
@@ -67,10 +66,10 @@ namespace FowaProtocol.FowaImplementations
             return successfull;
         }
 
-        public async void ReadFromSreamAsync()
+        public async Task<string> ReadFromSreamAsync()
         {
             string s = await _streamReader.ReadLineAsync();
-            HandleIncomingMessage(s, ClientStream);
+            return s;
         }
 
         protected void Dispose(bool freeManagedObjectsAlso)

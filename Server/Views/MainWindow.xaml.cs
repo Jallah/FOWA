@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementations;
 using FowaProtocol;
+using FowaProtocol.FowaMessages;
 
 namespace FOWA.Views
 {
@@ -32,6 +35,14 @@ namespace FOWA.Views
             // fowaServerLogTextBlock.Text = args.Message;
 
             Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text = args.Message));
+            StreamWriter sw = new StreamWriter(args.SenderNetworkStream);
+            List<User> l = new List<User>
+                               {
+                                   new User(234, "","","", "")
+                               }; 
+            FriendListMessage<User> m = new FriendListMessage<User>(l);
+            sw.WriteLineAsync(m.Message);
+            sw.Flush();
         }
 
 

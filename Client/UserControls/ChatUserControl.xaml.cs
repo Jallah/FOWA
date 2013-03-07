@@ -27,8 +27,8 @@ namespace Client.UserControls
 
         private const int MAX_CHARS = 200;
         public string ChatWith { get; set; }
-        private readonly FowaClient _client = new FowaClient(new IPEndPoint(IPAddress.Parse( /*"127.0.0.1"*/"192.168.2.108"), 3000));
-
+        private readonly FowaClient _client = new FowaClient();
+        // new IPEndPoint(IPAddress.Parse( /*"127.0.0.1"*/"192.168.2.108"), 3000)
         public ChatUserControl(/*string chatWith*/)
         {
             InitializeComponent();
