@@ -34,16 +34,17 @@ namespace FowaProtocol.FowaMessages
             //header
             XmlNode headerNode = XmlDoc.CreateElement("header");
 
-            // //header/messagekind
+            //header/messagekind
             XmlAttribute messageKindAttribute = XmlDoc.CreateAttribute("messagekind");
             messageKindAttribute.Value = messageKind + "";
             if (headerNode.Attributes != null) 
                 headerNode.Attributes.Append(messageKindAttribute);
             else
                 throw new Exception("Error occurred during creating a Message");
-
-            // add header to RoodNode
+           
+            // add header,sender and receiver to RoodNode
             RoodNode.AppendChild(headerNode);
+
         }
 
         protected string XmlDocToString(XmlDocument xmlDoc)

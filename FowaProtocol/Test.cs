@@ -54,9 +54,9 @@ namespace FowaProtocol
             list.Add(p1);
             list.Add(p2);
 
-            FriendListMessage<IContact> friendListMessage = new FriendListMessage<IContact>(list);
+            //FriendListMessage<IContact> friendListMessage = new FriendListMessage<IContact>(list);
             
-            ErrorMessage errorMessage = new ErrorMessage(ErrorMessageKind.RegisterError, "lol fail du knecht");
+            //ErrorMessage errorMessage = new ErrorMessage(ErrorMessageKind.RegisterError, "lol fail du knecht");
 
             //XmlSerializer serializer = new XmlSerializer(list.GetType());
             //StringWriter stringWriter = new StringWriter();
@@ -65,7 +65,7 @@ namespace FowaProtocol
 
             //Console.WriteLine(stringWriter.ToString());
 
-            UserMessage userMessage = new UserMessage(p1, "some text");
+            UserMessage userMessage = new UserMessage(p1, p1, "some text");
 
     
             Console.WriteLine(userMessage.Message);

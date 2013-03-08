@@ -12,7 +12,8 @@ namespace FowaProtocol.FowaMessages
     /*
         <fowamessage>
             <header messagekind="3" />
-            <senderinfo email="" nickname="hans" ip="" uid="234" />
+            <sender uid="234" />
+            <receiver uid="222" />
             <message>some text</message>
         </fowamessage> 
     */
@@ -21,42 +22,41 @@ namespace FowaProtocol.FowaMessages
     {
         public string Message { get; private set; }
 
-        public UserMessage(IContact sender, string message):base((int)MessageKind.UserMessage)
+        public UserMessage(IContact sender, IContact receiver, string message):base((int)MessageKind.UserMessage)
         {
-            // senderinfonode
-            XmlNode senderInfoNode = XmlDoc.CreateElement("senderinfo");
+            //sender
+            XmlNode senderNode = XmlDoc.CreateElement("sender");
 
-            // Create attributes
-            XmlAttribute eMailAttribute = XmlDoc.CreateAttribute("email");
-            eMailAttribute.Value = sender.Email;
-            XmlAttribute nickNameAttribute = XmlDoc.CreateAttribute("nickname");
-            nickNameAttribute.Value = sender.Nick;
-            XmlAttribute ipAttribute = XmlDoc.CreateAttribute("ip");
-            ipAttribute.Value = sender.Ip;
-            XmlAttribute uidAttribute = XmlDoc.CreateAttribute("uid");
-            uidAttribute.Value = sender.UID + "";
-
-            // add attributes to senderinfonode
-            if (senderInfoNode.Attributes != null)
-            {
-                senderInfoNode.Attributes.Append(eMailAttribute);
-                senderInfoNode.Attributes.Append(nickNameAttribute);
-                senderInfoNode.Attributes.Append(ipAttribute);
-                senderInfoNode.Attributes.Append(uidAttribute);
-            }
+            //sender/uid
+            XmlAttribute senderUidAttribute = XmlDoc.CreateAttribute("uid");
+            senderUidAttribute.Value = sender.UID + "";
+            if (senderNode.Attributes != null)
+                senderNode.Attributes.Append(senderUidAttribute);
             else
-            {
                 throw new Exception("Error occurred during creating a UserMessage");
-            }
+
+            // receiver
+            XmlNode receiverNode = XmlDoc.CreateElement("receiver");
+
+            // receiver/uid
+            XmlAttribute receiverUidAttribute = XmlDoc.CreateAttribute("uid");
+            receiverUidAttribute.Value = receiver.UID + "";
+            if (receiverNode.Attributes != null)
+                receiverNode.Attributes.Append(receiverUidAttribute);
+            else
+                throw new Exception("Error occurred during creating a UserMessage");
 
             // messsagenode
             XmlNode messageNode = XmlDoc.CreateElement("message");
             messageNode.InnerText = message;
 
-            // add senderinfonode to RoodNode
-            RoodNode.AppendChild(senderInfoNode);
+            // add senderNode to RoodNode
+            RoodNode.AppendChild(senderNode);
 
-            //add messagenode to RoodNode
+            // add receiverNode to RoodNode
+            RoodNode.AppendChild(receiverNode);
+
+            //add essagenode to RoodNode
             RoodNode.AppendChild(messageNode);
 
             Message = XmlDocToString(XmlDoc);
