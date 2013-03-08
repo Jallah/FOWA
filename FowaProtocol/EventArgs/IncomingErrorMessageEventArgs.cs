@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using FowaProtocol.FowaImplementations;
 
 namespace FowaProtocol.EventArgs
 {
@@ -11,13 +12,13 @@ namespace FowaProtocol.EventArgs
     {
         public int Errorcode { get; private set; }
         public string Message { get; private set; }
-        public NetworkStream SenderNetworkStream { get; private set; }
+        public FowaClient FowaClient { get; set; }
 
-        public IncomingErrorMessageEventArgs(int errorCode,string message, NetworkStream senderNetworkStream)
+        public IncomingErrorMessageEventArgs(int errorCode, string message, FowaClient fowaClient)
         {
             this.Errorcode = errorCode;
             this.Message = message;
-            this.SenderNetworkStream = senderNetworkStream;
+            this.FowaClient = fowaClient;
         }
     }
 }

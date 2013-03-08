@@ -34,7 +34,7 @@ namespace Client.ViewModel
 
         public void OnIncomingFriendlistMessage(object sender, IncomingMessageEventArgs e)
         {
-            MessageBox.Show("Friendliest");
+            MessageBox.Show(e.Message);
         }
 
         public string EMail

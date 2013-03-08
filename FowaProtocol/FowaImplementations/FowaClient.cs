@@ -13,22 +13,24 @@ namespace FowaProtocol.FowaImplementations
 {
     public class FowaClient : FowaProtocol, IDisposable
     {
-        //private TcpClient _client;
         private Socket _client;
         private StreamWriter _streamWriter;
         private StreamReader _streamReader;
-        //private const int BUFFER_SIZE = 4096; // 2^12
         public NetworkStream ClientStream { get; set; }
 
-        //public delegate void IncomingUserMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        //public event IncomingUserMessageEventHandler IncomingUserMessage;
-
-
         // = new IPEndPoint(IPAddress.Parse(/*"127.0.0.1"*/"192.168.2.108"), 80);
+
         public FowaClient()
             : base()
         {
             _client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        }
+
+        public FowaClient(NetworkStream stream)
+        {
+            ClientStream = stream;
+            _streamWriter = new StreamWriter(ClientStream);
+            _streamReader = new StreamReader(ClientStream);
         }
 
         public void Connect(IPEndPoint endPoint)

@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Xml;
 using FowaProtocol.EventArgs;
+using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
 using System;
 using System.Collections.Generic;
@@ -72,19 +73,19 @@ namespace FowaProtocol
             {
                 case (int)MessageKind.LoginMessage:
                     if (IncomingLoginMessage != null)
-                        IncomingLoginMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                        IncomingLoginMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 case (int)MessageKind.RegisterMessage:
                     if (IncomingRegisterMessage != null)
-                        IncomingRegisterMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                        IncomingRegisterMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 case (int)MessageKind.UserMessage:
                     if (IncomingUserMessage != null)
-                        IncomingUserMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                        IncomingUserMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 case (int)MessageKind.SeekFriendsRequestMessage:
                     if (IncomingSeekFriendsRequestMessage != null)
-                        IncomingSeekFriendsRequestMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                        IncomingSeekFriendsRequestMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 case (int)MessageKind.ErrorMessage:
                     if (IncomingErrorMessage != null)
@@ -92,17 +93,17 @@ namespace FowaProtocol
                         switch (GetErrorCode(message))
                         {
                             case (int)ErrorMessageKind.LiginError:
-                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message, senderNetwrokStream));
+                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message, new FowaClient(senderNetwrokStream)));
                                 break;
                             case (int)ErrorMessageKind.RegisterError:
-                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.RegisterError, message, senderNetwrokStream));
+                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.RegisterError, message, new FowaClient(senderNetwrokStream)));
                                 break;
                         }
 
                     break;
                 case (int)MessageKind.FriendListMessage:
                     if (IncomingFriendlistMessage != null)
-                        IncomingFriendlistMessage(this, new IncomingMessageEventArgs(message, senderNetwrokStream));
+                        IncomingFriendlistMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 default:
                     throw new NotSupportedException("Not Supported");

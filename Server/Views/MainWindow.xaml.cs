@@ -35,14 +35,15 @@ namespace FOWA.Views
             // fowaServerLogTextBlock.Text = args.Message;
 
             Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text = args.Message));
-            StreamWriter sw = new StreamWriter(args.SenderNetworkStream);
+            //StreamWriter sw = new StreamWriter(args.SenderNetworkStream);
             List<User> l = new List<User>
                                {
                                    new User(234, "","","", "")
                                }; 
             FriendListMessage<User> m = new FriendListMessage<User>(l);
-            sw.WriteLineAsync(m.Message);
-            sw.Flush();
+            //sw.WriteLineAsync(m.Message);
+            //sw.Flush();
+            args.FowaClient.WriteToClientStreamAync(m);
         }
 
 
