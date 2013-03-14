@@ -15,31 +15,9 @@ namespace Client
     /// </summary>
     public partial class App : Application
     {
-        public static ContactWindow ContactWindow;
-
-        private static MainChatWindowViewModel _mainChatWindowViewModel;
-
-        public static MainChatWindowViewModel MainChatWindowViewModel
-        {
-            get { return _mainChatWindowViewModel ?? (_mainChatWindowViewModel = new MainChatWindowViewModel()); }
-        }
-
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
-            //ChatWindow chatWindow = new ChatWindow();
-            //chatWindow.Show();
-
-            //LoginWindow loginWindow = new LoginWindow();
-            //loginWindow.Show();
-
-            //RegisterWindow registerWindow = new RegisterWindow();
-            //registerWindow.Show();
-
-            //MainChatWindow mainChat = new MainChatWindow();
-            //mainChat.Show();
-
-            //ContactWindow = new ContactWindow();
-            //ContactWindow.Show();
-        }
+        //private void Application_Startup(object sender, StartupEventArgs e)
+        //{
+           
+        //}
     }
 }

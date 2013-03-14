@@ -46,7 +46,7 @@
 
     <Grid Margin="0,0,10,0" Height="197" VerticalAlignment="Top">
         <TextBox x:Name="email" Text="{Binding Path=EMail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Height="23" Margin="31,37,30,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBox x:Name="password" Text="{Binding Path=Password, UpdateSourceTrigger=PropertyChanged}" Margin="31,112,30,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23"/>
+        <TextBox x:Name="password" Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="31,112,30,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23"/>
         <Label x:Name="emailLabel" Content="E-mail:" Margin="31,11,167,0" Height="26" VerticalAlignment="Top"/>
         <Label x:Name="passwordLabel" Content="Passwort:" Margin="31,86,189,0" Height="26" VerticalAlignment="Top"/>
         

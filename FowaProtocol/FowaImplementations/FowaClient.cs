@@ -17,13 +17,17 @@ namespace FowaProtocol.FowaImplementations
         private StreamWriter _streamWriter;
         private StreamReader _streamReader;
         public NetworkStream ClientStream { get; set; }
-
         // = new IPEndPoint(IPAddress.Parse(/*"127.0.0.1"*/"192.168.2.108"), 80);
 
         public FowaClient()
             : base()
         {
             _client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        }
+
+        public bool IsConnected()
+        {
+            return _client.Connected;
         }
 
         public FowaClient(NetworkStream stream)
@@ -33,21 +37,25 @@ namespace FowaProtocol.FowaImplementations
             _streamReader = new StreamReader(ClientStream);
         }
 
+        public virtual void AsyncConnectionCompleted(object sender, SocketAsyncEventArgs e)
+        {
+        }
+
         public void Connect(IPEndPoint endPoint)
         {
             try
             {
+                
+                
                 _client.Connect(endPoint);
                 ClientStream = new NetworkStream(_client);
                 _streamWriter = new StreamWriter(ClientStream);
                 _streamReader = new StreamReader(ClientStream);
-               
             }
             catch (Exception ex)
             {
                 throw new Exception("Connection failed: " + ex.Message);
             }
-
         }
 
         public async Task<bool> WriteToClientStreamAync(IFowaMessage fowaMessage)

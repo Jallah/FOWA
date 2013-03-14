@@ -61,12 +61,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\FowaProtocol\Friend.cs">
-      <Link>FowaModels\Friend.cs</Link>
-    </Compile>
-    <Compile Include="..\FowaProtocol\User.cs">
-      <Link>FowaModels\User.cs</Link>
-    </Compile>
     <Compile Include="BL\Contracts\IEntity.cs" />
     <Compile Include="BL\Contracts\IUserFriendsService.cs" />
     <Compile Include="BL\Services\UserFriendsService.cs" />

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FowaProtocol;
 
 namespace Client.ViewModels
 {
@@ -16,8 +17,8 @@ namespace Client.ViewModels
         {
             UserChats = new ObservableCollection<UserChatViewModel>()
                             {
-                                new UserChatViewModel(new User(234, "Hans@gmx.net", "Hans", DateTime.Now, "hallo")),
-                                new UserChatViewModel(new User(555, "Peter@gmx.de", "Peter", DateTime.Now, "hallo"))
+                                //new UserChatViewModel(new User(){234, "Hans@gmx.net", "Hans", DateTime.Now, "hallo"}),
+                                //new UserChatViewModel(new User(555, "Peter@gmx.de", "Peter", DateTime.Now, "hallo"))
                             };
         }
     }

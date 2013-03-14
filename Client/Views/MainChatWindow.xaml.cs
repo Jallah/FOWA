@@ -10,7 +10,7 @@ namespace Client.Views
         public MainChatWindow()
         {
             InitializeComponent();
-            DataContext = App.MainChatWindowViewModel;
+            ///DataContext = App.MainChatWindowViewModel;
             //this.ChatTab.ItemsSource = App.MainChatWindowViewModel.UserChats;
         }
     }

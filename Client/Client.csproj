@@ -66,12 +66,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\FowaProtocol\Friend.cs">
-      <Link>Models\Friend.cs</Link>
-    </Compile>
-    <Compile Include="..\FowaProtocol\User.cs">
-      <Link>Models\User.cs</Link>
-    </Compile>
     <Compile Include="CaliBurnMicro\ClientBootStrapper.cs" />
     <Compile Include="CommandBase_NOTUSED\CreateCommandBinding.cs" />
     <Compile Include="CommandBase_NOTUSED\CommandModel.cs" />

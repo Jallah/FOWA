@@ -1,7 +1,6 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
-namespace FowaProtocol
+namespace FowaProtocol.FowaModels
 {
     public class Friend
     {

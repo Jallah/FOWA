@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using FowaProtocol;
+
 using FowaProtocol.FowaMessages;
 using FowaProtocol.XmlDeserialization;
 using Server;
@@ -33,7 +33,7 @@ namespace Tests
                                    new Friend(){Email = "hans", Nick = "hans", Uid = 23}
                                };
 
-            FriendListMessage m = new FriendListMessage(l);
+           // FriendListMessage m = new FriendListMessage(l);
             
 
             Console.ReadKey();

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FowaProtocol;
 using System.Xml;
+using FowaProtocol.FowaModels;
 
 namespace FowaProtocol.FowaMessages
 {

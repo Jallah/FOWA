@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using FowaProtocol;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementations;
-using FowaProtocol;
 using FowaProtocol.FowaMessages;
+using FowaProtocol.FowaModels;
+
 
 namespace FOWA.Views
 {
@@ -15,11 +17,11 @@ namespace FOWA.Views
     public partial class MainWindow : Window
     {
         private readonly FowaMetaData _metaData;
-        private readonly FowaService _service; 
+        private readonly FowaService _service;
 
         public MainWindow()
         {
-            _metaData = new FowaMetaData {OnIncomingLoginMessageCallback = this.OnIncomingLoginMessage};
+            _metaData = new FowaMetaData { OnIncomingLoginMessageCallback = this.OnIncomingLoginMessage };
             _service = new FowaService(_metaData);
 
             InitializeComponent();
@@ -37,8 +39,9 @@ namespace FOWA.Views
             //StreamWriter sw = new StreamWriter(args.SenderNetworkStream);
             List<Friend> l = new List<Friend>
                                {
-                                   //new User(234, "","",DateTime.Now, "")
-                               }; 
+                                    new Friend(){Email = "hans@lol.de", Nick = "hans", Uid = 23},
+                                    new Friend(){Email = "Peter@ulul.com", Nick = "Peter", Uid = 233}
+                               };
             FriendListMessage m = new FriendListMessage(l);
             //sw.WriteLineAsync(m.Message);
             //sw.Flush();

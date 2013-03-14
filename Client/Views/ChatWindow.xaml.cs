@@ -74,7 +74,7 @@ namespace Client.Views
         {
             _client.Dispose();
             _client = null;
-            App.ContactWindow.HandledChatWindows.Remove(ChatWith);
+            //App.ContactWindow.HandledChatWindows.Remove(ChatWith);
         }
 
        

@@ -31,13 +31,13 @@ namespace Client.Views
         {
             InitializeComponent();
 
-            list = new ObservableCollection<UserChatViewModel>
-                       {
-                           new UserChatViewModel(new User(234, "hans@penis.de", "Hans", DateTime.Now, "")),
-                           new UserChatViewModel(new User(555, "Peter@gmx.net", "Peter", DateTime.Now, ""))
-                       };
+            //list = new ObservableCollection<UserChatViewModel>
+            //           {
+            //               new UserChatViewModel(new User(234, "hans@penis.de", "Hans", DateTime.Now, "")),
+            //               new UserChatViewModel(new User(555, "Peter@gmx.net", "Peter", DateTime.Now, ""))
+            //           };
 
-            listBox.ItemsSource = list;
+            //listBox.ItemsSource = list;
         }
 
         private void AddFriendButton_Click(object sender, RoutedEventArgs e)

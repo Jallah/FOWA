@@ -15,6 +15,7 @@ using Client.Views;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Client.ViewModels
 {
@@ -23,6 +24,7 @@ namespace Client.ViewModels
     {
 
         #region Fields
+        private readonly IPEndPoint _ip = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 80);
         private readonly IWindowManager _windowManager;
         private string _eMail;
         private string _password;
@@ -39,9 +41,7 @@ namespace Client.ViewModels
             //_openRegisterDialog = new OpenDialogCommand(this);
 
             _windowManager = windowManager;
-            IPEndPoint ip = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 80);
             _client = new FowaClient();
-            _client.Connect(ip);
             _client.IncomingFriendlistMessage += OnIncomingFriendlistMessage;
         }
         #endregion
@@ -49,7 +49,11 @@ namespace Client.ViewModels
         #region EventHandler
         public void OnIncomingFriendlistMessage(object sender, IncomingMessageEventArgs e)
         {
-            MessageBox.Show(e.Message);
+            var list = FowaProtocol.XmlDeserialization.XmlDeserializer.DeserializeFriends(e.Message);
+
+            string fr = list.Aggregate("", (current, friend) => current + friend.Email + " " + friend.Nick + " " + friend.Uid + '\n');
+
+            MessageBox.Show(fr);
         }
         #endregion
 
@@ -94,9 +98,23 @@ namespace Client.ViewModels
         #region SendLoginData
         public async void SendLoginData()
         {
+            if(!_client.IsConnected())
+                try
+                {
+                    _client.Connect(_ip);
+                }
+                catch (Exception)
+                {
+                    System.Windows.Forms.MessageBox.Show("The service is currently not available.", "Sorry");
+                    return;
+                }
+              
             await _client.WriteToClientStreamAync(new LoginMessage(EMail, Password));
             string s = await _client.ReadFromSreamAsync();
             _client.HandleIncomingMessage(s, _client.ClientStream);
+
+            Password = string.Empty;
+
         }
 
         public bool CanSendLoginData
