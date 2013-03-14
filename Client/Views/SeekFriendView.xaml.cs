@@ -15,23 +15,13 @@ using System.Windows.Shapes;
 namespace Client.Views
 {
     /// <summary>
-    /// Interaktionslogik für SeekFriendsWindow.xaml
+    /// Interaktionslogik für SeekFriendView.xaml
     /// </summary>
-    public partial class SeekFriendsWindow : Window
+    public partial class SeekFriendView : Window
     {
-        public SeekFriendsWindow()
+        public SeekFriendView()
         {
             InitializeComponent();
-        }
-
-        private void SeekFriendsButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            ContactWindow.SeekFriendsWindow = null;
         }
     }
 }

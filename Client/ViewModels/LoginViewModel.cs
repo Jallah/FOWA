@@ -126,7 +126,7 @@ namespace Client.ViewModels
         #region OpenRegisterDialog
         public void OpenRegisterDialog()
         {
-           _windowManager.ShowWindow(new RegisterViewModel());
+           _windowManager.ShowWindow(new SeekFriendViewModel());
         }
         #endregion
 

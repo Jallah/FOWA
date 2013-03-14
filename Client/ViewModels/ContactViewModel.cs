@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Client.ViewModels
 {
-    public class SeekFriendWindowViewModel
+    public class ContactViewModel : ViewModelBase.ViewModelBase
     {
     }
 }

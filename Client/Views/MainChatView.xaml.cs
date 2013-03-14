@@ -3,11 +3,11 @@
 namespace Client.Views
 {
     /// <summary>
-    /// Interaktionslogik für LoginWindow.xaml
+    /// Interaktionslogik für MainChatView.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class MainChatView : Window
     {
-        public LoginWindow()
+        public MainChatView()
         {
             InitializeComponent();
         }

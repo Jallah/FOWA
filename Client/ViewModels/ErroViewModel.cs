@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Client.ViewModels
 {
-    public class RegisterViewModel : ViewModelBase.ViewModelBase
+    public class ErroViewModel : ViewModelBase.ViewModelBase
     {
-        
     }
 }

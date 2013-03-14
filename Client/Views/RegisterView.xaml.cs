@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Client.Views
@@ -18,7 +17,7 @@ namespace Client.Views
     /// <summary>
     /// Interaktionslogik für RegisterView.xaml
     /// </summary>
-    public partial class RegisterView : UserControl
+    public partial class RegisterView : Window
     {
         public RegisterView()
         {

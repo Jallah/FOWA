@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FowaProtocol;
-using FowaProtocol.FowaModels;
 
 namespace Client.ViewModels
 {
-    public class UserChatViewModel : ViewModelBase.ViewModelBase
+    public class MainChatViewModel : ViewModelBase.ViewModelBase
     {
-        public UserChatViewModel()
+        public MainChatViewModel()
         {
+            
         }
     }
 }

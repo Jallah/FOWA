@@ -37,16 +37,10 @@ namespace FowaProtocol.FowaImplementations
             _streamReader = new StreamReader(ClientStream);
         }
 
-        public virtual void AsyncConnectionCompleted(object sender, SocketAsyncEventArgs e)
-        {
-        }
-
         public void Connect(IPEndPoint endPoint)
         {
             try
             {
-                
-                
                 _client.Connect(endPoint);
                 ClientStream = new NetworkStream(_client);
                 _streamWriter = new StreamWriter(ClientStream);

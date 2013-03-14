@@ -13,7 +13,7 @@ namespace Client.Views
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class ChatWindow : Window
+    public partial class ChatView : Window
     {
         private const int MAX_CHARS = 200;
         public string ChatWith { get; private set; }
@@ -21,7 +21,7 @@ namespace Client.Views
         private FowaClient _client =
             new FowaClient();
         // new IPEndPoint(IPAddress.Parse( /*"127.0.0.1"*/"192.168.2.108"), 3000)
-        public ChatWindow(string chatWith)
+        public ChatView(string chatWith)
         {
             InitializeComponent();
             charCounterNumberLabel.Content = MAX_CHARS;
@@ -74,7 +74,7 @@ namespace Client.Views
         {
             _client.Dispose();
             _client = null;
-            //App.ContactWindow.HandledChatWindows.Remove(ChatWith);
+            //App.ContactView.HandledChatWindows.Remove(ChatWith);
         }
 
        
