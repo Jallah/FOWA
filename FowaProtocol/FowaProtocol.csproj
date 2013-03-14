@@ -56,12 +56,14 @@
     <Compile Include="EventArgs\IncomingMessageEventArgs.cs" />
     <Compile Include="FowaMetaData.cs" />
     <Compile Include="FowaProtocol.cs" />
+    <Compile Include="Friend.cs" />
     <Compile Include="IContact.cs" />
     <Compile Include="MessageEnums\ErrorMessageKind.cs" />
     <Compile Include="MessageEnums\MessageKind.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="XmlDeserialization\XmlDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

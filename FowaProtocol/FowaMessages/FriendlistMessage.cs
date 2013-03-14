@@ -14,19 +14,19 @@ namespace FowaProtocol.FowaMessages
         <fowamessage>
            <header messagekind="6" />
            <friendlist>
-                <friend email="" nickname="" ip="" uid="" />
-                <friend email="" nickname="" ip="" uid="" />
+                <friend email="" nickname="" uid="" />
+                <friend email="" nickname="" uid="" />
                 ...
           </friendlist>
         </fowamessage> 
     */
 
-    public class FriendListMessage<T> : MessageBase, IFowaMessage where T : IContact
+    public class FriendListMessage : MessageBase, IFowaMessage
     {
         public string Message { get; private set; }
 
         // not finished yet
-        public FriendListMessage(IEnumerable<T> friends)
+        public FriendListMessage(IEnumerable<Friend> friends)
             : base((int)MessageKind.FriendListMessage)
         {
             // friendlistnode
@@ -42,17 +42,14 @@ namespace FowaProtocol.FowaMessages
                 eMailAttribute.Value = friend.Email;
                 XmlAttribute nickNameAttribute = XmlDoc.CreateAttribute("nickname");
                 nickNameAttribute.Value = friend.Nick;
-                XmlAttribute ipAttribute = XmlDoc.CreateAttribute("ip");
-                ipAttribute.Value = friend.Ip;
                 XmlAttribute uidAttribute = XmlDoc.CreateAttribute("uid");
-                uidAttribute.Value = friend.UID + "";
+                uidAttribute.Value = friend.Uid + "";
 
                 // add attributes to friendnode
                 if (friendlistNode.Attributes != null)
                 {
                     friendNode.Attributes.Append(eMailAttribute);
                     friendNode.Attributes.Append(nickNameAttribute);
-                    friendNode.Attributes.Append(ipAttribute);
                     friendNode.Attributes.Append(uidAttribute);
                 }
                 else

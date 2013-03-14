@@ -27,7 +27,6 @@ namespace FOWA.Views
             _service.StartServer();
         }
 
-
         public void OnIncomingLoginMessage(object sender, IncomingMessageEventArgs args)
         {
             // folgendes würde zu folgender Aushahme führen:
@@ -36,11 +35,11 @@ namespace FOWA.Views
 
             Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text = args.Message));
             //StreamWriter sw = new StreamWriter(args.SenderNetworkStream);
-            List<User> l = new List<User>
+            List<Friend> l = new List<Friend>
                                {
-                                   new User(234, "","","", "")
+                                   //new User(234, "","",DateTime.Now, "")
                                }; 
-            FriendListMessage<User> m = new FriendListMessage<User>(l);
+            FriendListMessage m = new FriendListMessage(l);
             //sw.WriteLineAsync(m.Message);
             //sw.Flush();
             args.FowaClient.WriteToClientStreamAync(m);

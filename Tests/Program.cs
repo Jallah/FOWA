@@ -6,39 +6,36 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+using FowaProtocol;
+using FowaProtocol.FowaMessages;
+using FowaProtocol.XmlDeserialization;
 using Server;
 using Server.BL.Services;
 using Server.DL;
-
 
 namespace Tests
 {
     class Program
     {
+
         static void Main(string[] args)
         {
+            var s = Convert.ToString(DateTime.Now);
+            var d = new DateTime();
+            d = DateTime.Parse(s);
 
-            TcpListener listener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, 80);
-            listener.Start();
+            List<Friend> l = new List<Friend>
+                               {
+                                   new Friend(){Email = "hans", Nick = "hans", Uid = 23},
+                                   new Friend(){Email = "hans", Nick = "hans", Uid = 23}
+                               };
 
-            TcpClient client = listener.AcceptTcpClient();
+            FriendListMessage m = new FriendListMessage(l);
+            
 
-            NetworkStream stream = client.GetStream();
-
-            StreamReader reader = new StreamReader(stream);
-
-            while (true)
-            {
-                string s = reader.ReadLine();
-                Console.WriteLine(s);
-            }
-            //UserFriendsService service = new UserFriendsService();
-
-            //bool exist = service.UserExists("hhans@gmx.net");
-
-            //string s = exist ? "yes" : "no";
-
-            //Console.WriteLine(s);
             Console.ReadKey();
         }
     }

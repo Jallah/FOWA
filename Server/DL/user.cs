@@ -25,7 +25,7 @@ namespace Server.DL
         public string email { get; set; }
         public string pw { get; set; }
         public string nick { get; set; }
-        public string IP { get; set; }
+        public Nullable<System.DateTime> lastMessage { get; set; }
     
         public virtual ICollection<friends> friends { get; set; }
     }

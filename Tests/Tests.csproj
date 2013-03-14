@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Movie.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -48,6 +49,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{bec1af2a-def3-4b63-9781-af08a1fa627a}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FowaProtocol\FowaProtocol.csproj">
       <Project>{0bf519c1-40ac-410c-ac12-229dbd567d42}</Project>
       <Name>FowaProtocol</Name>
