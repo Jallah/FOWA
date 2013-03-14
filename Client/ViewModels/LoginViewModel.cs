@@ -113,8 +113,6 @@ namespace Client.ViewModels
             string s = await _client.ReadFromSreamAsync();
             _client.HandleIncomingMessage(s, _client.ClientStream);
 
-            Password = string.Empty;
-
         }
 
         public bool CanSendLoginData

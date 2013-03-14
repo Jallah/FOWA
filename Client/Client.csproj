@@ -98,6 +98,10 @@
     <Compile Include="Views\SeekFriendView.xaml.cs">
       <DependentUpon>SeekFriendView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\Messages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
