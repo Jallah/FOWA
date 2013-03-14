@@ -8,7 +8,7 @@
         <Label Content="User ID:" HorizontalAlignment="Left" Margin="22,97,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="Email" HorizontalAlignment="Left" Height="23" Margin="78,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="203"/>
         <TextBox x:Name="NickName" HorizontalAlignment="Left" Height="23" Margin="78,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="203"/>
-        <TextBox x:Name="Uid" HorizontalAlignment="Left" Height="23" Margin="78,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="203"/>
+        <TextBox x:Name="UserId" HorizontalAlignment="Left" Height="23" Margin="78,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="203"/>
         <Button x:Name="seekFriends" Content="Suche starten" HorizontalAlignment="Left" Margin="78,151,0,10" Width="202"/>
         <Border BorderBrush="Green" BorderThickness="2" Margin="298,38,12,10">
             <Grid Margin="300,38,10,10"></Grid>

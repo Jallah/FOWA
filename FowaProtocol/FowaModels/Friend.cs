@@ -11,6 +11,6 @@ namespace FowaProtocol.FowaModels
         public string Nick { get; set; }
 
         [XmlAttribute("uid")]
-        public int Uid { get; set; }
+        public int UserId { get; set; }
     }
 }

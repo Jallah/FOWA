@@ -29,7 +29,7 @@ namespace FowaProtocol.XmlDeserialization
                               {
                                   Email = email.Value,
                                   Nick = nickname.Value,
-                                  Uid = int.Parse(uid.Value)
+                                  UserId = int.Parse(uid.Value)
                               }).ToList<Friend>();
             return friends;
         } 

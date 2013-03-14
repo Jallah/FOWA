@@ -39,8 +39,8 @@ namespace FOWA.Views
             //StreamWriter sw = new StreamWriter(args.SenderNetworkStream);
             List<Friend> l = new List<Friend>
                                {
-                                    new Friend(){Email = "hans@lol.de", Nick = "hans", Uid = 23},
-                                    new Friend(){Email = "Peter@ulul.com", Nick = "Peter", Uid = 233}
+                                    new Friend(){Email = "hans@lol.de", Nick = "hans", UserId = 23},
+                                    new Friend(){Email = "Peter@ulul.com", Nick = "Peter", UserId = 233}
                                };
             FriendListMessage m = new FriendListMessage(l);
             //sw.WriteLineAsync(m.Message);

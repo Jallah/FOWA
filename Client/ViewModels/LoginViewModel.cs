@@ -51,7 +51,7 @@ namespace Client.ViewModels
         {
             var list = FowaProtocol.XmlDeserialization.XmlDeserializer.DeserializeFriends(e.Message);
 
-            string fr = list.Aggregate("", (current, friend) => current + friend.Email + " " + friend.Nick + " " + friend.Uid + '\n');
+            string fr = list.Aggregate("", (current, friend) => current + friend.Email + " " + friend.Nick + " " + friend.UserId + '\n');
 
             MessageBox.Show(fr);
         }

@@ -44,7 +44,7 @@ namespace FowaProtocol.FowaMessages
                 XmlAttribute nickNameAttribute = XmlDoc.CreateAttribute("nickname");
                 nickNameAttribute.Value = friend.Nick;
                 XmlAttribute uidAttribute = XmlDoc.CreateAttribute("uid");
-                uidAttribute.Value = friend.Uid + "";
+                uidAttribute.Value = friend.UserId + "";
 
                 // add attributes to friendnode
                 if (friendlistNode.Attributes != null)

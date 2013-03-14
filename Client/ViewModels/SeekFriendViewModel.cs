@@ -47,7 +47,7 @@ namespace Client.ViewModels
             {
                 if(_uid == value) return;
                 _uid = value;
-                OnPropertyChanged(this, "Uid");
+                OnPropertyChanged(this, "UserId");
             }
         }
 

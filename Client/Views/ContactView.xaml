@@ -20,7 +20,7 @@
             <ListBox Name="listBox">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
-                        <EventSetter Event="MouseDoubleClick" Handler=""></EventSetter>
+                        <!--<EventSetter Event="eventhandler" Handler=""></EventSetter>-->
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
