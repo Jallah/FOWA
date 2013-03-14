@@ -37,8 +37,18 @@
     <ApplicationIcon>Icon\smiley.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>C:\Users\Nicki\Desktop\CodeExamples\caliburnmicro-c02838ced358\bin\WPF\Debug\Caliburn.Micro.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Nicki\Desktop\CodeExamples\caliburnmicro-c02838ced358\bin\WPF\Debug\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,19 +66,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CommandBase\CreateCommandBinding.cs" />
-    <Compile Include="CommandBase\CommandModel.cs" />
-    <Compile Include="Commands\SendLoginDataCommand.cs" />
+    <Compile Include="CaliBurnMicro\ClientBootStrapper.cs" />
+    <Compile Include="CommandBase_NOTUSED\CreateCommandBinding.cs" />
+    <Compile Include="CommandBase_NOTUSED\CommandModel.cs" />
+    <Compile Include="Commands_NOTUSED\OpenDialogCommand.cs" />
+    <Compile Include="Commands_NOTUSED\SendLoginDataCommand.cs" />
     <Compile Include="Helper\Validator.cs" />
-    <Compile Include="UserControls\ChatUserControl.xaml.cs">
-      <DependentUpon>ChatUserControl.xaml</DependentUpon>
+    <Compile Include="Views\ChatUserView.xaml.cs">
+      <DependentUpon>ChatUserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModelBase\ViewModelBase.cs" />
-    <Compile Include="ViewModel\LoginWindowViewModel.cs" />
-    <Compile Include="ViewModel\MainChatWindowViewModel.cs" />
-    <Compile Include="ViewModel\RegisterWindowViewModel.cs" />
-    <Compile Include="ViewModel\SeekFriendWindowViewModel.cs" />
-    <Compile Include="ViewModel\UserChatViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MainChatWindowViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\SeekFriendWindowViewModel.cs" />
+    <Compile Include="ViewModels\UserChatViewModel.cs" />
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainChatWindow.xaml.cs">
       <DependentUpon>MainChatWindow.xaml</DependentUpon>
     </Compile>
@@ -79,13 +94,24 @@
     <Compile Include="Views\ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RegisterView.xaml.cs">
+      <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RegisterWindow.xaml.cs">
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SeekFriendsWindow.xaml.cs">
       <DependentUpon>SeekFriendsWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="UserControls\ChatUserControl.xaml">
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ChatUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -113,7 +139,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LoginWindow.xaml">
+    <Page Include="Views\_LoginViewWIND.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RegisterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,8 +157,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    <Compile Include="Views\_LoginViewWIND.xaml.cs">
+      <DependentUpon>_LoginViewWIND.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -165,6 +195,7 @@
   <ItemGroup>
     <Resource Include="Icon\smiley.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,18 @@
 ﻿<Application x:Class="Client.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Startup="Application_Startup">
-    <!--StartupUri="ChatWindow.xaml"-->
+             xmlns:CaliBurnMicro="clr-namespace:Client.CaliBurnMicro">
+             
     <Application.Resources>
-         
+        <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary>
+                <CaliBurnMicro:ClientBootStrapper x:Key="bootstrapper" />
+            </ResourceDictionary>
+        </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
+    
+<!--StartupUri="Views\LoginWindow.xaml"-->
+<!--Startup="Application_Startup">-->

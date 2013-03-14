@@ -7,15 +7,15 @@ using System.Windows;
 using System.Windows.Input;
 using Client.CommandBase;
 using Client.Helper;
-using Client.ViewModel;
+using Client.ViewModels;
 
 namespace Client.Commands
 {
     public class SendLoginDataCommand : CommandModel
     {
-        private readonly LoginWindowViewModel _viewModel;
+        private readonly LoginViewModel _viewModel;
 
-        public SendLoginDataCommand(LoginWindowViewModel viewModel)
+        public SendLoginDataCommand(LoginViewModel viewModel)
         {
             this._viewModel = viewModel;
         }

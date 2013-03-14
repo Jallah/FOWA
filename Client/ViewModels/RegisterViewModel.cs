@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client.ViewModel
+namespace Client.ViewModels
 {
-    public class SeekFriendWindowViewModel
+    public class RegisterViewModel : ViewModelBase.ViewModelBase
     {
     }
 }

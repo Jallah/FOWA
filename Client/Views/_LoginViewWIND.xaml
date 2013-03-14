@@ -1,12 +1,11 @@
 ﻿<Window x:Name="LoginWindow1" x:Class="Client.Views.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ViewModel="clr-namespace:Client.ViewModel"
+        xmlns:vm="clr-namespace:Client.ViewModels"
         xmlns:CommandBase="clr-namespace:Client.CommandBase"
-        xmlns:Command="clr-namespace:Client.Commands"
         Title="Login" Height="244" Width="271" ResizeMode="CanMinimize">
     <Window.DataContext>
-        <ViewModel:LoginWindowViewModel />
+        <vm:LoginViewModel/>
     </Window.DataContext>
 
     <Window.Resources>
@@ -56,7 +55,8 @@
         <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="31,161,0,0" VerticalAlignment="Top" Width="75" CommandParameter="{Binding}" Command="{Binding SendLoginDataCommand.Command}"
                 CommandBase:CreateCommandBinding.Command="{Binding SendLoginDataCommand}"/>
         
-        <Button x:Name="registerButton" Content="Registrieren" HorizontalAlignment="Left" Margin="160,161,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="registerButton" Content="Registrieren" HorizontalAlignment="Left" Margin="160,161,0,0" VerticalAlignment="Top" Width="75" CommandParameter="{Binding}" Command="{Binding OpenRegisterDialogCommand.Command}"
+                CommandBase:CreateCommandBinding.Command="{Binding OpenRegisterDialogCommand}"/>
 
     </Grid>
 </Window>

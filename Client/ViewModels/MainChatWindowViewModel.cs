@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client.ViewModel
+namespace Client.ViewModels
 {
     public class MainChatWindowViewModel
     {
