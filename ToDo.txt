@@ -7,7 +7,9 @@ Client: (MVVM)
 		- MainChatWindow with Tabs
 		- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
 	
-	-Add resource file for messages
+	-Add resource file for messages (done)
+	-Add settings file (done)
+	-Add TabView using CaliBurn Micro Sreen/Conductor
 	- ...
 
 --------------------

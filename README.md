@@ -19,5 +19,23 @@ I hope we will be able to
 
 as soon as possible.
 
+----------
+
+----------
+
+**Requierements**
+
+*Client*
+
+ -  Caliburn Micro WPF Framework
+
+*Server*
+
+ - Entity Framework
+
+----------
+
+----------
+
 to be continued ...
 
