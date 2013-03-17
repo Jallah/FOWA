@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -33,8 +34,10 @@ namespace FowaProtocol.FowaImplementations
                 {
                     // Client Disconnected
                     string s = exception.Message;
+#if DEBUG
+                    Debug.WriteLine(s);
+#endif
                     // log Exception
-                    //Console.WriteLine("Client {0} disconnected", _nr);
                     break;
                 }
 

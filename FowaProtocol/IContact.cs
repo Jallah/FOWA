@@ -10,7 +10,7 @@ namespace FowaProtocol
 {
     public interface IContact
     {
-        int UID { get; set; }
+        int UserId { get; set; }
         string Email { get; set; }
         string Pw { get; set; }
         string Nick { get; set; }

@@ -30,6 +30,7 @@ namespace FowaProtocol.FowaImplementations
             return _client.Connected;
         }
 
+        // used to write into a consisting Stream
         public FowaClient(NetworkStream stream)
         {
             ClientStream = stream;
@@ -61,16 +62,17 @@ namespace FowaProtocol.FowaImplementations
                 await _streamWriter.WriteLineAsync(fowaMessage.Message);
                 _streamWriter.Flush();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Log exceptions
+                // Maybe the an error occured during "Connect" and the streamWriter is null
                 successfull = false;
             }
 
             return successfull;
         }
 
-        public async Task<string> ReadFromSreamAsync()
+        public async Task<string> ReadFromStreamAsync()
         {
             string s = await _streamReader.ReadLineAsync();
             return s;

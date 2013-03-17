@@ -14,6 +14,7 @@ namespace FowaProtocol.FowaMessages
     /*
         <fowamessage>
            <header messagekind="6" />
+           <logedinas email="" nickname="" uid="" />
            <friendlist>
                 <friend email="" nickname="" uid="" />
                 <friend email="" nickname="" uid="" />
@@ -22,14 +23,35 @@ namespace FowaProtocol.FowaMessages
         </fowamessage> 
     */
 
+    // This Message will be send to the client if the login was successful
     public class FriendListMessage : MessageBase, IFowaMessage
     {
         public string Message { get; private set; }
 
         // not finished yet
-        public FriendListMessage(IEnumerable<Friend> friends)
+        public FriendListMessage(User loggedInAs, IEnumerable<Friend> friends)
             : base((int)MessageKind.FriendListMessage)
         {
+            // loggedinas
+            XmlNode loggedInAsNode = XmlDoc.CreateElement("loggedinas");
+            XmlAttribute loggedInAsEMailAttribute = XmlDoc.CreateAttribute("email");
+            loggedInAsEMailAttribute.Value = loggedInAs.Email;
+            XmlAttribute loggedInAsNickNameAttribute = XmlDoc.CreateAttribute("nickname");
+            loggedInAsNickNameAttribute.Value = loggedInAs.Nick;
+            XmlAttribute loggedInAsUidAttribute = XmlDoc.CreateAttribute("uid");
+            loggedInAsUidAttribute.Value = loggedInAs.UserId + "";
+
+            if(loggedInAsNode.Attributes != null)
+            {
+                loggedInAsNode.Attributes.Append(loggedInAsEMailAttribute);
+                loggedInAsNode.Attributes.Append(loggedInAsNickNameAttribute);
+                loggedInAsNode.Attributes.Append(loggedInAsUidAttribute);
+            }
+            else
+            {
+                throw new Exception("Error occurred during creating a FriendListMessage");
+            }
+
             // friendlistnode
             XmlNode friendlistNode = XmlDoc.CreateElement("friendlist");
 
@@ -61,6 +83,9 @@ namespace FowaProtocol.FowaMessages
                 // add friendnode to freindlistnode
                 friendlistNode.AppendChild(friendNode);
             }
+
+            // add loggedinas to xml RoodNode
+            RoodNode.AppendChild(loggedInAsNode);
 
             // add logininfo to xml RoodNode
             RoodNode.AppendChild(friendlistNode);

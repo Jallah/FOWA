@@ -25,12 +25,12 @@ namespace FowaProtocol
         //public delegate void IncomingErrorMessageMessageEventHandler(object sender, IncomingErrorMessageEventArgs args);
         //public delegate void IncomingFriendlistMessageEventHandler(object sender, IncomingMessageEventArgs args);
 
-        public event Action<object, IncomingMessageEventArgs> IncomingLoginMessage;
-        public event Action<object, IncomingMessageEventArgs> IncomingRegisterMessage;
-        public event Action<object, IncomingMessageEventArgs> IncomingUserMessage;
-        public event Action<object, IncomingMessageEventArgs> IncomingSeekFriendsRequestMessage;
-        public event Action<object, IncomingErrorMessageEventArgs> IncomingErrorMessage;
-        public event Action<object, IncomingMessageEventArgs> IncomingFriendlistMessage;
+        public event EventHandler<IncomingMessageEventArgs>  IncomingLoginMessage;
+        public event EventHandler<IncomingMessageEventArgs> IncomingRegisterMessage;
+        public event EventHandler<IncomingMessageEventArgs> IncomingUserMessage;
+        public event EventHandler<IncomingMessageEventArgs> IncomingSeekFriendsRequestMessage;
+        public event EventHandler<IncomingErrorMessageEventArgs> IncomingErrorMessage;
+        public event EventHandler<IncomingMessageEventArgs> IncomingFriendlistMessage;
 
         // LoginMessage = 1
         // RegisterMessage = 2

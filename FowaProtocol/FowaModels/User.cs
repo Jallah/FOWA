@@ -4,7 +4,7 @@ namespace FowaProtocol.FowaModels
 {
     public class User : IContact
     {
-        public int UID { get; set; }
+        public int UserId { get; set; }
         
         public string Email { get; set; }
         

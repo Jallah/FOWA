@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:CommandBase="clr-namespace:Client.CommandBase" mc:Ignorable="d" d:DesignWidth="291" Height="197">
+             xmlns:CommandBase="clr-namespace:Client.CommandBase" mc:Ignorable="d" d:DesignWidth="291" Height="191">
     <UserControl.Resources>
 
         <Style TargetType="{x:Type TextBox}">
@@ -44,15 +44,16 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="0,0,10,0" Height="197" VerticalAlignment="Top">
+    <Grid>
         <TextBox x:Name="email" Text="{Binding Path=EMail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Height="23" Margin="31,37,30,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBox x:Name="password" Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="31,112,30,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23"/>
+        <TextBox x:Name="password" Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="31,96,30,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23"/>
         <Label x:Name="emailLabel" Content="E-mail:" Margin="31,11,167,0" Height="26" VerticalAlignment="Top"/>
-        <Label x:Name="passwordLabel" Content="Passwort:" Margin="31,86,189,0" Height="26" VerticalAlignment="Top"/>
+        <Label x:Name="passwordLabel" Content="Passwort:" Margin="31,65,189,100"/>
         
         <!-- See CaliBurn Micro Tutorial Short Syntax -->
-        <Button x:Name="loginButton" Content="Login" Margin="31,161,139,0" cal:Message.Attach="[Event Click] = [Action SendLoginData]" Height="22" VerticalAlignment="Top"/>
-        <Button x:Name="registerButton" Content="Registrieren" Margin="146,161,30,0" cal:Message.Attach="[Event Click] = [Action OpenRegisterDialog]" Height="22" VerticalAlignment="Top"/>
+        <Button x:Name="loginButton" Content="Login" Margin="31,124,148,45" cal:Message.Attach="[Event Click] = [Action SendLoginData]"/>
+        <Button x:Name="registerButton" Content="Registrieren" Margin="148,124,29,0" cal:Message.Attach="[Event Click] = [Action OpenRegisterDialog]" Height="22" VerticalAlignment="Top"/>
+        <Label x:Name="Info" HorizontalAlignment="Left" Margin="31,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.474,0.038"/>
         <!-- Without using CaliBurn Micro -->
         <!--<Button x:Name="loginButton" Content="Login" Margin="31,161,139,0" CommandParameter="{Binding}" Command="{Binding SendLoginDataCommand.Command}"
                 CommandBase:CreateCommandBinding.Command="{Binding SendLoginDataCommand}" Height="22" VerticalAlignment="Top"/>-->

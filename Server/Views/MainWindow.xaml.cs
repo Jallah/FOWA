@@ -8,8 +8,7 @@ using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
 using FowaProtocol.FowaModels;
 
-
-namespace FOWA.Views
+namespace Server.Views
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
@@ -36,13 +35,14 @@ namespace FOWA.Views
             // fowaServerLogTextBlock.Text = args.Message;
 
             Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text = args.Message));
-            //StreamWriter sw = new StreamWriter(args.SenderNetworkStream);
+            //StreamWriter sw = new StreamWriter(args.FowaClient.ClientStream);
             List<Friend> l = new List<Friend>
                                {
                                     new Friend(){Email = "hans@lol.de", Nick = "hans", UserId = 23},
                                     new Friend(){Email = "Peter@ulul.com", Nick = "Peter", UserId = 233}
                                };
-            FriendListMessage m = new FriendListMessage(l);
+
+            FriendListMessage m = new FriendListMessage(new User(){Email = "hans@gmx.net", LastMessage = DateTime.Now, Nick = "hans", Pw = "pw", UserId = 234}, l);
             //sw.WriteLineAsync(m.Message);
             //sw.Flush();
             args.FowaClient.WriteToClientStreamAync(m);

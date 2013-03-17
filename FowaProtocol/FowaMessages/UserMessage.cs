@@ -29,7 +29,7 @@ namespace FowaProtocol.FowaMessages
 
             //sender/uid
             XmlAttribute senderUidAttribute = XmlDoc.CreateAttribute("uid");
-            senderUidAttribute.Value = sender.UID + "";
+            senderUidAttribute.Value = sender.UserId + "";
             if (senderNode.Attributes != null)
                 senderNode.Attributes.Append(senderUidAttribute);
             else
@@ -40,7 +40,7 @@ namespace FowaProtocol.FowaMessages
 
             // receiver/uid
             XmlAttribute receiverUidAttribute = XmlDoc.CreateAttribute("uid");
-            receiverUidAttribute.Value = receiver.UID + "";
+            receiverUidAttribute.Value = receiver.UserId + "";
             if (receiverNode.Attributes != null)
                 receiverNode.Attributes.Append(receiverUidAttribute);
             else

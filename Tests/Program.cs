@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 
 using FowaProtocol.FowaMessages;
+using FowaProtocol.FowaModels;
 using FowaProtocol.XmlDeserialization;
 using Server;
 using Server.BL.Services;
@@ -18,25 +19,31 @@ using Server.DL;
 
 namespace Tests
 {
+    public sealed class Singleton
+    {
+        private static readonly Singleton instance = new Singleton();
+
+        private Singleton() { Console.WriteLine("Ctor"); }
+
+        public static Singleton Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+    }
+
     class Program
     {
 
         static void Main(string[] args)
         {
-            var s = Convert.ToString(DateTime.Now);
-            var d = new DateTime();
-            d = DateTime.Parse(s);
+            var s = Singleton.Instance; 
 
-            List<Friend> l = new List<Friend>
-                               {
-                                   new Friend(){Email = "hans", Nick = "hans", Uid = 23},
-                                   new Friend(){Email = "hans", Nick = "hans", Uid = 23}
-                               };
+            var a = Singleton.Instance;
 
-           // FriendListMessage m = new FriendListMessage(l);
-            
-
-            Console.ReadKey();
+            Console.ReadKey(); 
         }
     }
 }

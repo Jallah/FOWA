@@ -19,7 +19,7 @@ namespace FowaProtocol
     //    [XmlAttribute("nick")]
     //    public string Nick { get; set; }
     //    [XmlAttribute("id")]
-    //    public int UID { get; set; }
+    //    public int UserId { get; set; }
     //    [XmlAttribute("ip")]
     //    public string Ip { get; set; }
 

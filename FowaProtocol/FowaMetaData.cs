@@ -10,12 +10,12 @@ namespace FowaProtocol
     public class FowaMetaData
     {
 
-        public Action<object, IncomingMessageEventArgs> OnIncomingLoginMessageCallback { get; set; }
-        public Action<object, IncomingMessageEventArgs> OnIncomingRegisterMessageeCallback { get; set; }
-        public Action<object, IncomingMessageEventArgs> OnIncomingUserMessageCallback { get; set; }
-        public Action<object, IncomingMessageEventArgs> OnIncomingSeekFriendsRequestMessageCallback { get; set; }
-        public Action<object, IncomingErrorMessageEventArgs> OnIncomingErrorMessageCallback { get; set; }
-        public Action<object, IncomingMessageEventArgs> OnIncomingFriendlistMessageCallback { get; set; }
+        public EventHandler<IncomingMessageEventArgs> OnIncomingLoginMessageCallback { get; set; }
+        public EventHandler<IncomingMessageEventArgs> OnIncomingRegisterMessageeCallback { get; set; }
+        public EventHandler<IncomingMessageEventArgs> OnIncomingUserMessageCallback { get; set; }
+        public EventHandler<IncomingMessageEventArgs> OnIncomingSeekFriendsRequestMessageCallback { get; set; }
+        public EventHandler<IncomingErrorMessageEventArgs> OnIncomingErrorMessageCallback { get; set; }
+        public EventHandler<IncomingMessageEventArgs> OnIncomingFriendlistMessageCallback { get; set; }
 
     }
 }

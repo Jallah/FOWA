@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Client.Views
 {
     /// <summary>
-    /// Interaktionslogik für ErrorWindow.xaml
+    /// Interaktionslogik für ErrorView.xaml
     /// </summary>
-    public partial class ErrorWindow : Window
+    public partial class ErrorView : Window
     {
-        public ErrorWindow()
+        public ErrorView()
         {
             InitializeComponent();
         }

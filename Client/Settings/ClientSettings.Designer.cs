@@ -13,13 +13,34 @@ namespace Client.Settings {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class ClientSettings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class ClientSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static ClientSettings defaultInstance = ((ClientSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ClientSettings())));
         
         public static ClientSettings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("87.160.38.140")]
+        public string FowaServerIp {
+            get {
+                return ((string)(this["FowaServerIp"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3333")]
+        public int FowaServerPort {
+            get {
+                return ((int)(this["FowaServerPort"]));
+            }
+            set {
+                this["FowaServerPort"] = value;
             }
         }
     }

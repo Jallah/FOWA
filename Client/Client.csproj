@@ -82,9 +82,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>ClientSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SingletonFowaClient\FowaConnection.cs" />
     <Compile Include="ViewModelBase\ViewModelBase.cs" />
     <Compile Include="ViewModels\ContactViewModel.cs" />
-    <Compile Include="ViewModels\ErroViewModel.cs" />
+    <Compile Include="ViewModels\ErrorViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainChatViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
@@ -99,8 +100,8 @@
     <Compile Include="Views\ContactView.xaml.cs">
       <DependentUpon>ContactView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ErrorWindow.xaml.cs">
-      <DependentUpon>ErrorWindow.xaml</DependentUpon>
+    <Compile Include="Views\ErrorView.xaml.cs">
+      <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterView.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
@@ -136,7 +137,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ErrorWindow.xaml">
+    <Page Include="Views\ErrorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,7 +178,7 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Settings\ClientSettings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>ClientSettings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>

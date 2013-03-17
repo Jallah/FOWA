@@ -11,7 +11,9 @@ using Caliburn.Micro;
 using Client.CommandBase;
 using Client.Commands;
 using Client.Helper;
+using Client.SingletonFowaClient;
 using Client.Views;
+using FowaProtocol;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
@@ -24,13 +26,17 @@ namespace Client.ViewModels
     {
 
         #region Fields
-        private readonly IPEndPoint _ip = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 80);
+        private readonly IPEndPoint _ip = new IPEndPoint(IPAddress.Parse(Settings.ClientSettings.Default.FowaServerIp), Settings.ClientSettings.Default.FowaServerPort);
         private readonly IWindowManager _windowManager;
         private string _eMail;
         private string _password;
+        private string _info;
+       // private readonly FowaClient _client;
+        private FowaConnection connection;
+
         //private readonly CommandModel _sendLogin;
         //private readonly CommandModel _openRegisterDialog;
-        private readonly FowaClient _client;
+        
         #endregion
 
         #region Ctor
@@ -39,14 +45,18 @@ namespace Client.ViewModels
         {
             //_sendLogin = new SendLoginDataCommand(this);
             //_openRegisterDialog = new OpenDialogCommand(this);
-
             _windowManager = windowManager;
-            _client = new FowaClient();
-            _client.IncomingFriendlistMessage += OnIncomingFriendlistMessage;
+
+            connection = FowaConnection.Instance;
+
+            connection.ConnectionFailed += OnConnectionFailed;
+            FowaMetaData data = new FowaMetaData {OnIncomingFriendlistMessageCallback = OnIncomingFriendlistMessage};
+            connection.FowaMetaData = data;
         }
         #endregion
 
         #region EventHandler
+
         public void OnIncomingFriendlistMessage(object sender, IncomingMessageEventArgs e)
         {
             var list = FowaProtocol.XmlDeserialization.XmlDeserializer.DeserializeFriends(e.Message);
@@ -55,6 +65,13 @@ namespace Client.ViewModels
 
             MessageBox.Show(fr);
         }
+
+        public void OnConnectionFailed(object sender, ConnectionFailedEventArgs e)
+        {
+            Info = string.Empty;
+            Execute.OnUIThread(() => _windowManager.ShowDialog(new ErrorViewModel(e.Exception.Message)));
+        }
+
         #endregion
 
         #region Properties
@@ -81,6 +98,17 @@ namespace Client.ViewModels
                 OnPropertyChanged(this, "CanSendLoginData");
             }
         }
+
+        public string Info
+        {
+            get { return _info; }
+            set
+            {
+                if (_info == value) return;
+                _info = value;
+                OnPropertyChanged(this, "Info");
+            }
+        }
         #endregion
 
         #region not used Commands
@@ -95,24 +123,44 @@ namespace Client.ViewModels
         //}
         #endregion
 
-        #region SendLoginData
+        #region SendLoginData and wait for server response
+
         public async void SendLoginData()
         {
-            if(!_client.IsConnected())
-                try
-                {
-                    _client.Connect(_ip);
-                }
-                catch (Exception)
-                {
-                    System.Windows.Forms.MessageBox.Show("The service is currently not available.", "Sorry");
-                    return;
-                }
-              
-            await _client.WriteToClientStreamAync(new LoginMessage(EMail, Password));
-            string s = await _client.ReadFromSreamAsync();
-            _client.HandleIncomingMessage(s, _client.ClientStream);
+            string pw = Password;
+            Password = string.Empty;
+            Info = "Please wait ...";
 
+            if(!connection.Connected())
+            {
+                bool connected = await Task.Run(() => connection.Connect());
+                
+                if (!connected) return;
+            }
+
+            var successful = await connection.WriteToClientStreamAync(new LoginMessage(EMail, pw));
+
+            if (!successful)
+            {
+                _windowManager.ShowDialog(new ErrorViewModel("Service not available"));
+                return;
+            }
+
+            StartReadingServerResponseAsync();
+        }
+
+        public async void StartReadingServerResponseAsync()
+        {
+            try
+            {
+                string s = await connection.ReadFromStreamAsync();
+                connection.HandleIncomingMessage(s, connection.ClientStream);
+            }
+            catch (Exception ex)
+            {
+                _windowManager.ShowWindow(new ErrorViewModel(ex.Message));
+            }
+            
         }
 
         public bool CanSendLoginData
@@ -124,7 +172,7 @@ namespace Client.ViewModels
         #region OpenRegisterDialog
         public void OpenRegisterDialog()
         {
-           _windowManager.ShowWindow(new SeekFriendViewModel());
+           _windowManager.ShowDialog(new ErrorViewModel("hans"));
         }
         #endregion
 
