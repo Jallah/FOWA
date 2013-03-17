@@ -39,9 +39,9 @@ namespace Tests
 
         static void Main(string[] args)
         {
-            var s = Singleton.Instance; 
-
-            var a = Singleton.Instance;
+            var s1 = Singleton.Instance; 
+            var s2 = Singleton.Instance;
+            var s3 = Singleton.Instance;
 
             Console.ReadKey(); 
         }

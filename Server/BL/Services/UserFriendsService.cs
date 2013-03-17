@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Server.BL.Contracts;
 using Server.DAL;
+using Server.DAL.Contracts;
 using Server.DL;
-using Server.DL.Contracts;
 
 namespace Server.BL.Services
 {
@@ -26,6 +26,14 @@ namespace Server.BL.Services
         public user GetUserById(int id)
         {
             return _userRepository.GetById(id);
+        }
+
+        public user GetUserbyEmail(string email)
+        {
+            var user = (from u in _userRepository.Table
+                        where u.email.Contains(email)
+                        select u).FirstOrDefault();
+            return user;
         }
 
         public void AddUser(user user)

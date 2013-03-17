@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Server.BL.Contracts;
 
-namespace Server.DL.Contracts
+namespace Server.DAL.Contracts
 {
     interface IRepository<T> where T : IEntity
     {

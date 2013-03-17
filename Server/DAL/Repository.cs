@@ -1,8 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using Server.BL.Contracts;
-using Server.DL.Contracts;
 using System.Data.Entity.Migrations;
+using Server.DAL.Contracts;
 
 namespace Server.DAL
 {

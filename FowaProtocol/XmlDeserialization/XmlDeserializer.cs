@@ -32,6 +32,8 @@ namespace FowaProtocol.XmlDeserialization
                                   UserId = int.Parse(uid.Value)
                               }).ToList<Friend>();
             return friends;
-        } 
+        }
+
+        
     }
 }
