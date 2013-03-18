@@ -22,7 +22,7 @@ using MessageBox = System.Windows.Forms.MessageBox;
 namespace Client.ViewModels
 {
     [Export(typeof(LoginViewModel))]
-    public class LoginViewModel : ViewModelBase.ViewModelBase
+    public class LoginViewModel : ViewModelBase.ViewModelBase, IViewAware
     {
 
         #region Fields
@@ -31,27 +31,18 @@ namespace Client.ViewModels
         private string _eMail;
         private string _password;
         private string _info;
-       // private readonly FowaClient _client;
-        private FowaConnection connection;
-
-        //private readonly CommandModel _sendLogin;
-        //private readonly CommandModel _openRegisterDialog;
-        
+        private readonly FowaConnection _connection;
         #endregion
 
         #region Ctor
         [ImportingConstructor]
         public LoginViewModel(IWindowManager windowManager)
         {
-            //_sendLogin = new SendLoginDataCommand(this);
-            //_openRegisterDialog = new OpenDialogCommand(this);
             _windowManager = windowManager;
-
-            connection = FowaConnection.Instance;
-
-            connection.ConnectionFailed += OnConnectionFailed;
-            FowaMetaData data = new FowaMetaData {OnIncomingFriendlistMessageCallback = OnIncomingFriendlistMessage};
-            connection.FowaMetaData = data;
+            _connection = FowaConnection.Instance;
+            _connection.ConnectionFailed += OnConnectionFailed;
+            FowaMetaData data = new FowaMetaData { OnIncomingFriendlistMessageCallback = OnIncomingFriendlistMessage };
+            _connection.FowaMetaData = data;
         }
         #endregion
 
@@ -131,14 +122,14 @@ namespace Client.ViewModels
             Password = string.Empty;
             Info = "Please wait ...";
 
-            if(!connection.Connected())
+            if (!_connection.Connected())
             {
-                bool connected = await Task.Run(() => connection.Connect());
-                
+                bool connected = await Task.Run(() => _connection.Connect());
+
                 if (!connected) return;
             }
 
-            var successful = await connection.WriteToClientStreamAync(new LoginMessage(EMail, pw));
+            var successful = await _connection.WriteToClientStreamAync(new LoginMessage(EMail, pw));
 
             if (!successful)
             {
@@ -153,26 +144,27 @@ namespace Client.ViewModels
         {
             try
             {
-                string s = await connection.ReadFromStreamAsync();
-                connection.HandleIncomingMessage(s, connection.ClientStream);
+                string s = await _connection.ReadFromStreamAsync();
+                _connection.HandleIncomingMessage(s, _connection.ClientStream);
             }
             catch (Exception ex)
             {
                 _windowManager.ShowWindow(new ErrorViewModel(ex.Message));
             }
-            
+
         }
 
         public bool CanSendLoginData
         {
-            get { return (Validator.IsEmail(this.EMail) && Validator.ValidateFields(new[] {this.EMail, this.Password})); }
+            get { return (Validator.IsEmail(this.EMail) && Validator.ValidateFields(new[] { this.EMail, this.Password })); }
         }
         #endregion
 
         #region OpenRegisterDialog
         public void OpenRegisterDialog()
         {
-           _windowManager.ShowDialog(new ErrorViewModel("hans"));
+            CloseView();
+            //_windowManager.ShowDialog(new ErrorViewModel("hans"));
         }
         #endregion
 
@@ -194,6 +186,30 @@ namespace Client.ViewModels
                 return errorMessage;
             }
         }
+        #endregion
+
+        #region IViewAware implementation
+        private Window _loginView;
+
+        public void AttachView(object view, object context = null)
+        {
+            _loginView = view as Window;
+            if (ViewAttached != null)
+                ViewAttached(this,
+                   new ViewAttachedEventArgs() { Context = context, View = view });
+        }
+
+        public object GetView(object context = null)
+        {
+            return _loginView;
+        }
+
+        public void CloseView()
+        {
+            _loginView.Close();
+        }
+
+        public event EventHandler<ViewAttachedEventArgs> ViewAttached;
         #endregion
     }
 }

@@ -1,21 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Serialization;
-
-using FowaProtocol.FowaMessages;
-using FowaProtocol.FowaModels;
-using FowaProtocol.XmlDeserialization;
-using Server;
-using Server.BL.Services;
-using Server.DL;
 
 namespace Tests
 {
