@@ -13,7 +13,7 @@ namespace FowaProtocol.XmlDeserialization
 {
     public static class XmlDeserializer
     {
-        static public List<Friend> DeserializeFriends(string xmlFriendList)
+        public static List<Friend> DeserializeFriends(string xmlFriendList)
         {
             XDocument doc = XDocument.Parse(xmlFriendList);
 
@@ -32,6 +32,32 @@ namespace FowaProtocol.XmlDeserialization
                                   UserId = int.Parse(uid.Value)
                               }).ToList<Friend>();
             return friends;
+        }
+
+        public static LoginInfo GetLoginInfo(string xmlLoginInfo)
+        {
+            XDocument doc = XDocument.Parse(xmlLoginInfo);
+
+            var loginInfo = (from i in doc.Descendants("logininfo")
+                             let email = i.Attribute("email")
+                             where email != null
+                             let password = i.Attribute("password")
+                             where password != null
+
+                             select new LoginInfo
+                                        {
+                                            Email = email.Value,
+                                            Pw = password.Value
+                                        }).FirstOrDefault();
+            return loginInfo;
+        }
+
+        public static string GetErrorMessage(string xmlErrorMessage)
+        {
+            XDocument doc = XDocument.Parse(xmlErrorMessage);
+            XElement messageElement = doc.Descendants("errormessage").FirstOrDefault();
+
+            return messageElement != null ? messageElement.Value : null;
         }
 
         

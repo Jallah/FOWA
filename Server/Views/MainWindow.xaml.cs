@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using FowaProtocol;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
 using FowaProtocol.FowaModels;
+using FowaProtocol.MessageEnums;
+using FowaProtocol.XmlDeserialization;
+using Server.BL.Services;
+using Server.DL;
 
 namespace Server.Views
 {
@@ -17,11 +22,13 @@ namespace Server.Views
     {
         private readonly FowaMetaData _metaData;
         private readonly FowaService _service;
+        private readonly UserFriendsService _userFriendService;
 
         public MainWindow()
         {
             _metaData = new FowaMetaData { OnIncomingLoginMessageCallback = this.OnIncomingLoginMessage };
             _service = new FowaService(_metaData);
+            _userFriendService = new UserFriendsService();
 
             InitializeComponent();
             //service.IncomingUserMessage += OnIncomingUserMessage;
@@ -34,17 +41,33 @@ namespace Server.Views
             // Der aufrufende Thread kann nicht auf dieses Objekt zugreifen, da sich das Objekt im Besitz eines anderen Threads befindet."
             // fowaServerLogTextBlock.Text = args.Message;
 
-            Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text = args.Message));
-            //StreamWriter sw = new StreamWriter(args.FowaClient.ClientStream);
-            List<Friend> l = new List<Friend>
-                               {
-                                    new Friend(){Email = "hans@lol.de", Nick = "hans", UserId = 23},
-                                    new Friend(){Email = "Peter@ulul.com", Nick = "Peter", UserId = 233}
-                               };
+            var login = XmlDeserializer.GetLoginInfo(args.Message);
+            Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Incoming Login:\n" + '\t' + login.Email + "\n\t" + login.Pw + "\n\n"));
 
-            FriendListMessage m = new FriendListMessage(new User(){Email = "hans@gmx.net", LastMessage = DateTime.Now, Nick = "hans", Pw = "pw", UserId = 234}, l);
-            //sw.WriteLineAsync(m.Message);
-            //sw.Flush();
+            // Check if user exists
+            if (!_userFriendService.UserExists(login.Email))
+            {
+                Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Login failed: User not found.\n----------\n"));
+                args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "User not found."));
+                return;
+            }
+
+            // Check if password is correct
+            var user = _userFriendService.GetUserbyEmail(login.Email);
+
+            if (!user.pw.Equals(login.Pw))
+            {
+                Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Login failed: Wrong Password.\n----------\n"));
+                args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "Incorrect Password"));
+                return;
+            }
+
+            // Send Friendlist to user
+            var friends = _userFriendService.GetFriends(user);
+            List<Friend> friendList = friends.Select(friend => new Friend { Email = friend.email, Nick = friend.nick, UserId = friend.ID }).ToList();
+            FriendListMessage m = new FriendListMessage(new User { Email = user.email, LastMessage = user.lastMessage, Nick = user.nick, UserId = user.ID }, friendList);
+
+            // send FriendListMessage
             args.FowaClient.WriteToClientStreamAync(m);
         }
 

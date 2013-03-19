@@ -55,6 +55,7 @@
     <Compile Include="FowaMessages\UserMessage.cs" />
     <Compile Include="EventArgs\IncomingMessageEventArgs.cs" />
     <Compile Include="FowaMetaData.cs" />
+    <Compile Include="FowaModels\LoginInfo.cs" />
     <Compile Include="FowaProtocol.cs" />
     <Compile Include="FowaModels\Friend.cs" />
     <Compile Include="IContact.cs" />

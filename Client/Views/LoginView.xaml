@@ -53,7 +53,7 @@
         <!-- See CaliBurn Micro Tutorial Short Syntax -->
         <Button x:Name="loginButton" Content="Login" Margin="31,124,148,45" cal:Message.Attach="[Event Click] = [Action SendLoginData]"/>
         <Button x:Name="registerButton" Content="Registrieren" Margin="148,124,29,0" cal:Message.Attach="[Event Click] = [Action OpenRegisterDialog]" Height="22" VerticalAlignment="Top"/>
-        <Label x:Name="Info" HorizontalAlignment="Left" Margin="31,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.474,0.038"/>
+        <Label x:Name="Info" Foreground="Red" HorizontalAlignment="Left" Margin="31,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.474,0.038"/>
         <!-- Without using CaliBurn Micro -->
         <!--<Button x:Name="loginButton" Content="Login" Margin="31,161,139,0" CommandParameter="{Binding}" Command="{Binding SendLoginDataCommand.Command}"
                 CommandBase:CreateCommandBinding.Command="{Binding SendLoginDataCommand}" Height="22" VerticalAlignment="Top"/>-->

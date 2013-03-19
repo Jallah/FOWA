@@ -17,6 +17,7 @@ using FowaProtocol;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
+using FowaProtocol.XmlDeserialization;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Client.ViewModels
@@ -41,7 +42,7 @@ namespace Client.ViewModels
             _windowManager = windowManager;
             _connection = FowaConnection.Instance;
             _connection.ConnectionFailed += OnConnectionFailed;
-            FowaMetaData data = new FowaMetaData { OnIncomingFriendlistMessageCallback = OnIncomingFriendlistMessage };
+            FowaMetaData data = new FowaMetaData { OnIncomingFriendlistMessageCallback = OnIncomingFriendlistMessage, OnIncomingErrorMessageCallback = OnIncomingErrorMessage};
             _connection.FowaMetaData = data;
         }
         #endregion
@@ -55,6 +56,11 @@ namespace Client.ViewModels
             string fr = list.Aggregate("", (current, friend) => current + friend.Email + " " + friend.Nick + " " + friend.UserId + '\n');
 
             MessageBox.Show(fr);
+        }
+
+        public void OnIncomingErrorMessage(object sender, IncomingErrorMessageEventArgs e)
+        {
+            Info = XmlDeserializer.GetErrorMessage(e.Message);
         }
 
         public void OnConnectionFailed(object sender, ConnectionFailedEventArgs e)
@@ -129,7 +135,7 @@ namespace Client.ViewModels
                 if (!connected) return;
             }
 
-            var successful = await _connection.WriteToClientStreamAync(new LoginMessage(EMail, pw));
+            var successful = await _connection.WriteToClientStreamAync(new LoginMessage(EMail.Trim(), pw.Trim()));
 
             if (!successful)
             {
@@ -195,8 +201,7 @@ namespace Client.ViewModels
         {
             _loginView = view as Window;
             if (ViewAttached != null)
-                ViewAttached(this,
-                   new ViewAttachedEventArgs() { Context = context, View = view });
+                ViewAttached(this, new ViewAttachedEventArgs() { Context = context, View = view });
         }
 
         public object GetView(object context = null)

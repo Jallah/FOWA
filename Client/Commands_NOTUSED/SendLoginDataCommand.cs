@@ -19,7 +19,7 @@ namespace Client.Commands
         {
             this._viewModel = viewModel;
         }
-
+        
         public override void CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = (Validator.IsEmail(_viewModel.EMail) && Validator.ValidateFields(new[] { _viewModel.EMail, _viewModel.Password }));

@@ -17,7 +17,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="U_ID" Type="int" Nullable="false" />
           <Property Name="F_ID" Type="int" Nullable="false" />
         </EntityType>
@@ -61,7 +61,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="U_ID" Type="Int32" Nullable="false" />
           <Property Name="F_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="user" Relationship="fowaModel.FK" FromRole="friends" ToRole="user" />
