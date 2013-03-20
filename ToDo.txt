@@ -10,6 +10,7 @@ Client: (MVVM)
 	-Add resource file for messages (done)
 	-Add settings file (done)
 	-Add TabView using CaliBurn Micro Sreen/Conductor
+	-Implement dependency injection for a service to open and close views from code.
 	- ...
 
 --------------------
@@ -24,8 +25,10 @@ FowaProtocol:
 Server:
 --------------------
 
-	- Implement RepositoryPattern
-	- NAT Traversal
+	- Implement RepositoryPattern (done)
+	- NAT Traversal (maybe not nessecary through the architecture)
+	- Implement a list with connected cients
+	- Implement a way of notify if a user is on-/offline 
 	- ...
 
 --------------------
