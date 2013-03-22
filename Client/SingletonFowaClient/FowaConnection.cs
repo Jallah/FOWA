@@ -46,6 +46,23 @@ namespace Client.SingletonFowaClient
             _fowaMetaData = new FowaMetaData();
         }
 
+        public static FowaConnection Instance
+        {
+            get
+            {
+                // double-check locking
+                if (_instance == null)
+                {
+                    lock (Lock)
+                    {
+                        if (_instance == null)
+                            _instance = new FowaConnection();
+                    }
+                }
+
+                return _instance;
+            }
+        }
         
         public FowaMetaData FowaMetaData
         {
@@ -104,22 +121,6 @@ namespace Client.SingletonFowaClient
             }
         }
 
-        public static FowaConnection Instance
-        {
-            get
-            {
-                // double-check locking
-                if (_instance == null)
-                {
-                    lock (Lock)
-                    {
-                        if (_instance == null)
-                            _instance = new FowaConnection();
-                    }
-                }
-
-                return _instance;
-            }
-        }
+        
     }
 }

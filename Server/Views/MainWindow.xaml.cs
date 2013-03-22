@@ -69,7 +69,7 @@ namespace Server.Views
             catch (Exception ex)
             {
                 // Log ex
-                Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "DB connection failed.\n----------\n"));
+                Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "DB connection failed.\n----------\n" + ex.Message));
                 args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "Fetching Friends failed."));
                 return;
             }

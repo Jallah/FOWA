@@ -15,6 +15,7 @@ namespace Server.BL.Services
         private readonly IRepository<user> _userRepository;
         private readonly IRepository<friends> _friendsRepository;
         private readonly fowaEntities _fowaDbContext;
+        private readonly object _lock = new object();
 
         public UserFriendsService()
         {
@@ -93,7 +94,13 @@ namespace Server.BL.Services
             // email = hans@gmx.neT --> return true
             // email = hans@gmx.nett --> return false
             // email = hhans@gmx.net --> return false
-            return _userRepository.Table.FirstOrDefault(a => a.email.Contains(email)) != null;
+
+            //open two clients (start debugging and go to the debug/release folder) .. now fill the input fields and send the data to the server at the same time.
+            //without this lock below, you will got an error.
+            lock (_lock)
+            {
+                return _userRepository.Table.FirstOrDefault(a => a.email.Contains(email)) != null;
+            }
         }
 
         private void Commit()
