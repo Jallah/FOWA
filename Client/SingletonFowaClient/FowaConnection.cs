@@ -13,6 +13,8 @@ using FowaProtocol.FowaMessages;
 namespace Client.SingletonFowaClient
 {
 
+   
+
     public class ConnectionFailedEventArgs : EventArgs
     {
         public Exception Exception;
@@ -21,6 +23,9 @@ namespace Client.SingletonFowaClient
             Exception = exception;
         }
     }
+
+    // see http://www.ibm.com/developerworks/java/library/j-dcl/index.html
+    // or http://www.yoda.arachsys.com/csharp/singleton.html
 
     public sealed class FowaConnection
     {
@@ -31,19 +36,11 @@ namespace Client.SingletonFowaClient
 
         public event EventHandler<ConnectionFailedEventArgs> ConnectionFailed;
 
-        public  EventHandler<IncomingMessageEventArgs> IncomingLoginMessage;
-        public  EventHandler<IncomingMessageEventArgs> IncomingRegisterMessage;
-        public  EventHandler<IncomingMessageEventArgs> IncomingUserMessage;
-        public  EventHandler<IncomingMessageEventArgs> IncomingSeekFriendsRequestMessage;
-        public  EventHandler<IncomingErrorMessageEventArgs> IncomingErrorMessage;
-        public  EventHandler<IncomingMessageEventArgs> IncomingFriendlistMessage;
-
         private readonly FowaClient _fowaClient;
 
         private FowaConnection()
         {
             _fowaClient = new FowaClient();
-            _fowaMetaData = new FowaMetaData();
         }
 
         public static FowaConnection Instance

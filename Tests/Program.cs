@@ -7,45 +7,41 @@ using Server.DL;
 
 namespace Tests
 {
-    public sealed class Singleton
+    public class Sender
     {
-        private static readonly Singleton instance = new Singleton();
+        public event EventHandler<EventArgs> OnFoo; 
 
-        private Singleton() { Console.WriteLine("Ctor"); }
-
-        public static Singleton Instance
+        public void RaiseEvent()
         {
-            get
-            {
-                return instance;
-            }
+            OnFoo(this, new EventArgs());
         }
     }
+
+    public class Subscriber
+    {
+        public void OnFooEventHandler(object sender, EventArgs e)
+        {
+            Console.WriteLine("fire fire fire");
+        }
+    }
+
 
     class Program
     {
 
         static void Main(string[] args)
         {
-            //var s1 = Singleton.Instance; 
-            //var s2 = Singleton.Instance;
-            //var s3 = Singleton.Instance;
+            Sender s = new Sender();
+            Subscriber su = new Subscriber();
 
-            UserFriendsService service = new UserFriendsService();
-            //var user = service.GetUserById(1);
-            //var user2 = service.GetUserById(2);
+            s.OnFoo += su.OnFooEventHandler;
 
-            //var friends = service.GetFriends(user);
+            s.RaiseEvent();
 
-            //foreach (var friend in friends)
-            //{
-            //    Console.WriteLine(friend.email);
-            //}
-            ErrorMessage m = new ErrorMessage(ErrorMessageKind.LiginError, "hans");
+            su = null;
 
-            
+            s.RaiseEvent(); // hier hab ich erwatet das das der EventHanlder nich mehr gültig ist und somit nicht mehr ausgeführt wird
 
-            Console.WriteLine(XmlDeserializer.GetErrorMessage(m.Message));
             Console.ReadKey(); 
         }
     }

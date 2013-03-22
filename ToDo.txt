@@ -47,3 +47,5 @@ Server:
 Additional notes:
 	
 	- Maybe to much logic within the Messages-Ctors. ( matter of taste :) )
+	- Can not use the DbContext for multi accessing. Mabye try to create a copy of the DbContext and after an action discard this copy.
+	  I will need this in order to not have to use the locking statement.
