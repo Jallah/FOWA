@@ -19,69 +19,101 @@ namespace Server.BL.Services
 
         public UserFriendsService()
         {
-            _fowaDbContext = new fowaEntities();
-            _userRepository = new Repository<user>(_fowaDbContext);
-            _friendsRepository = new Repository<friends>(_fowaDbContext);
+            lock (_lock)
+            {
+                _fowaDbContext = new fowaEntities();
+                _userRepository = new Repository<user>(_fowaDbContext);
+                _friendsRepository = new Repository<friends>(_fowaDbContext);
+            }
+           
         }
 
         public user GetUserById(int id)
         {
-            return _userRepository.GetById(id);
+            lock (_lock)
+            {
+                return _userRepository.GetById(id);
+            }
+            
         }
 
         public user GetUserbyEmail(string email)
         {
-            var user = (from u in _userRepository.Table
-                        where u.email.Contains(email)
-                        select u).FirstOrDefault();
-            return user;
+            lock (_lock)
+            {
+                var user = (from u in _userRepository.Table
+                            where u.email.Contains(email)
+                            select u).FirstOrDefault();
+                return user;
+            }
         }
 
         public void AddUser(user user)
         {
-            _userRepository.Insert(user);
-            Commit();
+            lock (_lock)
+            {
+                _userRepository.Insert(user);
+                Commit();
+            }
         }
 
         public void UpdateUser(user user)
         {
-            _userRepository.Update(user);
-            Commit();
+            lock (_lock)
+            {
+                _userRepository.Update(user);
+                Commit();
+            }
         }
 
         public void DeleteUser(user user)
         {
             // We don't have to implicitly delete all the friends of this user because
             // (delete) dissemination is enabled on the MySql-Server. (ON DELETE/UPDATE CASCADE in the foreign key options)
-            _userRepository.Delete(user);
-            Commit();
+            lock (_lock)
+            {
+                _userRepository.Delete(user);
+                Commit();
+            }
+            
         }
 
         public IList<user> GetFriends(user user)
         {
-            IQueryable<int> friendIds = from f in _friendsRepository.Table
-                                        where f.U_ID == user.ID
-                                        select f.F_ID;
+            lock (_lock)
+            {
+                IQueryable<int> friendIds = from f in _friendsRepository.Table
+                                            where f.U_ID == user.ID
+                                            select f.F_ID;
 
-            IQueryable<user> friends = from u in _userRepository.Table
-                                       from friendId in friendIds
-                                       where u.ID == friendId
-                                       select u;
+                IQueryable<user> friends = from u in _userRepository.Table
+                                           from friendId in friendIds
+                                           where u.ID == friendId
+                                           select u;
 
-            return friends.ToList(); // Execute query
+                return friends.ToList(); // Execute query
+            }
         }
 
 
         public void AddFriend(user user, user newFriend)
         {
-            _friendsRepository.Insert(new friends { F_ID = newFriend.ID, U_ID = user.ID });
-            Commit();
+            lock(_lock)
+            {
+                _friendsRepository.Insert(new friends { F_ID = newFriend.ID, U_ID = user.ID });
+                Commit();
+            }
+            
         }
 
         public void RemoveFriend(user user, user friendToRemove)
         {
-            _friendsRepository.Delete(new friends{U_ID = user.ID, F_ID = friendToRemove.ID});
-            Commit();
+            lock (_lock)
+            {
+                _friendsRepository.Delete(new friends { U_ID = user.ID, F_ID = friendToRemove.ID });
+                Commit(); 
+            }
+            
         }
 
         public bool UserExists(string email) // email is an uniq field
