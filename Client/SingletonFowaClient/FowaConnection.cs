@@ -67,6 +67,18 @@ namespace Client.SingletonFowaClient
 
             set
             {
+                var oldMetadata = _fowaMetaData;
+               
+                if(oldMetadata != null)
+                {
+                    _fowaClient.IncomingLoginMessage -= oldMetadata.OnIncomingLoginMessageCallback;
+                    _fowaClient.IncomingRegisterMessage -= oldMetadata.OnIncomingRegisterMessageeCallback;
+                    _fowaClient.IncomingUserMessage -= oldMetadata.OnIncomingUserMessageCallback;
+                    _fowaClient.IncomingSeekFriendsRequestMessage -= oldMetadata.OnIncomingSeekFriendsRequestMessageCallback;
+                    _fowaClient.IncomingErrorMessage -= oldMetadata.OnIncomingErrorMessageCallback;
+                    _fowaClient.IncomingFriendlistMessage -= oldMetadata.OnIncomingFriendlistMessageCallback;
+                }
+
                 _fowaMetaData = value;
                 _fowaClient.IncomingLoginMessage += _fowaMetaData.OnIncomingLoginMessageCallback;
                 _fowaClient.IncomingRegisterMessage += _fowaMetaData.OnIncomingRegisterMessageeCallback;

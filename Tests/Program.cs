@@ -13,6 +13,7 @@ namespace Tests
 
         public void RaiseEvent()
         {
+            if(OnFoo != null)
             OnFoo(this, new EventArgs());
         }
     }
@@ -34,13 +35,13 @@ namespace Tests
             Sender s = new Sender();
             Subscriber su = new Subscriber();
 
-            s.OnFoo += su.OnFooEventHandler;
+            s.OnFoo -= su.OnFooEventHandler;
 
             s.RaiseEvent();
 
             su = null;
 
-            s.RaiseEvent(); // hier hab ich erwatet das das der EventHanlder nich mehr gültig ist und somit nicht mehr ausgeführt wird
+            //s.RaiseEvent(); // hier hab ich erwatet das das der EventHanlder nich mehr gültig ist und somit nicht mehr ausgeführt wird
 
             Console.ReadKey(); 
         }
