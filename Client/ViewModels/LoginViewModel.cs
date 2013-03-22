@@ -27,15 +27,17 @@ namespace Client.ViewModels
     {
 
         #region Fields
-        private readonly IPEndPoint _ip = new IPEndPoint(IPAddress.Parse(Settings.ClientSettings.Default.FowaServerIp), Settings.ClientSettings.Default.FowaServerPort);
+
         private readonly IWindowManager _windowManager;
         private string _eMail;
         private string _password;
         private string _info;
         private readonly FowaConnection _connection;
+
         #endregion
 
         #region Ctor
+
         [ImportingConstructor]
         public LoginViewModel(IWindowManager windowManager)
         {
@@ -45,13 +47,14 @@ namespace Client.ViewModels
             FowaMetaData data = new FowaMetaData { OnIncomingFriendlistMessageCallback = OnIncomingFriendlistMessage, OnIncomingErrorMessageCallback = OnIncomingErrorMessage};
             _connection.FowaMetaData = data;
         }
+
         #endregion
 
         #region EventHandler
 
         public void OnIncomingFriendlistMessage(object sender, IncomingMessageEventArgs e)
         {
-            var list = FowaProtocol.XmlDeserialization.XmlDeserializer.DeserializeFriends(e.Message);
+            var list = XmlDeserializer.DeserializeFriends(e.Message);
 
             string fr = list.Aggregate("", (current, friend) => current + friend.Email + " " + friend.Nick + " " + friend.UserId + '\n');
 

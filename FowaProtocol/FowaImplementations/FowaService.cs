@@ -31,24 +31,27 @@ namespace FowaProtocol.FowaImplementations
 
         public async void ListenForClients()
         {
-            TcpClient tcpClient = await this._tcpListener.AcceptTcpClientAsync();
+            while (ServerIsRunning)
+            {
+                TcpClient tcpClient = await this._tcpListener.AcceptTcpClientAsync();
 
-            NetworkStream stream = tcpClient.GetStream();
+                NetworkStream stream = tcpClient.GetStream();
 
-            ClientHandling client = new ClientHandling(stream);
+                ClientHandling client = new ClientHandling(stream);
 
-            SubscribeEvents(client);
+                SubscribeEvents(client);
 
-            client.StartReadingAsync();
+                client.StartReadingAsync();
 
-            Clients.Add(client);
+                Clients.Add(client);
+            }
         }
 
         public void StartServer()
         {
+            _serviceIsRunning = true;
             if (_listenTask.Status != TaskStatus.Running) _listenTask.Start();
             _tcpListener.Start();
-            _serviceIsRunning = true;
         }
 
         public void StopServer()

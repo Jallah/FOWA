@@ -19,6 +19,8 @@ FowaProtocol:
 	
 	- Create XML-Messages with an API (Header, Body, ...) // done
 	- Write a ConnectionCach class
+	- rewrite the Connect Method to use the Socket methode ConnectAsync() because of reconnectin issues
+	  (If the socket has been previously disconnected, then you cannot use this method to restore the connection) 
 	- ...
 
 --------------------
