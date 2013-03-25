@@ -5,15 +5,20 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Caliburn.Micro;
 using FowaProtocol;
 
 namespace Client.ViewModels
 {
-    public class MainChatViewModel : ViewModelBase.ViewModelBase
+    public class MainChatViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public MainChatViewModel()
+        {}
+
+        public void OpenTab()
         {
-            
+            ActivateItem(new UserChatViewModel{DisplayName = "foo"});
         }
     }
 }

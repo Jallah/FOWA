@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:CommandBase="clr-namespace:Client.CommandBase" mc:Ignorable="d" d:DesignWidth="291" Height="191">
+             mc:Ignorable="d" d:DesignWidth="291" Height="191">
     <UserControl.Resources>
 
         <Style TargetType="{x:Type TextBox}">

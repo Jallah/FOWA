@@ -172,8 +172,8 @@ namespace Client.ViewModels
         #region OpenRegisterDialog
         public void OpenRegisterDialog()
         {
-            CloseView();
-            //_windowManager.ShowDialog(new ErrorViewModel("hans"));
+            //CloseView();
+            _windowManager.ShowWindow(new MainChatViewModel());
         }
         #endregion
 

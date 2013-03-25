@@ -42,7 +42,7 @@ namespace Client.Views
         //    // Wenn kein Chatfenster für den User Existiert --> ChantWindow erstellen
         //    if (chatWindow == null)
         //    {
-        //        HandledChatWindows.Add(chatWith, new ChatView(chatWith));
+        //        HandledChatWindows.Add(chatWith, new UserChatView(chatWith));
         //        HandledChatWindows.First(w => w.Key == chatWith).Value.ShowDialog();//Visibility = Visibility.Visible;
         //    }
         //    // Chatfenster aus Taskleist holen

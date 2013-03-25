@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 using FowaProtocol;
 using FowaProtocol.FowaModels;
 
 namespace Client.ViewModels
 {
-    public class UserChatViewModel : ViewModelBase.ViewModelBase
+    public class UserChatViewModel : Screen
     {
-        public UserChatViewModel()
-        {
-        }
+    
     }
 }
