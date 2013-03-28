@@ -11,19 +11,43 @@ using System.Text;
 using System.Threading.Tasks;
 using FowaProtocol.MessageEnums;
 
+/*
+example 1:
+   (IncomingLoginMessage != null) /1
+                                  /2
+    IncomingLoginMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream))); /3
+ 
+ better:
+  
+ example 2:
+ 
+ var ilm = IncomingLoginMessage;
+ if (ilm != null) /1
+                  /2
+    ilm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream))); /3
+ 
+ For multithreading issues it is important to crete a reference to the event.
+ Assume the following: (concering to example 1)
+ 
+ * 
+ 1: Thread A goes through "/1" and Incoming
+ 2: Thrad A is preempted by Thread B
+ 3: Thred in Thread B the event is set to null (for example: unsubscribe all eventhandler ---> event is equals null)
+ 4: Thrad B is preempted by Thread A. Thread A continues working at step "/2".
+    Now IincomingLoginMessage ins null and the execution of step "/3" will cause a NullReferenceExcepiton.
+ * 
+ 
+ Example 2 is an solution. If the event will by null at step "/2" it doesen't matter and the event will still be executed.
+     
+*/
+
+
 namespace FowaProtocol
 {
     public abstract class FowaProtocol
     {
         protected FowaProtocol()
-        { }
-
-        //public delegate void IncomingLoginMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        //public delegate void IncomingRegisterMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        //public delegate void IncomingUserMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        //public delegate void IncomingSeekFriendsRequestMessageEventHandler(object sender, IncomingMessageEventArgs args);
-        //public delegate void IncomingErrorMessageMessageEventHandler(object sender, IncomingErrorMessageEventArgs args);
-        //public delegate void IncomingFriendlistMessageEventHandler(object sender, IncomingMessageEventArgs args);
+        {}
 
         public event EventHandler<IncomingMessageEventArgs>  IncomingLoginMessage;
         public event EventHandler<IncomingMessageEventArgs> IncomingRegisterMessage;
@@ -72,38 +96,44 @@ namespace FowaProtocol
             switch (GetKindOfMessage(message))
             {
                 case (int)MessageKind.LoginMessage:
-                    if (IncomingLoginMessage != null)
-                        IncomingLoginMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
+                    var ilm = IncomingLoginMessage;
+                    if (ilm != null)
+                        ilm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 case (int)MessageKind.RegisterMessage:
-                    if (IncomingRegisterMessage != null)
-                        IncomingRegisterMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
+                    var irm = IncomingRegisterMessage;
+                    if (irm != null)
+                        irm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 case (int)MessageKind.UserMessage:
-                    if (IncomingUserMessage != null)
-                        IncomingUserMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
+                    var ium = IncomingUserMessage;
+                    if (ium != null)
+                        ium(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 case (int)MessageKind.SeekFriendsRequestMessage:
-                    if (IncomingSeekFriendsRequestMessage != null)
-                        IncomingSeekFriendsRequestMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
+                    var isfm = IncomingSeekFriendsRequestMessage;
+                    if (isfm != null)
+                        isfm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 case (int)MessageKind.ErrorMessage:
-                    if (IncomingErrorMessage != null)
+                    var iem = IncomingErrorMessage;
+                    if (iem != null)
 
                         switch (GetErrorCode(message))
                         {
                             case (int)ErrorMessageKind.LiginError:
-                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message, new FowaClient(senderNetwrokStream)));
+                                iem(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message, new FowaClient(senderNetwrokStream)));
                                 break;
                             case (int)ErrorMessageKind.RegisterError:
-                                IncomingErrorMessage(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.RegisterError, message, new FowaClient(senderNetwrokStream)));
+                                iem(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.RegisterError, message, new FowaClient(senderNetwrokStream)));
                                 break;
                         }
 
                     break;
                 case (int)MessageKind.FriendListMessage:
-                    if (IncomingFriendlistMessage != null)
-                        IncomingFriendlistMessage(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
+                    var iflm = IncomingFriendlistMessage;
+                    if (iflm != null)
+                        iflm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
                     break;
                 default:
                     throw new NotSupportedException("Not Supported");

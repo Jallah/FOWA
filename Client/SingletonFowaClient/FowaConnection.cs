@@ -124,7 +124,8 @@ namespace Client.SingletonFowaClient
             catch (Exception ex)
             {
                 // LogException(ex)
-                if (ConnectionFailed != null)
+                var conFail = ConnectionFailed;
+                if (conFail != null)
                     ConnectionFailed(this, new ConnectionFailedEventArgs(ex));
                 return false;
             }
