@@ -42,11 +42,12 @@ namespace Client.ViewModels
             else
             {
                 var window = MainChatViewModel.GetView() as Window;
-                if (window != null) window.Activate();
+                if (window != null)
+                {
+                    if(window.WindowState == WindowState.Minimized) window.WindowState = WindowState.Normal;
+                    window.Activate();
+                }
             }
-
-            var user = Friends.FirstOrDefault(f => f.UserId == friend.UserId);
-            if (user == null) return;
 
             var tab = (from f in OpenTabs where f == friend.UserId select f).FirstOrDefault();
 
