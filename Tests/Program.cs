@@ -29,19 +29,39 @@ namespace Tests
 
     class Program
     {
+        private static void Demo()
+        {
+
+            Action[] func = new Action[10];
+            for (int i = 0; i < 10; i++)
+            {
+                int j = i;
+
+                func[i] = (delegate()
+                {
+                    Console.WriteLine("Wert von i: {0}", j);
+                    // anstatt i hier j verwenden
+                });
+            }
+
+            foreach (Action item in func)
+                item();
+        }  
 
         static void Main(string[] args)
         {
-            Sender s = new Sender();
-            Subscriber su = new Subscriber();
+            //Sender s = new Sender();
+            //Subscriber su = new Subscriber();
 
-            s.OnFoo -= su.OnFooEventHandler;
+            //s.OnFoo -= su.OnFooEventHandler;
 
-            s.RaiseEvent();
+            //s.RaiseEvent();
 
-            su = null;
+            //su = null;
 
-            //s.RaiseEvent(); // hier hab ich erwatet das das der EventHanlder nich mehr gültig ist und somit nicht mehr ausgeführt wird
+            ////s.RaiseEvent(); // hier hab ich erwatet das das der EventHanlder nich mehr gültig ist und somit nicht mehr ausgeführt wird
+            //Demo();
+
 
             Console.ReadKey(); 
         }

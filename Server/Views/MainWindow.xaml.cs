@@ -28,7 +28,7 @@ namespace Server.Views
         {
             _metaData = new FowaMetaData
                             {
-                                OnIncomingLoginMessageCallback = OnIncomingLoginMessage, 
+                                OnIncomingLoginMessageCallback = OnIncomingLoginMessage,
                                 OnIncomingUserMessageCallback = OnIncomingUserMessage
                             };
             _service = new FowaService(_metaData);
@@ -41,7 +41,21 @@ namespace Server.Views
 
         public async void OnIncomingUserMessage(object sender, IncomingMessageEventArgs args)
         {
-            
+            await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Incoming UserMessage:\n"));
+            string message = args.Message;
+
+            int receiverId = XmlDeserializer.GetUserIdFromUserMessage(message, UserMessageElement.Receiver);
+            int senderId = XmlDeserializer.GetUserIdFromUserMessage(message, UserMessageElement.Sender);
+
+            var userClient = _service.Clients.FirstOrDefault(c => c.Key == receiverId);
+
+            if (userClient.Value == null) return; // User is not online send ErrorMessage
+            var fowaClient = userClient.Value;
+
+            //foward Usermessage
+            fowaClient.WriteToClientStreamAync(new UserMessage(new Friend { UserId = senderId },
+                                                               new Friend { UserId = receiverId }, args.Message));
+
         }
 
         public async void OnIncomingLoginMessage(object sender, IncomingMessageEventArgs args)
@@ -64,8 +78,9 @@ namespace Server.Views
 
 
             bool writeToClientSuccessfull; // Not used yet
-            
+
             var login = XmlDeserializer.GetLoginInfo(args.Message);
+
             await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Incoming Login:\n" + '\t' + login.Email + "\n\t" + login.Pw + "\n\n"));
 
             // Check if user exists
@@ -99,6 +114,11 @@ namespace Server.Views
                 writeToClientSuccessfull = await args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "Incorrect Password"));
                 return;
             }
+
+            // add user to Clientlist
+            bool addingSuccessful = _service.Clients.TryAdd(user.ID, args.FowaClient);
+
+            // check if adding was successful
 
             // Send Friendlist to user
             var friends = _userFriendService.GetFriends(user);

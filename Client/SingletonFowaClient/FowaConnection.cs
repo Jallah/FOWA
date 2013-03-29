@@ -9,6 +9,7 @@ using FowaProtocol;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
+using FowaProtocol.FowaModels;
 
 namespace Client.SingletonFowaClient
 {
@@ -33,6 +34,7 @@ namespace Client.SingletonFowaClient
         private static readonly object Lock = new Object();
         private FowaMetaData _fowaMetaData;
         private readonly IPEndPoint _ip = new IPEndPoint(IPAddress.Parse(Settings.ClientSettings.Default.FowaServerIp), Settings.ClientSettings.Default.FowaServerPort);
+        public Friend LogedInAs { get; set; }
 
         public event EventHandler<ConnectionFailedEventArgs> ConnectionFailed;
 

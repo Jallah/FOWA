@@ -62,10 +62,10 @@ namespace FowaProtocol.FowaImplementations
                 await _streamWriter.WriteLineAsync(fowaMessage.Message);
                 _streamWriter.Flush();
             }
-            catch (Exception ex)
+            catch (Exception /*ex*/)
             {
                 // Log exceptions
-                // Maybe the an error occured during "Connect" and the streamWriter is null
+                // Maybe an error occured during "Connect" and the streamWriter is null
                 successfull = false;
             }
 

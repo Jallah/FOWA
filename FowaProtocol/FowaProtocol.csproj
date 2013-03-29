@@ -64,6 +64,7 @@
     <Compile Include="Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FowaModels\User.cs" />
+    <Compile Include="XmlDeserialization\UserMessageElement.cs" />
     <Compile Include="XmlDeserialization\XmlDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using FowaProtocol.FowaModels;
 
 namespace FowaProtocol.FowaMessages
 {
@@ -22,7 +23,7 @@ namespace FowaProtocol.FowaMessages
     {
         public string Message { get; private set; }
 
-        public UserMessage(IContact sender, IContact receiver, string message):base((int)MessageKind.UserMessage)
+        public UserMessage(Friend sender, Friend receiver, string message):base((int)MessageKind.UserMessage)
         {
             //sender
             XmlNode senderNode = XmlDoc.CreateElement("sender");

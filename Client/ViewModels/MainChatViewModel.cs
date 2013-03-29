@@ -17,9 +17,9 @@ namespace Client.ViewModels
         public MainChatViewModel()
         {}
 
-        public void OpenTab(Friend friend)
+        public void OpenTab(ContactViewModel contactViewModel, Friend friend)
         {
-            ActivateItem(new UserChatViewModel{DisplayName = friend.Nick});
+            ActivateItem(new UserChatViewModel(contactViewModel, friend));
         }
     }
 }

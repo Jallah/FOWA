@@ -14,7 +14,7 @@ namespace FowaProtocol.FowaMessages
         <fowamessage>
             <header messagekind="5" />
             <errorinfo errormessagekind="2" />
-            <errormessage>Some error message</errormessage>
+            <message>Some error message</errormessage>
         </fowamessage> 
     */
 
@@ -43,7 +43,7 @@ namespace FowaProtocol.FowaMessages
             }
 
             // errormessagenode
-            XmlNode errorMessageNode = XmlDoc.CreateElement("errormessage");
+            XmlNode errorMessageNode = XmlDoc.CreateElement("message");
             errorMessageNode.InnerText = errorMessage;
 
             // add errorinfonode to xml RoodNode

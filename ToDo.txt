@@ -31,6 +31,7 @@ Server:
 	- NAT Traversal (maybe not nessecary through the architecture)
 	- Implement a list with connected cients
 	- Implement a way of notify if a user is on-/offline 
+	- Remove Client from ClientDictionary on disconnect
 	- ...
 
 --------------------

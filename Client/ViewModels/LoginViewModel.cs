@@ -17,6 +17,7 @@ using FowaProtocol;
 using FowaProtocol.EventArgs;
 using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
+using FowaProtocol.FowaModels;
 using FowaProtocol.XmlDeserialization;
 using MessageBox = System.Windows.Forms.MessageBox;
 
@@ -52,8 +53,11 @@ namespace Client.ViewModels
 
         #region EventHandler
 
+        // login successful
         public void OnIncomingFriendlistMessage(object sender, IncomingMessageEventArgs e)
         {
+            _connection.LogedInAs = XmlDeserializer.GetLogedInAsInfo(e.Message);
+
             var list = XmlDeserializer.DeserializeFriends(e.Message);
 
             _windowManager.ShowWindow(new ContactViewModel(_windowManager, list));
@@ -64,7 +68,7 @@ namespace Client.ViewModels
 
         public void OnIncomingErrorMessage(object sender, IncomingErrorMessageEventArgs e)
         {
-            Info = XmlDeserializer.GetErrorMessage(e.Message);
+            Info = XmlDeserializer.GetMessage(e.Message);
         }
 
         public void OnConnectionFailed(object sender, ConnectionFailedEventArgs e)
@@ -138,7 +142,8 @@ namespace Client.ViewModels
 
                 if (!connected) return;
             }
-
+            
+            
             var successful = await _connection.WriteToClientStreamAync(new LoginMessage(EMail.Trim(), pw.Trim()));
 
             if (!successful)

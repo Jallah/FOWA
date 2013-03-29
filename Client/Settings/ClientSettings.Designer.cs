@@ -43,5 +43,17 @@ namespace Client.Settings {
                 this["FowaServerPort"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int CharMax {
+            get {
+                return ((int)(this["CharMax"]));
+            }
+            set {
+                this["CharMax"] = value;
+            }
+        }
     }
 }

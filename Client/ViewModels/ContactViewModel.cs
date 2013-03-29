@@ -13,9 +13,10 @@ namespace Client.ViewModels
     {
         #region Fields
 
-        public BindableCollection<Friend> Friends { get; set; }
-        public List<int> OpenTabs { get; set; } 
+        public BindableCollection<Friend> Friends { get; private set; }
+        private List<int> OpenTabs { get; set; } 
         private MainChatViewModel MainChatViewModel { get; set; }
+        private Window MainChatView { get; set; }
         private readonly IWindowManager _windowManager;
 
         #endregion
@@ -36,25 +37,41 @@ namespace Client.ViewModels
         public void OpenUserChat(Friend friend)
         {
             if (MainChatViewModel == null) MainChatViewModel = new MainChatViewModel();
-
+ 
             if (!MainChatViewModel.IsActive)
+            {
                 _windowManager.ShowWindow(MainChatViewModel);
+                MainChatView = MainChatViewModel.GetView() as Window;
+            }
             else
             {
-                var window = MainChatViewModel.GetView() as Window;
-                if (window != null)
+                if (MainChatView != null)
                 {
-                    if(window.WindowState == WindowState.Minimized) window.WindowState = WindowState.Normal;
-                    window.Activate();
+                    if(MainChatView.WindowState == WindowState.Minimized) MainChatView.WindowState = WindowState.Normal;
+                    MainChatView.Activate();
                 }
             }
+
+           
 
             var tab = (from f in OpenTabs where f == friend.UserId select f).FirstOrDefault();
 
             // tab does exist
             if (tab != 0) return;
-            MainChatViewModel.OpenTab(friend);
+
+            MainChatViewModel.OpenTab(this,friend);
             OpenTabs.Add(friend.UserId);
+        }
+
+        #endregion
+
+        #region remove Tab
+
+        public void RemoveTab(int uid)
+        {
+            OpenTabs.Remove(uid);
+            if (OpenTabs.Count == 0)
+                if(MainChatView != null) MainChatView.Close();
         }
 
         #endregion

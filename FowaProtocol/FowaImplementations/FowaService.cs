@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,11 @@ namespace FowaProtocol.FowaImplementations
         private readonly Task _listenTask;
         private readonly FowaMetaData _metaData;
 
-        public List<ClientHandling> Clients;
+        private readonly ConcurrentDictionary<int, FowaClient> _clients;
+        public ConcurrentDictionary<int, FowaClient> Clients{get { return _clients; }}
+
+        //private readonly BlockingCollection<ClientHandling> _clients;
+        //public BlockingCollection<ClientHandling> Clients { get { return _clients; } } 
 
         public FowaService(FowaMetaData metaData)
             : base()
@@ -26,7 +31,8 @@ namespace FowaProtocol.FowaImplementations
             _metaData = metaData;
             this._tcpListener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, 3333);
             this._listenTask = new Task(ListenForClients);
-            Clients = new List<ClientHandling>();
+            _clients = new ConcurrentDictionary<int, FowaClient>();
+            //_clients = new BlockingCollection<ClientHandling>();
         }
 
         public async void ListenForClients()
@@ -38,12 +44,12 @@ namespace FowaProtocol.FowaImplementations
                 NetworkStream stream = tcpClient.GetStream();
 
                 ClientHandling client = new ClientHandling(stream);
-
+                
                 SubscribeEvents(client);
 
                 client.StartReadingAsync();
 
-                Clients.Add(client);
+                //Clients.Add(client);
             }
         }
 
@@ -75,9 +81,9 @@ namespace FowaProtocol.FowaImplementations
                 _tcpListener = null;
             }
 
-            foreach (var client in Clients.Where(client => client != null))
+            foreach (var client in _clients.Where(client => client.Value != null))
             {
-                client.Stream.Dispose();
+                client.Value.Dispose();
             }
         }
 
@@ -91,13 +97,6 @@ namespace FowaProtocol.FowaImplementations
         {
             Dispose(false); // false because otherwise the managed Code will be (tried to) dispose twice
         }
-
-         //OnIncomingLoginMessageEventHandler(object sender, IncomingMessageEventArgs args);
-         //OnIncomingRegisterMessageEventHandler(object sender, IncomingMessageEventArgs args);
-         //OnIncomingUserMessageEventHandler(object sender, IncomingMessageEventArgs args);
-         //OnIncomingSeekFriendsRequestMessageEventHandler(object sender, IncomingMessageEventArgs args);
-         //OnIncomingErrorMessageMessageEventHandler(object sender, IncomingErrorMessageEventArgs args);
-         //OnIncomingFriendlistMessageEventHandler(object sender, IncomingMessageEventArgs args);
 
         private void SubscribeEvents(ClientHandling client)
         {
