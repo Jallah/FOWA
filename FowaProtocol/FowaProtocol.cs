@@ -31,10 +31,10 @@ example 1:
  
  * 
  1: Thread A goes through "/1" and Incoming
- 2: Thrad A is preempted by Thread B
- 3: Thred in Thread B the event is set to null (for example: unsubscribe all eventhandler ---> event is equals null)
+ 2: Thread A is preempted by Thread B
+ 3: Thread B sets the event to null (for example: unsubscribe all eventhandler ---> event is equals null)
  4: Thrad B is preempted by Thread A. Thread A continues working at step "/2".
-    Now IincomingLoginMessage ins null and the execution of step "/3" will cause a NullReferenceExcepiton.
+    Now IincomingLoginMessage is null and the execution of step "/3" will cause a NullReferenceExcepiton.
  * 
  
  Example 2 is an solution. If the event will by null at step "/2" it doesen't matter and the event will still be executed.

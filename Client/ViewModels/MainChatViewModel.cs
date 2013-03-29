@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Caliburn.Micro;
 using FowaProtocol;
+using FowaProtocol.FowaModels;
 
 namespace Client.ViewModels
 {
@@ -16,9 +17,9 @@ namespace Client.ViewModels
         public MainChatViewModel()
         {}
 
-        public void OpenTab()
+        public void OpenTab(Friend friend)
         {
-            ActivateItem(new UserChatViewModel{DisplayName = "foo"});
+            ActivateItem(new UserChatViewModel{DisplayName = friend.Nick});
         }
     }
 }

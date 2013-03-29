@@ -56,9 +56,10 @@ namespace Client.ViewModels
         {
             var list = XmlDeserializer.DeserializeFriends(e.Message);
 
-            string fr = list.Aggregate("", (current, friend) => current + friend.Email + " " + friend.Nick + " " + friend.UserId + '\n');
+            _windowManager.ShowWindow(new ContactViewModel(_windowManager, list));
 
-            MessageBox.Show(fr);
+            CloseView();
+            //string fr = list.Aggregate("", (current, friend) => current + friend.Email + " " + friend.Nick + " " + friend.UserId + '\n');
         }
 
         public void OnIncomingErrorMessage(object sender, IncomingErrorMessageEventArgs e)
@@ -198,6 +199,7 @@ namespace Client.ViewModels
         #endregion
 
         #region IViewAware implementation
+
         private Window _loginView;
 
         public void AttachView(object view, object context = null)
@@ -218,6 +220,7 @@ namespace Client.ViewModels
         }
 
         public event EventHandler<ViewAttachedEventArgs> ViewAttached;
+
         #endregion
     }
 }
