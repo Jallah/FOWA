@@ -34,7 +34,7 @@ namespace Client.SingletonFowaClient
         private static readonly object Lock = new Object();
         private FowaMetaData _fowaMetaData;
         private readonly IPEndPoint _ip = new IPEndPoint(IPAddress.Parse(Settings.ClientSettings.Default.FowaServerIp), Settings.ClientSettings.Default.FowaServerPort);
-        public Friend LogedInAs { get; set; }
+        public Friend LoggedInAs { get; set; }
 
         public event EventHandler<ConnectionFailedEventArgs> ConnectionFailed;
 
@@ -98,7 +98,7 @@ namespace Client.SingletonFowaClient
 
         public Task<string> ReadFromStreamAsync()
         {
-            return _fowaClient.ReadFromStreamAsync();
+            return _fowaClient.ReadLineFromStreamAsync();
         }
 
         public void HandleIncomingMessage(string message, NetworkStream stream)

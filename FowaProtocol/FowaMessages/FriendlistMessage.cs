@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FowaProtocol;
 using System.Xml;
 using FowaProtocol.FowaModels;
+using FowaProtocol.MessageEnums;
 
 namespace FowaProtocol.FowaMessages
 {
@@ -29,7 +30,7 @@ namespace FowaProtocol.FowaMessages
         public string Message { get; private set; }
 
         // not finished yet
-        public FriendListMessage(User loggedInAs, IEnumerable<Friend> friends)
+        public FriendListMessage(IContact loggedInAs, IEnumerable<Friend> friends)
             : base((int)MessageKind.FriendListMessage)
         {
             // loggedinas

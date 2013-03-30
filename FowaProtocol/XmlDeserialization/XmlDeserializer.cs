@@ -60,7 +60,7 @@ namespace FowaProtocol.XmlDeserialization
             return messageElement != null ? messageElement.Value : null;
         }
 
-        public static Friend GetLogedInAsInfo(string xmlMessage)
+        public static Friend GetLoggedInAsInfo(string xmlMessage)
         {
             XDocument doc = XDocument.Parse(xmlMessage);
 
@@ -82,18 +82,28 @@ namespace FowaProtocol.XmlDeserialization
             return logedinas;
         }
 
-        public static int GetUserIdFromUserMessage(string xmlMessage, UserMessageElement element)
+        public static IContact GetUserFromUserMessage(string xmlMessage, UserMessageElement element)
         {
             XDocument doc = XDocument.Parse(xmlMessage);
 
             string messgeElement = element.ToString().ToLower();
 
-            var userId = (from i in doc.Descendants(messgeElement)
+            var user = (from i in doc.Descendants(messgeElement)
                                let uid = i.Attribute("uid")
                                where uid != null
-                               select uid.Value).FirstOrDefault();
+                               let email = i.Attribute("email")
+                               where email != null
+                               let nickname = i.Attribute("nickname")
+                               where nickname != null
 
-            return int.Parse(userId);
+                               select new Friend()
+                                          {
+                                              UserId = int.Parse(uid.Value),
+                                              Email = email.Value,
+                                              Nick = nickname.Value
+                                          }).FirstOrDefault();
+
+            return user;
         }
     }
 }

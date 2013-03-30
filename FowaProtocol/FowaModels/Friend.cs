@@ -2,7 +2,7 @@
 
 namespace FowaProtocol.FowaModels
 {
-    public class Friend
+    public class Friend : IContact
     {
         public string Email { get; set; }
 

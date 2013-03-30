@@ -24,5 +24,11 @@ namespace Client.Views
         {
             InitializeComponent();
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(email);
+        }
+
     }
 }

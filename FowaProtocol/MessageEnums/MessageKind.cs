@@ -1,6 +1,6 @@
-﻿namespace FowaProtocol
+﻿namespace FowaProtocol.MessageEnums
 {
-    enum MessageKind
+    public enum MessageKind
     {
         LoginMessage = 1,
         RegisterMessage,
@@ -8,5 +8,6 @@
         SeekFriendsRequestMessage,
         ErrorMessage,
         FriendListMessage,
+        UnknownMessage
     }
 }

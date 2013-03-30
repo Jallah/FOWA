@@ -12,8 +12,6 @@ namespace FowaProtocol
     {
         int UserId { get; set; }
         string Email { get; set; }
-        string Pw { get; set; }
         string Nick { get; set; }
-        DateTime? LastMessage { get; set; }
     }
 }

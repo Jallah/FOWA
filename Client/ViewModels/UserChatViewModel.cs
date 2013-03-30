@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Client.SingletonFowaClient;
+using Client.Views;
 using FowaProtocol;
 using FowaProtocol.FowaMessages;
 using FowaProtocol.FowaModels;
@@ -15,7 +16,7 @@ using Screen = Caliburn.Micro.Screen;
 
 namespace Client.ViewModels
 {
-    public  class UserChatViewModel : Screen
+    public class UserChatViewModel : Screen
     {
         #region Fields
 
@@ -25,12 +26,13 @@ namespace Client.ViewModels
         private string _chatContent;
         private int _charCounter;
         private readonly FowaConnection _connection;
+        private UserChatView _view;
 
         #endregion
 
         #region WriteToChat
 
-        private void WriteToChat(string text)
+        public void WriteToChat(string text)
         {
             ChatContent += text + "\n";
         }
@@ -94,6 +96,13 @@ namespace Client.ViewModels
             CharCounter = Settings.ClientSettings.Default.CharMax - Message.Count();
         }
 
+        public void SetKeyboardFocus()
+        {
+            if (_view == null) _view = GetView() as UserChatView;
+            // GetView could return null
+            if (_view != null) Keyboard.Focus(_view.Message);
+        }
+
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
@@ -108,29 +117,32 @@ namespace Client.ViewModels
             var eventArgs = (KeyEventArgs) context.EventArgs;
             var key = eventArgs.Key;
 
-            if (key == Key.Enter)
+            switch (key)
             {
-                Message = Message.Trim();
-                if(!Message.Any()) return;
+                case Key.Enter:
+                    {
+                        Message = Message.Trim();
+                        if(!Message.Any()) return;
 
-                var sendingSuccessful =
-                    await _connection.WriteToClientStreamAync(new UserMessage(_connection.LogedInAs, User, Message));
+                        var sendingSuccessful =
+                            await _connection.WriteToClientStreamAync(new UserMessage(_connection.LoggedInAs, User, Message));
 
-                WriteToChat(_connection.LogedInAs.Nick + ": " + Message);
+                        WriteToChat(_connection.LoggedInAs.Nick + ": " + Message);
 
-                // Check if sendinSuccessful is true and write it to the readonly textblock .. else write errormessage to readonly textblock.
-                Message = string.Empty;
-            }
-            else if (key == Key.Delete || key == Key.Back)
-            {
-                return;
-            }
-            else
-            {
-                if(CharCounter <= 0)
-                {
-                    eventArgs.Handled = true;
-                }
+                        // Check if sendingSuccessful is true and write it to the readonly textblock .. else write errormessage to readonly textblock.
+                        Message = string.Empty;
+                        SetKeyboardFocus();
+                    }
+                    break;
+                case Key.Back:
+                case Key.Delete:
+                    return;
+                default:
+                    if(CharCounter <= 0)
+                    {
+                        eventArgs.Handled = true;
+                    }
+                    break;
             }
         }
 

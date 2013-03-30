@@ -72,7 +72,7 @@ namespace FowaProtocol.FowaImplementations
             return successfull;
         }
 
-        public async Task<string> ReadFromStreamAsync()
+        public async Task<string> ReadLineFromStreamAsync()
         {
             string s = await _streamReader.ReadLineAsync();
             return s;

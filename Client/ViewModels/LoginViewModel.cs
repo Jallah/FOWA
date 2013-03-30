@@ -56,7 +56,7 @@ namespace Client.ViewModels
         // login successful
         public void OnIncomingFriendlistMessage(object sender, IncomingMessageEventArgs e)
         {
-            _connection.LogedInAs = XmlDeserializer.GetLogedInAsInfo(e.Message);
+            _connection.LoggedInAs = XmlDeserializer.GetLoggedInAsInfo(e.Message);
 
             var list = XmlDeserializer.DeserializeFriends(e.Message);
 
@@ -143,8 +143,7 @@ namespace Client.ViewModels
                 if (!connected) return;
             }
             
-            
-            var successful = await _connection.WriteToClientStreamAync(new LoginMessage(EMail.Trim(), pw.Trim()));
+            var successful = await _connection.WriteToClientStreamAync(new LoginMessage(EMail.Trim().ToLower(), pw.Trim()));
 
             if (!successful)
             {
@@ -166,7 +165,6 @@ namespace Client.ViewModels
             {
                 _windowManager.ShowWindow(new ErrorViewModel(ex.Message));
             }
-
         }
 
         public bool CanSendLoginData

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net.Sockets;
 using FowaProtocol.FowaMessages;
+using FowaProtocol.FowaModels;
 using FowaProtocol.MessageEnums;
 using FowaProtocol.XmlDeserialization;
 using Server.BL.Services;
@@ -61,8 +63,11 @@ namespace Tests
 
             ////s.RaiseEvent(); // hier hab ich erwatet das das der EventHanlder nich mehr gültig ist und somit nicht mehr ausgeführt wird
             //Demo();
+            UserMessage userMessage = new UserMessage(new Friend { Email = "abc", Nick = "abc", UserId = 123 }, new Friend { Email = "abc", Nick = "abc", UserId = 123 }, "hall");
+            Console.WriteLine(userMessage.Message);
+            var sender = XmlDeserializer.GetUserFromUserMessage(userMessage.Message, UserMessageElement.Sender);
 
-
+            Console.WriteLine(XmlDeserializer.GetMessage(userMessage.Message));
             Console.ReadKey(); 
         }
     }

@@ -9,6 +9,7 @@ namespace FowaProtocol.FowaModels
     public class LoginInfo
     {
         public string Email { get; set; }
+
         public string Pw { get; set; }
     }
 }

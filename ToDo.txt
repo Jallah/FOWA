@@ -2,24 +2,16 @@
 Client: (MVVM)
 --------------------
 
-	- Gui Redesign (First at all learn to understand the MVVM Pattern :D)
-		- ViewModels
-		- MainChatWindow with Tabs
-		- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
-	
-	-Add resource file for messages (done)
-	-Add settings file (done)
-	-Add TabView using CaliBurn Micro Sreen/Conductor
-	-Implement dependency injection for a service to open and close views from code.
+	- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
+	- Exception loggin
+	- Try to set the Keybaordfocus through setting the logical Focus see: http://msdn.microsoft.com/de-de/library/vstudio/aa969768.aspx#Logical_Focus
 	- ...
 
 --------------------
 FowaProtocol:
 --------------------
 	
-	- Create XML-Messages with an API (Header, Body, ...) // done
-	- Write a ConnectionCach class
-	- rewrite the Connect Method to use the Socket methode ConnectAsync() because of reconnectin issues
+	- rewrite the Connect Method to use the Socket methode ConnectAsync() because of reconnecting issues
 	  (If the socket has been previously disconnected, then you cannot use this method to restore the connection) 
 	- ...
 
@@ -27,11 +19,10 @@ FowaProtocol:
 Server:
 --------------------
 
-	- Implement RepositoryPattern (done)
 	- NAT Traversal (maybe not nessecary through the architecture)
-	- Implement a list with connected cients
 	- Implement a way of notify if a user is on-/offline 
 	- Remove Client from ClientDictionary on disconnect
+	- Exception loggin
 	- ...
 
 --------------------
@@ -50,3 +41,4 @@ Additional notes:
 	- Maybe to much logic within the Messages-Ctors. ( matter of taste :) )
 	- Can not use the DbContext for multi accessing. Mabye try to create a copy of the DbContext and after an action discard this copy.
 	  I will need this in order to not have to use the locking statement.
+	- Some bool's within the Server are not used. They can be used to check if the Server response was successful.

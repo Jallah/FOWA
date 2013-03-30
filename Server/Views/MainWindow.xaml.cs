@@ -44,57 +44,51 @@ namespace Server.Views
             await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Incoming UserMessage:\n"));
             string message = args.Message;
 
-            int receiverId = XmlDeserializer.GetUserIdFromUserMessage(message, UserMessageElement.Receiver);
-            int senderId = XmlDeserializer.GetUserIdFromUserMessage(message, UserMessageElement.Sender);
+            var messageReceiver = XmlDeserializer.GetUserFromUserMessage(message, UserMessageElement.Receiver);
+            var messageSender = XmlDeserializer.GetUserFromUserMessage(message, UserMessageElement.Sender);
 
-            var userClient = _service.Clients.FirstOrDefault(c => c.Key == receiverId);
+            var userClient = _service.Clients.FirstOrDefault(c => c.Key == messageReceiver.UserId);
 
             if (userClient.Value == null) return; // User is not online send ErrorMessage
             var fowaClient = userClient.Value;
 
-            //foward Usermessage
-            fowaClient.WriteToClientStreamAync(new UserMessage(new Friend { UserId = senderId },
-                                                               new Friend { UserId = receiverId }, args.Message));
+            //forward Usermessage
+            bool forwardingToClientSuccesful = await fowaClient.WriteToClientStreamAync(new UserMessage(messageSender, messageReceiver, XmlDeserializer.GetMessage(args.Message)));
 
         }
 
         public async void OnIncomingLoginMessage(object sender, IncomingMessageEventArgs args)
         {
+            // I will try to translate this comment later, but its just a note for me .. sry :D
             // folgendes würde zu folgender Aushahme führen:
             // Der aufrufende Thread kann nicht auf dieses Objekt zugreifen, da sich das Objekt im Besitz eines anderen Threads befindet."
             // fowaServerLogTextBlock.Text = args.Message;
-
-            //#if DEBUG // Send some test data
-            //            List<Friend> testList = new List<Friend>();
-            //            Friend f = new Friend{Email = "friend@gmx.net", Nick = "Friend 1", UserId = 23};
-            //            Friend f2 = new Friend{Email = "friend2@google.com", Nick = "Friend 2", UserId = 233};
-            //            testList.Add(f);
-            //            testList.Add(f);
-            //            FriendListMessage me = new FriendListMessage(new User { Email = "degug@test.de", LastMessage = DateTime.Now, Nick = "Testuser" }, testList);
-            //            bool ok = await args.FowaClient.WriteToClientStreamAync(me);
-            //            //check if write process was successfull if(ok) ...
-            //            return;
-            //#endif
-
-
-            bool writeToClientSuccessfull; // Not used yet
 
             var login = XmlDeserializer.GetLoginInfo(args.Message);
 
             await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Incoming Login:\n" + '\t' + login.Email + "\n\t" + login.Pw + "\n\n"));
 
-            // Check if user exists
-            bool userExists;
+            bool writeToClientSuccessfull; // Not used yet
+            bool userExists = true;
+            bool dbConnectionSuccessful = true;
+            string possibleException = string.Empty;
 
             try
             {
+                // Check if user exists
                 userExists = _userFriendService.UserExists(login.Email);
             }
             catch (Exception ex)
             {
                 // Log ex
-                Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "DB connection failed.\n----------\n" + ex.Message));
-                args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "Fetching Friends failed."));
+                possibleException = ex.Message;
+                dbConnectionSuccessful = false;
+            }
+
+            if(!dbConnectionSuccessful)
+            {
+                await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "DB connection failed.\n----------\n" + possibleException));
+                writeToClientSuccessfull = await args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "Fetching Friends failed."));
                 return;
             }
 
@@ -117,13 +111,14 @@ namespace Server.Views
 
             // add user to Clientlist
             bool addingSuccessful = _service.Clients.TryAdd(user.ID, args.FowaClient);
+            _service.RecentlyConnectedClient.ClientUserId = user.ID;
 
             // check if adding was successful
 
             // Send Friendlist to user
             var friends = _userFriendService.GetFriends(user);
             List<Friend> friendList = friends.Select(friend => new Friend { Email = friend.email, Nick = friend.nick, UserId = friend.ID }).ToList();
-            FriendListMessage m = new FriendListMessage(new User { Email = user.email, LastMessage = user.lastMessage, Nick = user.nick, UserId = user.ID }, friendList);
+            FriendListMessage m = new FriendListMessage(new Friend { Email = user.email, Nick = user.nick, UserId = user.ID }, friendList);
 
             // send FriendListMessage
             writeToClientSuccessfull = await args.FowaClient.WriteToClientStreamAync(m);
