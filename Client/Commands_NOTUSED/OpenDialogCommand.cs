@@ -21,7 +21,7 @@ namespace Client.Commands
 
         public override void Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
-            _vm.OpenRegisterDialog();
+            //_vm.OpenRegisterView();
         }
 
         public override void CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)

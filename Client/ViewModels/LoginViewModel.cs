@@ -173,15 +173,17 @@ namespace Client.ViewModels
         }
         #endregion
 
-        #region OpenRegisterDialog
-        public void OpenRegisterDialog()
+        #region OpenRegisterView
+
+        public void OpenRegisterView()
         {
-            //CloseView();
-            _windowManager.ShowWindow(new MainChatViewModel());
+            _windowManager.ShowDialog(new RegisterViewModel());
         }
+
         #endregion
 
         #region IDataErrorInfo implementation
+
         public override string this[string columnName]
         {
             get
@@ -192,13 +194,12 @@ namespace Client.ViewModels
                     case "EMail":
                         if (!Validator.IsEmail(EMail)) errorMessage = "Invalid e-mail";
                         break;
-                    case "Password":
-                        break;
                 }
 
                 return errorMessage;
             }
         }
+
         #endregion
 
         #region IViewAware implementation

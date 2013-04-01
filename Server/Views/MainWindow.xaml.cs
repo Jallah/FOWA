@@ -29,14 +29,20 @@ namespace Server.Views
             _metaData = new FowaMetaData
                             {
                                 OnIncomingLoginMessageCallback = OnIncomingLoginMessage,
-                                OnIncomingUserMessageCallback = OnIncomingUserMessage
+                                OnIncomingUserMessageCallback = OnIncomingUserMessage,
+                                OnIncomingRegisterMessageeCallback = OnIncomingRegisterMessage
                             };
+
             _service = new FowaService(_metaData);
             _userFriendService = new UserFriendsService();
 
             InitializeComponent();
-            //service.IncomingUserMessage += OnIncomingUserMessage;
             _service.StartServer();
+        }
+
+        public void OnIncomingRegisterMessage(object sender, IncomingMessageEventArgs args)
+        {
+            return;
         }
 
         public async void OnIncomingUserMessage(object sender, IncomingMessageEventArgs args)

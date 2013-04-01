@@ -21,6 +21,7 @@ namespace FowaProtocol.FowaImplementations
         public ClientHandling RecentlyConnectedClient { get; private set; }
         private readonly ConcurrentDictionary<int, FowaClient> _clients;
         public ConcurrentDictionary<int, FowaClient> Clients{get { return _clients; }}
+        private object _lock;
 
         public FowaService(FowaMetaData metaData)
             : base()
@@ -29,6 +30,7 @@ namespace FowaProtocol.FowaImplementations
             this._tcpListener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, 3333);
             this._listenTask = new Task(ListenForClients);
             _clients = new ConcurrentDictionary<int, FowaClient>();
+            _lock = new object();
         }
 
         public async void ListenForClients()
@@ -46,8 +48,6 @@ namespace FowaProtocol.FowaImplementations
                 SubscribeEvents(client);
 
                 client.StartReadingAsync();
-
-                //Clients.Add(client);
             }
         }
 

@@ -72,6 +72,7 @@
     <Compile Include="CommandBase_NOTUSED\CommandModel.cs" />
     <Compile Include="Commands_NOTUSED\OpenDialogCommand.cs" />
     <Compile Include="Commands_NOTUSED\SendLoginDataCommand.cs" />
+    <Compile Include="Helper\PasswordHelper.cs" />
     <Compile Include="Helper\Validator.cs" />
     <Compile Include="Resources\Messages.Designer.cs">
       <AutoGen>True</AutoGen>

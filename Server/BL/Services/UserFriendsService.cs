@@ -25,7 +25,6 @@ namespace Server.BL.Services
                 _userRepository = new Repository<user>(_fowaDbContext);
                 _friendsRepository = new Repository<friends>(_fowaDbContext);
             }
-           
         }
 
         public user GetUserById(int id)

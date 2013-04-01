@@ -6,38 +6,22 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" d:DesignWidth="291" Height="191" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-
         <Style TargetType="{x:Type TextBox}">
-
             <Setter Property="VerticalAlignment" Value="Center" />
-
             <Setter Property="Margin" Value="0,2,40,2" />
-
             <Setter Property="Validation.ErrorTemplate">
-
                 <Setter.Value>
-
                     <ControlTemplate>
-
                         <DockPanel LastChildFill="true">
-
                             <Border Background="Red" BorderThickness="0" DockPanel.Dock="right" Margin="5,0,0,0" Width="20" Height="20" CornerRadius="10"
 	                            ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
-
                                 <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" FontWeight="Bold" Foreground="white"/>
-
                             </Border>
-
                             <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
-
                                 <Border BorderBrush="Red" BorderThickness="2" />
-
                             </AdornedElementPlaceholder>
-
                         </DockPanel>
-
                     </ControlTemplate>
-
                 </Setter.Value>
             </Setter>
         </Style>
@@ -51,7 +35,7 @@
         
         <!-- See CaliBurn Micro Tutorial Short Syntax -->
         <Button x:Name="loginButton" Content="Login" Margin="31,124,148,45" cal:Message.Attach="[Event Click] = [Action SendLoginData]"/>
-        <Button x:Name="registerButton" Content="Registrieren" Margin="148,124,29,0" cal:Message.Attach="[Event Click] = [Action OpenRegisterDialog]" Height="22" VerticalAlignment="Top"/>
+        <Button x:Name="OpenRegisterView" Content="Registrieren" Margin="148,124,29,0" cal:Message.Attach="[Event Click] = [Action OpenRegisterView]" Height="22" VerticalAlignment="Top"/>
         <Label x:Name="Info" Foreground="Red" HorizontalAlignment="Left" Margin="31,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.474,0.038"/>
         <!-- Without using CaliBurn Micro -->
         <!--<Button x:Name="loginButton" Content="Login" Margin="31,161,139,0" CommandParameter="{Binding}" Command="{Binding SendLoginDataCommand.Command}"

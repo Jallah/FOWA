@@ -25,34 +25,28 @@ namespace Client.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("87.160.22.162")]
         public string FowaServerIp {
             get {
                 return ((string)(this["FowaServerIp"]));
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("3333")]
         public int FowaServerPort {
             get {
                 return ((int)(this["FowaServerPort"]));
             }
-            set {
-                this["FowaServerPort"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public int CharMax {
             get {
                 return ((int)(this["CharMax"]));
-            }
-            set {
-                this["CharMax"] = value;
             }
         }
     }

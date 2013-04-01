@@ -35,6 +35,7 @@ namespace Client.ViewModels
         public void WriteToChat(string text)
         {
             ChatContent += text + "\n";
+            ScrollToEnd();
         }
 
         #endregion
@@ -96,11 +97,19 @@ namespace Client.ViewModels
             CharCounter = Settings.ClientSettings.Default.CharMax - Message.Count();
         }
 
-        public void SetKeyboardFocus()
+        private void SetKeyboardFocus()
         {
             if (_view == null) _view = GetView() as UserChatView;
             // GetView could return null
             if (_view != null) Keyboard.Focus(_view.Message);
+        }
+
+        private void ScrollToEnd()
+        {
+            if (_view == null) _view = GetView() as UserChatView;
+            // GetView could return null
+            if (_view != null)
+                _view.ChatContent.ScrollToLine(_view.ChatContent.LineCount - 1);
         }
 
         protected override void OnDeactivate(bool close)
