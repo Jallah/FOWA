@@ -20,7 +20,7 @@ namespace Client.ViewModels
     {
         #region Fields
 
-        private Friend User { get; set; }
+        private IContact User { get; set; }
         private ContactViewModel ContactViewModel { get; set; }
         private string _message;
         private string _chatContent;
@@ -79,7 +79,7 @@ namespace Client.ViewModels
 
         #region Ctor
 
-        public UserChatViewModel(ContactViewModel caller, Friend user)
+        public UserChatViewModel(ContactViewModel caller, IContact user)
         {
             base.DisplayName = user.Nick;
             ContactViewModel = caller;

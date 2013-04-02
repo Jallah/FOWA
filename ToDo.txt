@@ -3,7 +3,7 @@ Client: (MVVM)
 --------------------
 
 	- Implement IDataErrorInfo to RegisterViewModel (DataTrigger, e-mail regex etc.)
-	- Exception loggin
+	- Exception logging
 	- Try to set the Keybaordfocus through setting the logical Focus see: http://msdn.microsoft.com/de-de/library/vstudio/aa969768.aspx#Logical_Focus
 	- ...
 
@@ -22,7 +22,7 @@ Server:
 	- NAT Traversal (maybe not nessecary through the architecture)
 	- Implement a way of notify if a user is on-/offline 
 	- Remove Client from ClientDictionary on disconnect
-	- Exception loggin
+	- Exception logging
 	- ...
 
 --------------------
@@ -42,3 +42,4 @@ Additional notes:
 	- Can not use the DbContext for multi accessing. Mabye try to create a copy of the DbContext and after an action discard this copy.
 	  I will need this in order to not have to use the locking statement.
 	- Some bool's within the Server are not used. They can be used to check if the Server response was successful.
+	- Add ConnectionFailedCallBack to FowaMetadata and raise this event on FowaClient.

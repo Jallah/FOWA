@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using FowaProtocol.FowaMessages;
 using FowaProtocol.FowaModels;
 using FowaProtocol.MessageEnums;
@@ -48,7 +50,13 @@ namespace Tests
 
             foreach (Action item in func)
                 item();
-        }  
+        }
+
+        public static IPAddress[] Getip()
+        {
+            var ip = Dns.GetHostAddresses("jallah.no-ip.org");
+            return ip;
+        }
 
         static void Main(string[] args)
         {
@@ -63,11 +71,15 @@ namespace Tests
 
             ////s.RaiseEvent(); // hier hab ich erwatet das das der EventHanlder nich mehr gültig ist und somit nicht mehr ausgeführt wird
             //Demo();
-            UserMessage userMessage = new UserMessage(new Friend { Email = "abc", Nick = "abc", UserId = 123 }, new Friend { Email = "abc", Nick = "abc", UserId = 123 }, "hall");
-            Console.WriteLine(userMessage.Message);
-            var sender = XmlDeserializer.GetUserFromUserMessage(userMessage.Message, UserMessageElement.Sender);
 
-            Console.WriteLine(XmlDeserializer.GetMessage(userMessage.Message));
+
+            var ip = Getip();
+
+            foreach (var ipAddress in ip)
+            {
+                Console.WriteLine(ipAddress);
+            }
+
             Console.ReadKey(); 
         }
     }

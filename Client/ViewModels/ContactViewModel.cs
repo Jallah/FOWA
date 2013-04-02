@@ -18,7 +18,7 @@ namespace Client.ViewModels
     {
         #region Fields
 
-        public BindableCollection<Friend> Friends { get; private set; }
+        public BindableCollection<IContact> Friends { get; private set; }
         private Dictionary<int, int> OpenTabs { get; set; }
         private MainChatViewModel MainChatViewModel { get; set; }
         private Window MainChatView { get; set; }
@@ -30,13 +30,13 @@ namespace Client.ViewModels
 
         #region Ctor
 
-        public ContactViewModel(IWindowManager windowManager, IEnumerable<Friend> friends)
+        public ContactViewModel(IWindowManager windowManager, IEnumerable<IContact> friends)
         {
             _connection = FowaConnection.Instance;
             FowaMetaData metaData = new FowaMetaData { OnIncomingUserMessageCallback = OnIncomingUserMessage };
             _connection.FowaMetaData = metaData;
             _windowManager = windowManager;
-            Friends = new BindableCollection<Friend>(friends);
+            Friends = new BindableCollection<IContact>(friends);
             OpenTabs = new Dictionary<int, int>();
             StartListeningAsync();
         }
@@ -68,7 +68,7 @@ namespace Client.ViewModels
 
         #region OpenUserChat
 
-        public void OpenUserChat(Friend friend)
+        public void OpenUserChat(IContact friend)
         {
             if (MainChatViewModel == null) MainChatViewModel = new MainChatViewModel();
 

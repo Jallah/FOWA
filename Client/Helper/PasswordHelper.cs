@@ -1,6 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
+
+//The Idea for this password helper was originally posted here:
+//http://blog.functionalfun.net/2008/06/wpf-passwordbox-and-data-binding.html 
+
 namespace Client.Helper
 {
     public static class PasswordHelper

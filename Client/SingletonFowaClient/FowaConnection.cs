@@ -14,7 +14,7 @@ using FowaProtocol.FowaModels;
 namespace Client.SingletonFowaClient
 {
 
-   
+
 
     public class ConnectionFailedEventArgs : EventArgs
     {
@@ -33,8 +33,8 @@ namespace Client.SingletonFowaClient
         private static volatile FowaConnection _instance;
         private static readonly object Lock = new Object();
         private FowaMetaData _fowaMetaData;
-        private readonly IPEndPoint _ip = new IPEndPoint(IPAddress.Parse(Settings.ClientSettings.Default.FowaServerIp), Settings.ClientSettings.Default.FowaServerPort);
-        public Friend LoggedInAs { get; set; }
+        private IPEndPoint _ip;
+        public IContact LoggedInAs { get; set; }
 
         public event EventHandler<ConnectionFailedEventArgs> ConnectionFailed;
 
@@ -62,7 +62,7 @@ namespace Client.SingletonFowaClient
                 return _instance;
             }
         }
-        
+
         public FowaMetaData FowaMetaData
         {
             get { return _fowaMetaData; }
@@ -70,8 +70,8 @@ namespace Client.SingletonFowaClient
             set
             {
                 var oldMetadata = _fowaMetaData;
-               
-                if(oldMetadata != null)
+
+                if (oldMetadata != null)
                 {
                     _fowaClient.IncomingLoginMessage -= oldMetadata.OnIncomingLoginMessageCallback;
                     _fowaClient.IncomingRegisterMessage -= oldMetadata.OnIncomingRegisterMessageeCallback;
@@ -85,7 +85,7 @@ namespace Client.SingletonFowaClient
                 _fowaClient.IncomingLoginMessage += _fowaMetaData.OnIncomingLoginMessageCallback;
                 _fowaClient.IncomingRegisterMessage += _fowaMetaData.OnIncomingRegisterMessageeCallback;
                 _fowaClient.IncomingUserMessage += _fowaMetaData.OnIncomingUserMessageCallback;
-                _fowaClient.IncomingSeekFriendsRequestMessage +=_fowaMetaData.OnIncomingSeekFriendsRequestMessageCallback;
+                _fowaClient.IncomingSeekFriendsRequestMessage += _fowaMetaData.OnIncomingSeekFriendsRequestMessageCallback;
                 _fowaClient.IncomingErrorMessage += _fowaMetaData.OnIncomingErrorMessageCallback;
                 _fowaClient.IncomingFriendlistMessage += _fowaMetaData.OnIncomingFriendlistMessageCallback;
             }
@@ -116,11 +116,14 @@ namespace Client.SingletonFowaClient
             return _fowaClient.IsConnected();
         }
 
-        public bool Connect()
+        public async Task<bool> Connect()
         {
+            var ip = await Dns.GetHostAddressesAsync(Settings.ClientSettings.Default.FowaServerIp);
+            _ip = new IPEndPoint(IPAddress.Parse(ip[0].ToString()), Settings.ClientSettings.Default.FowaServerPort);
+
             try
             {
-                 _fowaClient.Connect(_ip);
+                _fowaClient.Connect(_ip);
                 return true;
             }
             catch (Exception ex)
@@ -133,6 +136,6 @@ namespace Client.SingletonFowaClient
             }
         }
 
-        
+
     }
 }

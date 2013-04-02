@@ -1,25 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Net;
-using System.Text;
+using System.Dynamic;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using Caliburn.Micro;
-using Client.CommandBase;
-using Client.Commands;
 using Client.Helper;
 using Client.SingletonFowaClient;
-using Client.Views;
 using FowaProtocol;
 using FowaProtocol.EventArgs;
-using FowaProtocol.FowaImplementations;
 using FowaProtocol.FowaMessages;
-using FowaProtocol.FowaModels;
 using FowaProtocol.XmlDeserialization;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Client.ViewModels
 {
@@ -73,8 +63,11 @@ namespace Client.ViewModels
 
         public void OnConnectionFailed(object sender, ConnectionFailedEventArgs e)
         {
+            dynamic settings = new ExpandoObject();
+            settings.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
             Info = string.Empty;
-            Execute.OnUIThread(() => _windowManager.ShowDialog(new ErrorViewModel(e.Exception.Message)));
+            Execute.OnUIThread(() => _windowManager.ShowDialog(new ErrorViewModel("Sorry\n\n\tService not available.\n\tPlease try again later."), null, settings));
         }
 
         #endregion
@@ -138,7 +131,7 @@ namespace Client.ViewModels
 
             if (!_connection.Connected())
             {
-                bool connected = await Task.Run(() => _connection.Connect());
+                bool connected = await Task.Run(()=>_connection.Connect());
 
                 if (!connected) return;
             }
@@ -154,6 +147,7 @@ namespace Client.ViewModels
             StartReadingServerResponseAsync();
         }
 
+        // maybe solve this with FowaMetadata
         public async void StartReadingServerResponseAsync()
         {
             try
@@ -177,7 +171,10 @@ namespace Client.ViewModels
 
         public void OpenRegisterView()
         {
-            _windowManager.ShowDialog(new RegisterViewModel());
+            dynamic settings = new ExpandoObject();
+            settings.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            _windowManager.ShowDialog(new RegisterViewModel(_windowManager), null, settings);
         }
 
         #endregion

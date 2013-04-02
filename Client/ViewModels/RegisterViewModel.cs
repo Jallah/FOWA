@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Forms;
+using Caliburn.Micro;
 using Client.Helper;
+using Client.SingletonFowaClient;
+using FowaProtocol;
+using FowaProtocol.EventArgs;
+using FowaProtocol.FowaMessages;
+using FowaProtocol.FowaModels;
+using FowaProtocol.XmlDeserialization;
 
 namespace Client.ViewModels
 {
-    public class RegisterViewModel : ViewModelBase.ViewModelBase
+    public class RegisterViewModel : ViewModelBase.ViewModelBase, IViewAware
     {
 
         #region Fields
@@ -18,6 +27,8 @@ namespace Client.ViewModels
         private string _password;
         private string _confirmedPassword;
         private string _info;
+        private readonly FowaConnection _connection;
+        private readonly IWindowManager _windowManager;
 
         #endregion
 
@@ -86,22 +97,62 @@ namespace Client.ViewModels
 
         #region Ctor
 
-        public RegisterViewModel()
+        public RegisterViewModel(IWindowManager windowManager)
         {
+            FowaMetaData metaData = new FowaMetaData
+                                        {
+                                            OnIncomingErrorMessageCallback = OnIncomingErrorMessage,
+                                            OnIncomingFriendlistMessageCallback = OnIncomingFriendListMessage
+                                        };
             Info = "Register info\n\tFill in the fields and register to be cool :D\n\t...";
-            Password = "hans";
+            _windowManager = windowManager;
+            _connection = FowaConnection.Instance;
+            _connection.FowaMetaData = metaData;
         }
 
         #endregion
 
+        #region EventHandler
 
+        public void OnIncomingErrorMessage(object sender, IncomingErrorMessageEventArgs args)
+        {
+            Info = XmlDeserializer.GetMessage(args.Message);
+        }
+
+        // the server will send a (empty) friend list to indicate that the user has successfully registered.
+        public void OnIncomingFriendListMessage(object sender, IncomingMessageEventArgs args)
+        {
+            _connection.LoggedInAs = XmlDeserializer.GetLoggedInAsInfo(args.Message);
+
+            //you do not have to deserialize the incoming friendlist, you will not have friends yet :)
+            //var list = XmlDeserializer.DeserializeFriends(args.Message);
+
+            _windowManager.ShowWindow(new ContactViewModel(_windowManager, Enumerable.Empty<Friend>()));
+
+            CloseView();
+        }
+
+        #endregion
 
         #region SendRegisterMessage
 
-        public void SendRegisterMessage()
+        public async void SendRegisterMessage()
         {
-            Info = "hans";
-            MessageBox.Show(NickName + "\n" + Password + "\n" + ConfirmedPassword + "\n" + Email + "\n" + Info);
+            Password = string.Empty;
+            Info = "\n Please wait ...";
+
+            if (!_connection.Connected())
+            {
+                bool connected = await Task.Run(() => _connection.Connect());
+
+                if (!connected) Info = "Connection failed.";
+                return;
+            }
+
+            var successful = await _connection.WriteToClientStreamAync(new RegisterMessage(Email, Password, NickName));
+
+            if (successful) return;
+            Info = "SORRY !!!\n\n\tService not available.\n\tPlease try again later.";
         }
 
         public bool CanSendRegisterMessage
@@ -138,6 +189,31 @@ namespace Client.ViewModels
                 return errorMessage;
             }
         }
+
+        #endregion
+
+        #region IViewAware implementation
+
+        private Window _registerView;
+
+        public void AttachView(object view, object context = null)
+        {
+            _registerView = view as Window;
+            if (ViewAttached != null)
+                ViewAttached(this, new ViewAttachedEventArgs() { Context = context, View = view });
+        }
+
+        public object GetView(object context = null)
+        {
+            return _registerView;
+        }
+
+        public void CloseView()
+        {
+            _registerView.Close();
+        }
+
+        public event EventHandler<ViewAttachedEventArgs> ViewAttached;
 
         #endregion
 
