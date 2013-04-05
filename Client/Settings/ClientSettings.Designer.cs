@@ -25,7 +25,7 @@ namespace Client.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("jallah.no-ip.org")]
+        [global::System.Configuration.DefaultSettingValueAttribute("--.no-ip.org")]
         public string FowaServerIp {
             get {
                 return ((string)(this["FowaServerIp"]));

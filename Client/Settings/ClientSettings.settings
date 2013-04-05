@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="FowaServerIp" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">jallah.no-ip.org</Value>
+      <Value Profile="(Default)">--.no-ip.org</Value>
     </Setting>
     <Setting Name="FowaServerPort" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3333</Value>
