@@ -22,6 +22,7 @@ namespace FowaProtocol.FowaImplementations
         private readonly ConcurrentDictionary<int, FowaClient> _clients;
         public ConcurrentDictionary<int, FowaClient> Clients{get { return _clients; }}
         private object _lock;
+        public EventHandler<UserDisconnetedEventArgs> UserDiconnected;
 
         public FowaService(FowaMetaData metaData)
             : base()
@@ -31,6 +32,12 @@ namespace FowaProtocol.FowaImplementations
             this._listenTask = new Task(ListenForClients);
             _clients = new ConcurrentDictionary<int, FowaClient>();
             _lock = new object();
+        }
+
+        public FowaClient DisconnectUser(int uid)
+        {
+            // hier weiter machen und Clienhandling aus diese methode aufrufen
+            // und das UserDisconnected Event auslösen
         }
 
         public async void ListenForClients()

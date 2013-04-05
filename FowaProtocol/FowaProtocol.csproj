@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventArgs\IncomingErrorMessageEventArgs.cs" />
+    <Compile Include="EventArgs\UserDisconnetedEventArgs.cs" />
     <Compile Include="FowaImplementations\ClientHandling.cs" />
     <Compile Include="FowaImplementations\FowaClient.cs" />
     <Compile Include="FowaImplementations\FowaService.cs" />

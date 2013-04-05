@@ -92,29 +92,27 @@ namespace FowaProtocol
 
         public virtual MessageKind HandleIncomingMessage(string message, NetworkStream senderNetwrokStream)
         {
+            EventHandler<IncomingMessageEventArgs> incomingMessageEvent = null;
+            MessageKind messageKind;
 
             switch (GetKindOfMessage(message))
             {
                 case (int)MessageKind.LoginMessage:
-                    var ilm = IncomingLoginMessage;
-                    if (ilm != null)
-                        ilm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
-                    return MessageKind.LoginMessage;
+                    incomingMessageEvent = IncomingLoginMessage;   
+                    messageKind = MessageKind.LoginMessage;
+                    break;
                 case (int)MessageKind.RegisterMessage:
-                    var irm = IncomingRegisterMessage;
-                    if (irm != null)
-                        irm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
-                    return MessageKind.RegisterMessage;
+                    incomingMessageEvent = IncomingRegisterMessage;                
+                    messageKind = MessageKind.RegisterMessage;
+                    break;
                 case (int)MessageKind.UserMessage:
-                    var ium = IncomingUserMessage;
-                    if (ium != null)
-                        ium(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
-                    return MessageKind.UserMessage;
+                    incomingMessageEvent = IncomingUserMessage;                    
+                    messageKind = MessageKind.UserMessage;
+                    break;
                 case (int)MessageKind.SeekFriendsRequestMessage:
-                    var isfm = IncomingSeekFriendsRequestMessage;
-                    if (isfm != null)
-                        isfm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
-                    return MessageKind.SeekFriendsRequestMessage;
+                    incomingMessageEvent = IncomingSeekFriendsRequestMessage;                   
+                    messageKind = MessageKind.SeekFriendsRequestMessage;
+                    break;
                 case (int)MessageKind.ErrorMessage:
                     var iem = IncomingErrorMessage;
                     if (iem != null)
@@ -130,13 +128,18 @@ namespace FowaProtocol
                         }
                     return MessageKind.ErrorMessage;
                 case (int)MessageKind.FriendListMessage:
-                    var iflm = IncomingFriendlistMessage;
-                    if (iflm != null)
-                        iflm(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
-                    return MessageKind.FriendListMessage;
+                    incomingMessageEvent = IncomingFriendlistMessage;                   
+                    messageKind = MessageKind.FriendListMessage;
+                    break;
                 default:
-                    return MessageKind.UnknownMessage;
+                    messageKind = MessageKind.UnknownMessage;
+                    break;
             }
+
+            if (incomingMessageEvent != null)
+                incomingMessageEvent(this, new IncomingMessageEventArgs(message, new FowaClient(senderNetwrokStream)));
+
+            return messageKind;
         }
 
     }
