@@ -38,6 +38,7 @@ namespace FowaProtocol.FowaImplementations
         {
             // hier weiter machen und Clienhandling aus diese methode aufrufen
             // und das UserDisconnected Event auslösen
+            return null;
         }
 
         public async void ListenForClients()

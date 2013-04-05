@@ -56,80 +56,69 @@ namespace FowaProtocol
         public event EventHandler<IncomingErrorMessageEventArgs> IncomingErrorMessage;
         public event EventHandler<IncomingMessageEventArgs> IncomingFriendlistMessage;
 
+        // if attribute = header
         // LoginMessage = 1
         // RegisterMessage = 2
         // UserMessage = 3
         // SeekFriendsRequestMessage = 4
         // ErrorMessage = 5
         // FriendlistMessage = 6
-        protected int GetKindOfMessage(string incomingString)
-        {
-            int messageKind;
-            using (XmlReader reader = XmlReader.Create(new StringReader(incomingString)))
-            {
-                reader.ReadToFollowing("header");
-                reader.MoveToFirstAttribute();
-                messageKind = int.Parse(reader.Value);
-            }
-
-            return messageKind;
-        }
-
+        //
+        // if attribute = errorinfo
         // LoginError = 1
         // RegisterError = 2
-        protected int GetErrorCode(string message)
+        protected int GetKindOfMessageOrErrorCode(string incomingString, string attribute) // maybe solve this with an enum instead of an string for the attrubute parameter
         {
-            int errorcode;
-            using (XmlReader reader = XmlReader.Create(new StringReader(message)))
+            int messageKindOrErrorCode;
+            using (XmlReader reader = XmlReader.Create(new StringReader(incomingString)))
             {
-                reader.ReadToFollowing("errorinfo");
+                reader.ReadToFollowing(attribute);
                 reader.MoveToFirstAttribute();
-                errorcode = int.Parse(reader.Value);
+                messageKindOrErrorCode = int.Parse(reader.Value);
             }
 
-            return errorcode;
+            return messageKindOrErrorCode;
         }
+
 
         public virtual MessageKind HandleIncomingMessage(string message, NetworkStream senderNetwrokStream)
         {
             EventHandler<IncomingMessageEventArgs> incomingMessageEvent = null;
-            MessageKind messageKind;
+            MessageKind messageKind = (MessageKind)GetKindOfMessageOrErrorCode(message, "header");
 
-            switch (GetKindOfMessage(message))
+            switch (messageKind)
             {
-                case (int)MessageKind.LoginMessage:
-                    incomingMessageEvent = IncomingLoginMessage;   
-                    messageKind = MessageKind.LoginMessage;
+                case MessageKind.LoginMessage:
+                    incomingMessageEvent = IncomingLoginMessage;
                     break;
-                case (int)MessageKind.RegisterMessage:
-                    incomingMessageEvent = IncomingRegisterMessage;                
-                    messageKind = MessageKind.RegisterMessage;
+                case MessageKind.RegisterMessage:
+                    incomingMessageEvent = IncomingRegisterMessage;
                     break;
-                case (int)MessageKind.UserMessage:
-                    incomingMessageEvent = IncomingUserMessage;                    
-                    messageKind = MessageKind.UserMessage;
+                case MessageKind.UserMessage:
+                    incomingMessageEvent = IncomingUserMessage;
                     break;
-                case (int)MessageKind.SeekFriendsRequestMessage:
-                    incomingMessageEvent = IncomingSeekFriendsRequestMessage;                   
-                    messageKind = MessageKind.SeekFriendsRequestMessage;
+                case MessageKind.SeekFriendsRequestMessage:
+                    incomingMessageEvent = IncomingSeekFriendsRequestMessage;
                     break;
-                case (int)MessageKind.ErrorMessage:
+                case MessageKind.ErrorMessage:
                     var iem = IncomingErrorMessage;
-                    if (iem != null)
+                    ErrorMessageKind errorMessageKind = (ErrorMessageKind)GetKindOfMessageOrErrorCode(message, "errorinfo");
 
-                        switch (GetErrorCode(message))
-                        {
-                            case (int)ErrorMessageKind.LiginError:
+                    switch (errorMessageKind)
+                    {
+                        case ErrorMessageKind.LiginError:
+                            if (iem != null)
                                 iem(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message, new FowaClient(senderNetwrokStream)));
-                                break;
-                            case (int)ErrorMessageKind.RegisterError:
+                            break;
+                        case ErrorMessageKind.RegisterError:
+                            if (iem != null)
                                 iem(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.RegisterError, message, new FowaClient(senderNetwrokStream)));
-                                break;
-                        }
-                    return MessageKind.ErrorMessage;
-                case (int)MessageKind.FriendListMessage:
-                    incomingMessageEvent = IncomingFriendlistMessage;                   
-                    messageKind = MessageKind.FriendListMessage;
+                            break;
+                    }
+
+                    break;
+                case MessageKind.FriendListMessage:
+                    incomingMessageEvent = IncomingFriendlistMessage;
                     break;
                 default:
                     messageKind = MessageKind.UnknownMessage;
