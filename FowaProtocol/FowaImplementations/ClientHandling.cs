@@ -16,7 +16,6 @@ namespace FowaProtocol.FowaImplementations
         private readonly FowaService _fowaService;
 
         public int ClientUserId { get; set; }
-
         public NetworkStream Stream { get; set; }
 
         public ClientHandling(FowaService service, NetworkStream networstream)
@@ -38,12 +37,8 @@ namespace FowaProtocol.FowaImplementations
                 catch (Exception exception)
                 {
                     // Client Disconnected -- remove Client from ServiceClientList
-                    FowaClient client;
-
-                    //When this method returns, contains the object removed from the System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>, or
-                    //the default value of the TValue type if key does not exist. 
-                    _fowaService.Clients.TryRemove(ClientUserId, out client);
-
+                    _fowaService.DisconnectUser(ClientUserId);
+                    
                     string s = exception.Message;
 #if DEBUG
                     Debug.WriteLine(s);

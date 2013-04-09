@@ -52,6 +52,29 @@ namespace FowaProtocol.XmlDeserialization
             return loginInfo;
         }
 
+        public static RegisterInfo GetRegisterInfo(string xmlMessage)
+        {
+            XDocument doc = XDocument.Parse(xmlMessage);
+
+            var registerInfo = (from i in doc.Descendants("registerinfo")
+                             let email = i.Attribute("email")
+                             where email != null
+                             let password = i.Attribute("password")
+                             where password != null
+                             let nickname = i.Attribute("nickname")
+                             where nickname != null
+
+                             select new RegisterInfo()
+                             {
+                                 Email = email.Value,
+                                 Pw = password.Value,
+                                 NickName = nickname.Value
+                                 
+                             }).FirstOrDefault();
+
+            return registerInfo;
+        }
+
         public static string GetMessage(string xmlErrorMessage)
         {
             XDocument doc = XDocument.Parse(xmlErrorMessage);

@@ -73,6 +73,7 @@ namespace Client.ViewModels
         #endregion
 
         #region Properties
+
         public string EMail
         {
             get { return _eMail; }
@@ -107,6 +108,7 @@ namespace Client.ViewModels
                 OnPropertyChanged(this, "Info");
             }
         }
+
         #endregion
 
         #region not used Commands

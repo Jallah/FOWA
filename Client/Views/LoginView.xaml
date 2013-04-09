@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:cal="http://www.caliburnproject.org"
-             mc:Ignorable="d" d:DesignWidth="291" Height="191" Loaded="UserControl_Loaded">
+             xmlns:cal="http://www.caliburnproject.org" xmlns:helper="clr-namespace:Client.Helper" mc:Ignorable="d" d:DesignWidth="291" Height="191" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -29,7 +28,7 @@
 
     <Grid>
         <TextBox x:Name="email" Text="{Binding Path=EMail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Height="23" Margin="31,37,30,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBox x:Name="password" Text="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="31,96,30,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23"/>
+        <PasswordBox x:Name="password" helper:PasswordHelper.Attach="True" helper:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="31,96,30,0" VerticalAlignment="Top" Height="23"/>
         <Label x:Name="emailLabel" Content="E-mail:" Margin="31,11,167,0" Height="26" VerticalAlignment="Top"/>
         <Label x:Name="passwordLabel" Content="Passwort:" Margin="31,65,189,100"/>
         

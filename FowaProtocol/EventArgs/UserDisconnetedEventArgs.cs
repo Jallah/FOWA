@@ -8,5 +8,11 @@ namespace FowaProtocol.EventArgs
 {
     public class UserDisconnetedEventArgs : System.EventArgs
     {
+        public int UserId { get; set; }
+
+        public UserDisconnetedEventArgs(int uid)
+        {
+            UserId = uid;
+        }
     }
 }

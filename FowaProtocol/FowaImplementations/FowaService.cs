@@ -22,7 +22,7 @@ namespace FowaProtocol.FowaImplementations
         private readonly ConcurrentDictionary<int, FowaClient> _clients;
         public ConcurrentDictionary<int, FowaClient> Clients{get { return _clients; }}
         private object _lock;
-        public EventHandler<UserDisconnetedEventArgs> UserDiconnected;
+        public event EventHandler<UserDisconnetedEventArgs> UserDisconnected; // should used to inform the friends
 
         public FowaService(FowaMetaData metaData)
             : base()
@@ -34,11 +34,22 @@ namespace FowaProtocol.FowaImplementations
             _lock = new object();
         }
 
+        // returns null if the client does not exist.
         public FowaClient DisconnectUser(int uid)
         {
-            // hier weiter machen und Clienhandling aus diese methode aufrufen
-            // und das UserDisconnected Event auslösen
-            return null;
+            FowaClient client;
+            //When this method returns, contains the object removed from the System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>, or
+            //the default value of the TValue type if key does not exist. 
+            Clients.TryRemove(uid, out client);
+
+            if(client != null) // user found and removed
+            {
+                var userDisconnected = UserDisconnected;
+                if(userDisconnected != null)
+                    userDisconnected(this, new UserDisconnetedEventArgs(uid));
+            }
+
+            return client;
         }
 
         public async void ListenForClients()

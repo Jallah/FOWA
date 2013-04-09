@@ -28,7 +28,7 @@ namespace Client.CommandBase
 
         // Hier wird das eigentliche Binding des Commands and das UIelement vorgenommen mit den jeweilige Methoden des
         // CommandModels. Das Funktioniert mit fast allen Elementen da DependencyObject eine high-level Klasse ist und in der
-        // Klassenherachie ziemmlich weit oben ist.
+        // Klassenherachie ziemlich weit oben ist.
         private static void OnCommandInvalidated(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             UIElement element = (UIElement)dependencyObject;

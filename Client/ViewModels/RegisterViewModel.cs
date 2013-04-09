@@ -138,18 +138,26 @@ namespace Client.ViewModels
 
         public async void SendRegisterMessage()
         {
+            var pw = Password;
+            var cpw = ConfirmedPassword;
+
             Password = string.Empty;
+            ConfirmedPassword = string.Empty;
+
             Info = "\n Please wait ...";
 
             if (!_connection.Connected())
             {
                 bool connected = await Task.Run(() => _connection.Connect());
 
-                if (!connected) Info = "Connection failed.";
-                return;
+                if (!connected)
+                {
+                    Info = "Connection failed.";
+                    return;
+                }
             }
 
-            var successful = await _connection.WriteToClientStreamAync(new RegisterMessage(Email, Password, NickName));
+            var successful = await _connection.WriteToClientStreamAync(new RegisterMessage(Email, pw, NickName));
 
             if (successful) return;
             Info = "SORRY !!!\n\n\tService not available.\n\tPlease try again later.";
