@@ -24,11 +24,11 @@ namespace FowaProtocol.FowaImplementations
         private object _lock;
         public event EventHandler<UserDisconnetedEventArgs> UserDisconnected; // should used to inform the friends
 
-        public FowaService(FowaMetaData metaData)
+        public FowaService(FowaMetaData metaData, int port)
             : base()
         {
             _metaData = metaData;
-            this._tcpListener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, 3333);
+            this._tcpListener = new TcpListener(IPAddress.Any /*IPAddress.Parse("127.0.0.1")*/, port);
             this._listenTask = new Task(ListenForClients);
             _clients = new ConcurrentDictionary<int, FowaClient>();
             _lock = new object();

@@ -34,7 +34,7 @@ namespace Server.Views
                                 OnIncomingRegisterMessageeCallback = OnIncomingRegisterMessage
                             };
 
-            _service = new FowaService(_metaData);
+            _service = new FowaService(_metaData, 55555);
             _service.UserDisconnected += OnUserDiconnected;
             _userFriendService = new UserFriendsService();
 
@@ -51,7 +51,24 @@ namespace Server.Views
         {
             var registerInfo = XmlDeserializer.GetRegisterInfo(args.Message);
             await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Incoming register message:\n" + '\t' + registerInfo.NickName + "\n\t" + registerInfo.Email + "\n\t" + registerInfo.Pw + "\n\n"));
+            var handleResult = await HandleIncomingLoginOrRegisterMessage(args.FowaClient, registerInfo.Email);
+            bool writeToClientSuccessfull = true; // Not used yet
 
+            // DB con failed = 0
+            // user exists = 1
+            // User does not exists = 2
+            switch (handleResult)
+            {
+                case 0:
+                    // send ErrorMessage --> DB connection failed
+                    return;
+                case 1:
+                    // send ErrorMessage --> email already exists
+                    return;
+                case 2:
+                    // register the new user
+                    return;
+            }
         }
 
         public async void OnIncomingUserMessage(object sender, IncomingMessageEventArgs args)
@@ -90,15 +107,29 @@ namespace Server.Views
             // User does not exists = 2
             var handleResult = await HandleIncomingLoginOrRegisterMessage(args.FowaClient, login.Email);
 
-            if(handleResult == 0 || handleResult == 2) return; // if user exists .. carry on
+            //if (handleResult == 0 || handleResult == 2) return;
 
+            // DB con failed = 0
+            // user exists = 1
+            // User does not exists = 2
+            switch (handleResult)
+            {
+                case 0:
+                    writeToClientSuccessfull = await args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LoginError, "Fetching Friends failed."));
+                    return;
+                case 1: // carry on
+                    break;
+                case 2:
+                    writeToClientSuccessfull = await args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LoginError, "User not found."));
+                    return;
+            }
             // Check if password is correct
             var user = _userFriendService.GetUserbyEmail(login.Email);
 
             if (!user.pw.Equals(login.Pw))
             {
                 await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Login failed: Wrong Password.\n----------\n"));
-                writeToClientSuccessfull = await args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "Incorrect Password"));
+                writeToClientSuccessfull = await args.FowaClient.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LoginError, "Incorrect Password"));
                 return;
             }
 
@@ -136,21 +167,21 @@ namespace Server.Views
                 dbConnectionSuccessfull = false;
             }
 
-            if(!userExists)
+            if (!userExists)
             {
                 await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "Login failed: User not found.\n----------\n"));
-                writeToClientSuccessfull = await client.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "User not found."));
+                //writeToClientSuccessfull = await client.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LoginError, "User not found."));
             }
 
             if (!dbConnectionSuccessfull)
             {
                 await Dispatcher.BeginInvoke(new Action(() => fowaServerLogTextBlock.Text += "DB connection failed.\n----------\n" + possibleException));
-                writeToClientSuccessfull = await client.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LiginError, "Fetching Friends failed."));
+                //writeToClientSuccessfull = await client.WriteToClientStreamAync(new ErrorMessage(ErrorMessageKind.LoginError, "Fetching Friends failed."));
             }
 
-            if(!dbConnectionSuccessfull) return 0; // DB con failed
+            if (!dbConnectionSuccessfull) return 0; // DB con failed
             return userExists ? 1 : 2; // user exists = 1
-                                       // User does not exists = 2
+            // User does not exists = 2
         }
 
         private void StartServerButtonClick(object sender, RoutedEventArgs e)

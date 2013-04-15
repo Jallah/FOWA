@@ -106,9 +106,9 @@ namespace FowaProtocol
 
                     switch (errorMessageKind)
                     {
-                        case ErrorMessageKind.LiginError:
+                        case ErrorMessageKind.LoginError:
                             if (iem != null)
-                                iem(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LiginError, message, new FowaClient(senderNetwrokStream)));
+                                iem(this, new IncomingErrorMessageEventArgs((int)ErrorMessageKind.LoginError, message, new FowaClient(senderNetwrokStream)));
                             break;
                         case ErrorMessageKind.RegisterError:
                             if (iem != null)

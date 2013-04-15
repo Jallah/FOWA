@@ -8,7 +8,7 @@ namespace FowaProtocol.MessageEnums
 {
     public enum ErrorMessageKind
     {
-        LiginError = 1,
+        LoginError = 1,
         RegisterError
     }
 }

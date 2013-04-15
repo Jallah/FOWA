@@ -34,7 +34,7 @@ namespace Client.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3333")]
+        [global::System.Configuration.DefaultSettingValueAttribute("55555")]
         public int FowaServerPort {
             get {
                 return ((int)(this["FowaServerPort"]));
