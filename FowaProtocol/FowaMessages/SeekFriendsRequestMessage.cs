@@ -13,7 +13,7 @@ namespace FowaProtocol.FowaMessages
     /*
         <fowamessage>
             <header messagekind="4" />
-            <researchcriteria email="hans@penis.de" nickname="hans" id="345" />
+            <researchcriteria email="hans@mydomain.de" nickname="hans" id="345" />
         </fowamessage> 
     */
 
